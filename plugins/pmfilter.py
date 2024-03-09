@@ -1475,7 +1475,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             buttons = []
             if await db.has_premium_access(user_id):                               
                 buttons = [[
-                    InlineKeyboardButton("🚀 Fᴀꜱᴛ Oᴏᴡɴʟᴏᴀᴅ", url=lazy_download),
+                    InlineKeyboardButton("🚀 Fᴀꜱᴛ Dᴏᴡɴʟᴏᴀᴅ", url=lazy_download),
                     InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=lazy_stream)
                 ],[
                     InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url='https://t.me/FilmyHub_Adda')
