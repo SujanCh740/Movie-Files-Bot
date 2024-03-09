@@ -28,7 +28,7 @@ async def start(client, message):
         buttons = [[
                     InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
-                    InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', url=f'https://t.me/Sujan_BotZ'')
+                    InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', url=f'https://t.me/Sujan_BotZ')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply(script.GSTART_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
