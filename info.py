@@ -29,8 +29,8 @@ SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://graph.org/file/7d8b42873478
 CODE = (environ.get('CODE', 'https://graph.org/file/a737e665e8496192a65c3.jpg'))
 
 #stream link shortner
-STREAM_SITE = (environ.get('STREAM_SITE', 'vnshortener.com'))
-STREAM_API = (environ.get('STREAM_API', '6c5db31980885e46221e90106f1d47b8295aa0f8'))
+STREAM_SITE = (environ.get('STREAM_SITE'))
+STREAM_API = (environ.get('STREAM_API'))
 STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5714'))
 
 # Admins, Channels & Users
