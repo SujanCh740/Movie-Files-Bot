@@ -1527,10 +1527,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
                     InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
-                    InlineKeyboardButton('💸 ᴇᴀʀɴ ᴍᴏɴᴇʏ 💸', callback_data="shortlink_info")
+                    InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
-                    InlineKeyboardButton('• Uᴘᴅᴀᴛᴇꜱ •', callback_data='channels'),
-                    InlineKeyboardButton('• Hᴇʟᴘ •', callback_data='help')
+                    InlineKeyboardButton('💠 Hᴇʟᴘ 💠', callback_data='help'),
+                    InlineKeyboardButton('♻️ Aʙᴏᴜᴛ ♻️', callback_data='about')               
                 ],[
                     InlineKeyboardButton('✨ Bᴜʏ Sᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : Rᴇᴍᴏᴠᴇ Aᴅꜱ ✨', callback_data="premium_info")
                   ]]
