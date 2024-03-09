@@ -412,7 +412,7 @@ BOT WORKING PROPERLY"""
 
 ‼️ Mᴜsᴛ Sᴇɴᴅ Sᴄʀᴇᴇɴsʜᴏᴛ Aғᴛᴇʀ Pᴀʏᴍᴇɴᴛ.</b>"""    
 
-    -LOPER_TXT = """
+    DEVELOPER_TXT = """
 Special Thanks To ❤️ Developer -
 
 -Dev [Owner of this bot ]<a href='https://t.me/Sujan_Bots'>Sujan Ch</a>
