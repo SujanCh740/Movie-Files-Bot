@@ -62,16 +62,7 @@ async def start(client, message):
         elif curr_time < 21:
             gtxt = "Gᴏᴏᴅ Eᴠᴇɴɪɴɢ 👋"
         else:
-            gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"
-        m=await message.reply_text("<i>Wᴇʟᴄᴏᴍᴇ Tᴏ <b>Tʜᴇ Mᴏᴠɪᴇ Pʀᴏᴠɪᴅᴇʀ Bᴏᴛ</b>.\nHᴏᴘᴇ Yᴏᴜ'ʀᴇ Dᴏɪɴɢ Wᴇʟʟ...</i>")
-        await asyncio.sleep(0.4)
-        await m.edit_text("⚡")
-        await asyncio.sleep(0.5)
-        await m.edit_text("👀")
-        await asyncio.sleep(0.5)
-        await m.edit_text("<b><i>Sᴛᴀʀᴛɪɴɢ...</i></b>")
-        await asyncio.sleep(0.4)
-        await m.delete()        
+            gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"        
         m=await message.reply_sticker("CAACAgUAAxkBAAEGTCtl69u4iPhH7-XYTMYE877gvhUOVgACJwEAAsiUZBTiPWKAkUSmmh4E") 
         await asyncio.sleep(1)
         await m.delete()
