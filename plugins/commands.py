@@ -123,13 +123,6 @@ async def start(client, message):
             gtxt = "Gᴏᴏᴅ Eᴠᴇɴɪɴɢ 👋"
         else:
             gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"
-        m=await message.reply_text("<i>Wᴇʟᴄᴏᴍᴇ Tᴏ <b>Tʜᴇ Mᴏᴠɪᴇ Pʀᴏᴠɪᴅᴇʀ Bᴏᴛ</b>.\nHᴏᴘᴇ Yᴏᴜ'ʀᴇ Dᴏɪɴɢ Wᴇʟʟ...</i>")
-        await asyncio.sleep(0.4)
-        await m.edit_text("⚡")
-        await asyncio.sleep(0.5)
-        await m.edit_text("<b><i>Sᴛᴀʀᴛɪɴɢ...</i></b>")
-        await asyncio.sleep(0.4)
-        await m.delete()        
         m=await message.reply_sticker("CAACAgUAAxkBAAEGTCtl69u4iPhH7-XYTMYE877gvhUOVgACJwEAAsiUZBTiPWKAkUSmmh4E") 
         await asyncio.sleep(1)
         await m.delete()
@@ -350,7 +343,7 @@ async def start(client, message):
             text=f"🫂 ʜᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ ʏᴏᴜʀ ʟɪɴᴋ ɪꜱ ʀᴇᴀᴅʏ, ᴋɪɴᴅʟʏ ᴄʟɪᴄᴋ ᴏɴ ᴅᴏᴡɴʟᴏᴀᴅ ʙᴜᴛᴛᴏɴ.\n\n⚠️ ꜰɪʟᴇ ɴᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 ꜰɪʟᴇ ꜱɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n",
             reply_markup=InlineKeyboardMarkup(
                 [[
-                    InlineKeyboardButton('📁 ᴅᴏᴡɴʟᴏᴀᴅ 📁', url=g)
+                    InlineKeyboardButton('📁 Dᴏᴡɴʟᴏᴀᴅ 📁', url=g)
                 ], [
                     InlineKeyboardButton('⚡ Hᴏᴡ Tᴏ Dᴏᴡɴʟᴏᴀᴅ ⚡', url=await get_tutorial(chat_id))
                 ], [
