@@ -228,20 +228,16 @@ Mᴇꜱꜱᴀɢᴇ : <b>{}</b>"""
     CAPTION = """ 📂 <i><a href="https://t.me/+v5w4kXPkaj1jZTA1">{file_name}</a></i>\n\n"""
 
     IMDB_TEMPLATE_TXT = """
-<b>ʜᴇʏ {message.from_user.mention}, ʜᴇʀᴇ ɪꜱ ᴛʜᴇ ʀᴇꜱᴜʟᴛꜱ ꜰᴏʀ ʏᴏᴜʀ ǫᴜᴇʀʏ {search}.
+<b>Hᴇʏ {message.from_user.mention}, Hᴇʀᴇ Iꜱ Tʜᴇ Rᴇꜱᴜʟᴛꜱ Fᴏʀ Yᴏᴜʀ Qᴜᴇʀʏ {search}.
 
-🧿 {title}</b>
+🎬Tɪᴛʟᴇ: {title}</b>
+<b>⭐Rᴀᴛɪɴɢs: {rating}
+📆Rᴇʟᴇᴀsᴇ: {release_date}
+🧩Gᴇɴʀᴇ: {genres}
 
-<b>⭐ {rating} | ⏰ {runtime} Minutes
-📆 {release_date}
-🕵️ {director}
+📝 {plot}
 
-●  {languages}
-●  {genres}
-
-📖 {plot}
-
-💗 ᴘᴏᴡᴇʀᴇᴅ ʙʏ : {message.chat.title}</b>
+📯 Pᴏᴡᴇʀᴇᴅ Bʏ : {message.chat.title}</b>
 """
     
 
