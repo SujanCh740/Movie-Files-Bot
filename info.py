@@ -21,7 +21,7 @@ BOT_TOKEN = environ.get('BOT_TOKEN', "5861233671:AAFG1dEd9QwiGx2ZdOxrbWQgB5eY-PK
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
 USE_CAPTION_FILTER = bool(environ.get('USE_CAPTION_FILTER', True))
 
-PICS = (environ.get('PICS', 'https://graph.org/file/25384a59641ec3b2446be.jpg')).split() #SAMPLE PIC
+PICS = (environ.get('PICS', 'https://graph.org/file/a713b8db5df493b853cad.jpg https://graph.org/file/0a930db0eb217e430c4cf.jpg https://graph.org/file/bad5da58bb38181693a7a.jpg https://graph.org/file/e1fa4e58918c8e8d5aa0a.jpg https://graph.org/file/64804ede93c64c292a842.jpg https://graph.org/file/c2b39ede6dcdbacbf6289.jpg https://graph.org/file/43e6c59479c7d869bec2e.jpg https://graph.org/file/aae6f3c9135eacb01744c.jpg')).split() #SAMPLE PIC
 NOR_IMG = environ.get("NOR_IMG", "https://graph.org/file/efd525bc133e1cbd0c966.jpg")
 MELCOW_VID = environ.get("MELCOW_VID", "https://graph.org/file/98168a0fe0764b10fe1ea.mp4")
 SPELL_IMG = environ.get("SPELL_IMG", "https://graph.org/file/c71f7bc667122cd1be418.jpg")
@@ -34,23 +34,23 @@ STREAM_API = (environ.get('STREAM_API', '6c5db31980885e46221e90106f1d47b8295aa0f
 STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5714'))
 
 # Admins, Channels & Users
-ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5123039648').split()]
+ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5123039648, 6093431204').split()]
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001821450983').split()] #Channel id for auto indexing ( make sure bot is admin )
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '5123039648').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 PREMIUM_USER = [int(user) if id_pattern.search(user) else user for user in environ.get('PREMIUM_USER', '5123039648').split()]
-auth_channel = environ.get('AUTH_CHANNEL', '') #Channel / Group Id for force sub ( make sure bot is admin )
+auth_channel = environ.get('AUTH_CHANNEL', '-1001861445521') #Channel / Group Id for force sub ( make sure bot is admin )
 auth_grp = environ.get('AUTH_GROUP')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
-support_chat_id = environ.get('SUPPORT_CHAT_ID', '') # support group id ( make sure bot is admin )
-reqst_channel = environ.get('REQST_CHANNEL_ID', '-1002048183700') # request channel id ( make sure bot is admin )
+support_chat_id = environ.get('SUPPORT_CHAT_ID', '-1001868829529') # support group id ( make sure bot is admin )
+reqst_channel = environ.get('REQST_CHANNEL_ID', '-1001796707878') # request channel id ( make sure bot is admin )
 REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_channel) else None
 SUPPORT_CHAT_ID = int(support_chat_id) if support_chat_id and id_pattern.search(support_chat_id) else None
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False)) # True if you want no results messages in Log Channel
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://yobeto7402:yobeto7402@cluster0.3s3vrhz.mongodb.net/?retryWrites=true&w=majority")
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://yogeshchy9997:yogeshchy9997@cluster0.nxr4drz.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME = environ.get('DATABASE_NAME', "Sujan_BotZ")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 
@@ -61,18 +61,18 @@ HOWTOVERIFY = environ.get('HOWTOVERIFY', 'https://t.me/How_2_Download_From_TeraB
 # Others
 SHORTLINK_URL = environ.get('SHORTLINK_URL', 'vnshortener.com')
 SHORTLINK_API = environ.get('SHORTLINK_API', '6c5db31980885e46221e90106f1d47b8295aa0f8')
-IS_SHORTLINK = bool(environ.get('IS_SHORTLINK', False))
+IS_SHORTLINK = bool(environ.get('IS_SHORTLINK', True))
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '-1001767829947').split()]
 MAX_B_TN = environ.get("MAX_B_TN", "10")
 MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
 PORT = environ.get("PORT", "8080")
-GRP_LNK = environ.get('GRP_LNK', 'https://t.me/+IhrdZgCypNFlYjZl')
-CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/Sujan_BotZ')
+GRP_LNK = environ.get('GRP_LNK', 'https://t.me/+aSW3ErAd9zwwMGY1')
+CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/+WVaNEJ1unlZmZDRl')
 TUTORIAL = environ.get('TUTORIAL', 'https://t.me/How_2_Download_From_TeraBox/5714') # Tutorial video link for opening shortlink website 
 IS_TUTORIAL = bool(environ.get('IS_TUTORIAL', True))
 MSG_ALRT = environ.get('MSG_ALRT', 'ᴘʀɪᴠᴀᴄʏ ɪꜱ ᴄʀɪᴍᴇ')
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1002032838175')) #Log channel id ( make sure bot is admin )
-SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'https://t.me/') #Support group link ( make sure bot is admin )
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001870515303')) #Log channel id ( make sure bot is admin )
+SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 't.me/+qXKjMB2U_hBkMjg1') #Support group link ( make sure bot is admin )
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "False")), False)
 IMDB = is_enabled((environ.get('IMDB', "False")), False)
 AUTO_FFILTER = is_enabled((environ.get('AUTO_FFILTER', "True")), True)
