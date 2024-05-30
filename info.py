@@ -29,9 +29,9 @@ SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://graph.org/file/7d8b42873478
 CODE = (environ.get('CODE', 'https://graph.org/file/a737e665e8496192a65c3.jpg'))
 
 #stream link shortner
-STREAM_SITE = (environ.get('STREAM_SITE', 'nestshortener.com'))
-STREAM_API = (environ.get('STREAM_API', '5e84c540aca6976e2af0180a97b6dd0e03dd7f89'))
-STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5714'))
+STREAM_SITE = (environ.get('STREAM_SITE', ''))
+STREAM_API = (environ.get('STREAM_API', ''))
+STREAMHTO = (environ.get('STREAMHTO', ''))
 
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5123039648').split()]
