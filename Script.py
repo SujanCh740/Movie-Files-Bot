@@ -24,7 +24,37 @@ Wᴇ Hᴀᴠᴇ Dɪᴠɪᴅᴇᴅ Bᴏᴛ Cᴏᴍᴍᴀɴᴅꜱ Fᴏʀ Gʀᴏᴜ
 ‣ Uꜱᴇᴅ Sᴛᴏʀᴀɢᴇ : <code>{}</code>
 ‣ Fʀᴇᴇ Sᴛᴏʀᴀɢᴇ : <code>{}</code>
 </b>"""
+    
+    MODS_TXT = """Yᴏᴜ Cᴀɴ Tʀʏ Aʟʟ Tʜᴇsᴇ Cᴏᴏʟ Fᴇᴀᴛᴜʀᴇs Fʀᴏᴍ Bᴇʟᴏᴡ Oᴘᴛɪᴏɴ..!!!"""
 
+    STICKER_TXT = """<b>Y𝙾𝚄 C𝙰𝙽 U𝚂𝙴 T𝙷𝙸𝚂 M𝙾𝙳𝚄𝙻𝙴 T𝙾 F𝙸𝙽𝙳 A𝙽𝚈 S𝚃𝙸𝙲𝙺𝙴𝚁𝚂 I𝙳.</b>
+• 𝐔𝐒𝐀𝐆𝐄
+To Get Sticker ID
+ 
+  ⭕ 𝙃𝙤𝙬 𝙏𝙤 𝙐𝙨𝙚
+ 
+◉ Reply To Any Sticker [/stickerid]"""
+
+
+    FONT_TXT= """⚙️ 𝐔𝐒𝐀𝐆𝐄
+
+𝐘𝐎𝐔 𝐂𝐀𝐍 𝐔𝐒𝐄 𝐓𝐇𝐈𝐒 𝐌𝐎𝐃𝐔𝐋𝐄 𝐓𝐎 𝐂𝐇𝐀𝐍𝐆𝐄 𝐅𝐎𝐍𝐓 𝐒𝐓𝐘𝐋𝐄 
+
+<b>COMMAND</b> : /font your text (optional)
+        <b> Eg:- /font Hello</b>
+
+ <i>This feature added by @Sujan_BotZ"""
+
+    TELE_TXT = """▫️Hᴇʟᴘ: ▪️ Tᴇʟᴇɢʀᴀᴘʜ ▪️
+     Tᴇʟᴇɢʀᴀᴘʜ Lɪɴᴋ Gᴇɴᴇʀᴀᴛᴏʀ
+    Usᴀɢᴇ
+    🤧 /telegraph - Sᴇɴᴅ Mᴇ Pʜᴏᴛᴏ Oʀ Vɪᴅᴇᴏ Uɴᴅᴇʀ(5ᴍʙ) Aɴᴅ Rᴇᴘʟʏ Wɪᴛʜ Cᴏᴍᴍᴀᴍɴᴅ"""
+
+    CON_TXT = """<b><u>ᴄᴏᴜɴᴛʀʏ ɪɴғᴏ</b></u>
+<b>Tʜɪs ᴍᴏᴅᴜʟᴇ ɪs ᴛᴏ ғɪɴᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴄᴏᴜɴᴛʀɪᴇs</b>
+• /country [𝖼𝗈𝗎𝗇𝗍𝗋𝗒 𝗇𝖺𝗆𝖾] 
+𝖤𝗑𝖺𝗆𝗉𝗅𝖾 :- <code>/country Nepal</code>"""
+    
     LOG_TEXT_G = """#NewGroup
     
 Gʀᴏᴜᴘ = {}
