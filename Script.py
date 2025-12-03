@@ -255,7 +255,7 @@ Nᴀᴍᴇ : {}
 
 Mᴇꜱꜱᴀɢᴇ : <b>{}</b>"""
     
-    CAPTION = """<em><a>{file_name}</a></em>\n\n"""
+    CAPTION = """🗃️ <code><a>{file_name}</a></code>\n\n🔘 <code><a>{file_size}</a></code>\n\n"""
 
     IMDB_TEMPLATE_TXT = """
 <b>Hᴇʏ {message.from_user.mention}, Hᴇʀᴇ Iꜱ Tʜᴇ Rᴇꜱᴜʟᴛꜱ Fᴏʀ Yᴏᴜʀ Qᴜᴇʀʏ {search}.
