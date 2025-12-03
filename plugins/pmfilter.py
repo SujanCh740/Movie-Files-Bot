@@ -1,5 +1,3 @@
-# Kanged From @TroJanZheX
-# Thanks @DeletedFromEarth
 import asyncio
 import re
 import ast
@@ -1751,8 +1749,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
             InlineKeyboardButton('⚜️ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ ⚜️', url='https://t.me/Sujan_BotZ')
         ],[
-            InlineKeyboardButton('🍿 Mᴏᴠɪᴇ Rᴇǫᴜᴇꜱᴛ Gʀᴏᴜᴘ 🍿', url='https://t.me/+IhrdZgCypNFlYjZl')
-        ],[
             InlineKeyboardButton('⇇ Bᴀᴄᴋ', callback_data='start')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -2095,7 +2091,7 @@ async def auto_filter(client, msg, spoll=False):
         if len(message.text) < 100:
             search = message.text
             m=await message.reply_sticker("CAACAgQAAxkBAAEKSxplArIUActk4ORQuFn3DHFvBqQCOgACBQMAAnJxFyVYcSIunXgGjjAE",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f'Seaching for {search} 🔎', url=f"https://t.me/+v5w4kXPkaj1jZTA1")]]) 
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f'Seaching for {search} 🔎', url=f"https://t.me/Sujan_Ch")]]) 
             )
             search = search.lower()
             find = search.split(" ")
