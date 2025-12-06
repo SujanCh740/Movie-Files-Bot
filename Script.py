@@ -313,9 +313,9 @@ BOT WORKING PROPERLY"""
 
 ● <code>20₹</code> ➛ <u>Bʀᴏɴᴢᴇ Pʟᴀɴ</u> » <code>15 Dᴀʏꜱ</code>
 ● <code>40₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
-● <code>240₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>180 Dᴀʏꜱ</code>
-● <code>350₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>365 Dᴀʏꜱ</code>
+● <code>65₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>45 Dᴀʏꜱ</code>
+● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
 📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
@@ -363,31 +363,31 @@ BOT WORKING PROPERLY"""
     
 🥈 <u>ꜱɪʟᴠᴇʀ ᴘʟᴀɴ</u>
 ⏰ 30 ᴅᴀʏꜱ 
-💸 ᴘʟᴀɴ ᴘʀɪᴄᴇ ➛ 60₹
+💸 ᴘʟᴀɴ ᴘʀɪᴄᴇ ➛ 40₹
 
 ➛ Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ & Sᴇᴇ Aʟʟ Oᴜʀ Pʟᴀɴꜱ.</b>"""
 
     GOLD_TXT = """<b>👋 ʜᴇʏ {},
     
 🥇 <u>ɢᴏʟᴅ ᴘʟᴀɴ</u>
-⏰ 90 ᴅᴀʏꜱ 
-💸 ᴘʟᴀɴ ᴘʀɪᴄᴇ ➛ 180₹
+⏰ 45 ᴅᴀʏꜱ 
+💸 ᴘʟᴀɴ ᴘʀɪᴄᴇ ➛ 65₹
 
 ➛ Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ & Sᴇᴇ Aʟʟ Oᴜʀ Pʟᴀɴꜱ.</b>"""
 
     PLATINUM_TXT = """<b>👋 Hᴇʏ {},
     
 🏅 <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u>
-⏰ 180 Dᴀʏꜱ 
-💸 Pʟᴀɴ Pʀɪᴄᴇ ➛ 240₹
+⏰ 60 Dᴀʏꜱ 
+💸 Pʟᴀɴ Pʀɪᴄᴇ ➛ 75₹
 
 ➛ Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ & Sᴇᴇ Aʟʟ Oᴜʀ Pʟᴀɴꜱ.</b>"""
     
     DIAMOND_TXT = """<b>👋 Hᴇʏ {},
 
 💎 <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u>
-⏰ 365 Dᴀʏꜱ 
-💸 Pʟᴀɴ Pʀɪᴄᴇ ➛ 350₹
+⏰ 90 Dᴀʏꜱ 
+💸 Pʟᴀɴ Pʀɪᴄᴇ ➛ 120₹
 
 ➛ Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ & Sᴇᴇ Aʟʟ Oᴜʀ Pʟᴀɴꜱ.</b>"""
 
@@ -406,9 +406,9 @@ BOT WORKING PROPERLY"""
 
 ● <code>20₹</code> ➛ <u>Bʀᴏɴᴢᴇ Pʟᴀɴ</u> » <code>15 Dᴀʏꜱ</code>
 ● <code>40₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
-● <code>240₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>180 Dᴀʏꜱ</code>
-● <code>350₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>365 Dᴀʏꜱ</code>
+● <code>65₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>45 Dᴀʏꜱ</code>
+● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
 📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
@@ -419,5 +419,5 @@ BOT WORKING PROPERLY"""
     DEVELOPER_TXT = """
 Special Thanks To ❤️ Developer -
 
--Dev [Owner of this bot ]<a href='https://t.me/Sujan_Bots'>Sujan Ch</a>
+-Dev [Owner of this bot ]<a href='https://t.me/Sujan_Ch'>Sujan Ch</a>
 """
