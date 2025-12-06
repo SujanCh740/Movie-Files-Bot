@@ -1484,7 +1484,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 #text="<b>‼️ Wᴀɴᴛ Tᴏ Rᴇᴍᴏᴠᴇ Aᴅꜱ ?\n\n✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ Aᴅ-Fʀᴇᴇ Exᴘᴇʀɪᴇɴᴄᴇ.</b>",
                 #quote=True,
                 #disable_web_page_preview=True,                  
-                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
+                #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
                     InlineKeyboardButton("🚀 Fᴀꜱᴛ Dᴏᴡɴʟᴏᴀᴅ", url=hp_link),
                     InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=ph_link)
