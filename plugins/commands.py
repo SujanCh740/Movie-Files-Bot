@@ -411,7 +411,7 @@ async def start(client, message):
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
-        await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏꜱ / ꜰɪʟᴇꜱ ᴀʀᴇ ᴅᴇʟᴇᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nᴋɪɴᴅʟʏ ꜱᴇᴀʀᴄʜ ᴀɢᴀɪɴ.</b>")
+        await k.edit_text("<b>Yᴏᴜʀ Vɪᴅᴇᴏꜱ / Fɪʟᴇꜱ Aʀᴇ Dᴇʟᴇᴛᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nKɪɴᴅʟʏ Sᴇᴀʀᴄʜ Aɢᴀɪɴ.</b>")
         return
         
     elif data.startswith("files"):
