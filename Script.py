@@ -289,11 +289,9 @@ BOT WORKING PROPERLY"""
     
 🎖️ <u>Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs</u> :
 
-● <code>20₹</code> ➛ <u>Bʀᴏɴᴢᴇ Pʟᴀɴ</u> » <code>15 Dᴀʏꜱ</code>
-● <code>40₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
-● <code>240₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>180 Dᴀʏꜱ</code>
-● <code>350₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>365 Dᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
+● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
 📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
@@ -305,9 +303,7 @@ BOT WORKING PROPERLY"""
     
 🎖️ <u>Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs</u> :
 
-● <code>20₹</code> ➛ <u>Bʀᴏɴᴢᴇ Pʟᴀɴ</u> » <code>15 Dᴀʏꜱ</code>
-● <code>40₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>65₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>45 Dᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
 ● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
@@ -398,9 +394,7 @@ BOT WORKING PROPERLY"""
     
 🎖️ <u>Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs</u> :
 
-● <code>20₹</code> ➛ <u>Bʀᴏɴᴢᴇ Pʟᴀɴ</u> » <code>15 Dᴀʏꜱ</code>
-● <code>40₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>65₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>45 Dᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
 ● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
