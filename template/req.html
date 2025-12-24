@@ -1,210 +1,165 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>STREAMING BOT| {{file_name}}</title>
-  <link rel="icon" href="https://graph.org/file/385b9bb3996af1e20aaa7-e1ad0bd09db7960b44.jpg" type="image/x-icon">
-  <meta name="description" content="Stream high-quality videos and movies in 1080p. Experience seamless playback with multiple player options." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Bot | {{file_name}}</title>
+    <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/plyr.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- External CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://av-bo-tz.vercel.app/548/551/play.css" rel="stylesheet" />
-
-  <!-- ✅ Theme CSS -->
-  <style>
-    :root {
-      --header-bg: #000000;
-      --header-color: #ffffff;
-      --file-info-bg: #1e1e1e;
-      --file-info-color: #f8f9fa;
-      --description-bg: #2c2c2c;
-      --description-color: #ffffff;
-      --body-bg: #121212;
-      --body-color: #f8f9fa;
-      --card-border: #333;
-    }
-
-    body.light-mode {
-      --header-bg: #00bfff;
-      --header-color: #000000;
-      --file-info-bg: #f8f9fa;
-      --file-info-color: #212529;
-      --description-bg: #fff3cd;
-      --description-color: #212529;
-      --body-bg: #f8f9fa;
-      --body-color: #212529;
-      --card-border: #ddd;
-    }
-
-    body {
-      background-color: var(--body-bg) !important;
-      color: var(--body-color) !important;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      font-family: "Poppins", sans-serif;
-    }
-
-    header,
-    footer {
-      background-color: var(--header-bg) !important;
-      color: var(--header-color) !important;
-    }
-
-    header h1 {
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .card {
-      background-color: var(--file-info-bg) !important;
-      color: var(--file-info-color) !important;
-      border-color: var(--card-border) !important;
-    }
-
-    .alert-warning {
-      background-color: var(--description-bg) !important;
-      color: var(--description-color) !important;
-    }
-
-    a.report {
-      color: var(--header-color);
-      font-weight: 600;
-      text-decoration: underline;
-    }
-
-    .theme-toggle-btn {
-      transition: all 0.3s ease;
-    }
-
-    .btn-light,
-    .btn-dark {
-      border: none;
-    }
-
-    video {
-      border-radius: 10px;
-    }
-
-    footer {
-      background-color: #00bfff !important;
-      color: #000 !important;
-    }
-
-    footer a {
-      color: #000;
-      text-decoration: underline;
-    }
-  </style>
 </head>
 
-<body class="bg-dark text-light">
-  <div class="d-flex flex-column min-vh-100">
-    <!-- Header -->
-    <header class="py-2 shadow">
-      <div class="d-flex justify-content-between align-items-center container">
-        <h1 class="h4 mb-0 fw-bold">SUJAN BOTZ</h1>
-        <button id="theme-toggle-btn" class="btn btn-light theme-toggle-btn">
-          <i class="fa-solid fa-sun"></i> Light Mode
-        </button>
-      </div>
-    </header>
-
-    <!-- Main content -->
-    <main class="flex-grow-1 container py-3">
-      <div class="player-wrapper mb-3">
-        <video id="myVideo" src="{{file_url}}" class="w-100 rounded shadow" controls>
-          Your browser does not support the video tag.
-        </video>
-        <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
-      </div>
-
-      <!-- ✅ Download Button -->
-      <div class="text-center mb-4">
-        <a href="{{file_url}}" download class="btn btn-success btn-lg shadow-sm">
-          <i class="fa-solid fa-download me-2"></i> Download Now
-        </a>
-      </div>
-
-      <!-- File Info -->
-      <div class="card border-secondary mb-4">
-        <div class="card-header border-secondary">
-          <h5 class="mb-0"><i class="fa-solid fa-circle-info me-2"></i> File Information</h5>
+<body>
+    <nav>
+        <div class="nleft">
+            <a href="#">
+                <h3 id="heading" style="z-index: 100;" class="magnet title">FILE STREAM</h3>
+            </a>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <p><strong>Name: </strong>{{file_name}}</p>
-              <p><strong>Size: </strong>{{file_size}}</p>
+        <div class="nryt">
+            <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)">HOME</a>
+
+            <a href="#abtus" class="about-btn magnet" onclick="toggleWidthnav(this)">ABOUT</a>
+        </div>
+    </nav>
+    <center>
+        <div class="about-nav">
+            <a href="#abtus" class="wlcm magnet" onclick="toggleWidth(this)">WELCOME</a>
+            <a href="#channels" class="abt-chnl magnet" onclick="toggleWidth(this)">CHANNELS</a>
+            <a href="#contact" class="magnet contact-btn" onclick="toggleWidth(this)">CONTACT</a>
+        </div>
+    </center>
+
+    <div class="outer">
+        <div class="inner">
+            <div class="main" id="main">
+                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
+                    width="100%"></video>
+                <div class="player"></div>
+                <div class="file-name">
+                    <h4 style="display: inline;">File Name: </h4>
+                    <p style="display: inline;" id="myDiv">{{file_name}}</p><br>
+                    <h4 style="display: inline;">File Size: </h4>
+                    <p style="display: inline;">{{file_size}}</p>
+                </div>
+                <div class="downloadBtn">
+                    <button class="magnet" onclick="streamDownload()">
+                        <img style="height: 30px;" src="https://i.ibb.co/RjzYttX/dl.png" alt="">download video
+                    </button>
+                    <button class="magnet" onclick="copyStreamLink()">
+                        <img src="https://i.ibb.co/CM4Y586/link.png" alt="Copy Link">copy link
+                    </button>
+                    <button class="magnet" onclick="vlc_player()">
+                        <img src="https://i.ibb.co/px6fQs1/vlc.png" alt="">watch in VLC PLAYER
+                    </button>
+                    <button class="magnet" onclick="mx_player()">
+                        <img src="https://i.ibb.co/41WvtQ3/mx.png" alt="">watch in MX PLAYER
+                    </button>
+                    <button class="magnet" onclick="n_player()">
+                        <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">watch in nPlayer
+                    </button>
+                </div>
+
             </div>
-          </div>
+            <div class="abt">
+                <div class="about">
+                    <div class="about-dets">
+
+                        <div class="abt-sec" id="abtus" style="padding: 160px 30px;">
+                            <h1 style="text-align: center;">WELCOME TO OUR <Span>FILE STREAM</Span> BOT</h1>
+                            <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
+                                This is a Telegram Bot to Stream <span>Movies</span> and <span>Series</span> directly on
+                                Telegram. You can also
+                                <span>download</span> them if you want. This bot is developed by <a
+                                    href="https://t.me/Sujan_Ch"><span style="font-weight: 700;">Sujan</span></a>
+                                <br><br>If you like this bot, then don't
+                                forget to share it with your friends and family.
+                            </p>
+                        </div>
+
+                        <div class="abt-sec" id="channels">
+                            <h1>JOIN OUR <span>TELEGRAM</span> CHANNELS</h1>
+                            <div class="links chnl-link">
+                                <a class="magnet" href="https://t.me/Sujan_Ch">
+                                    <button>Owner Channel</button>
+                                </a>
+                                <a class="magnet" href="https://t.me/Sujan_BotZ">
+                                    <button>BotZ Channel</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="abt-sec" id="contact">
+                            <p style="text-align: center;">Report Bugs and Contact us on Telegram Below</p>
+                            <div class="links contact">
+                                <a href="https://t.me/Sujan_Ch">
+                                    <button>CONTACT</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <footer>
+            <center>
 
-      <!-- Disclaimer -->
-      <div class="alert alert-warning">
-        <h6 class="fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i> Disclaimer</h6>
-        <p class="mb-2">{{disclaimer}}</p>
-        <p class="mb-0">
-          This website only provides a service to help you play your video online without downloading.
-          You can report files or videos that contain issues like copyright infringement,
-          +18 content, violence, etc.
-        </p>
-        <div class="button-container mt-2">
-          <a href="{{report_link}}" class="report">Report</a>
-        </div>
-      </div>
-    </main>
-  </div>
+                <div class="movie-cont">
+                    <div class="movieSug">
+                        <div class="movieDets">
 
-  <!-- ✅ Footer -->
-  <footer class="text-center py-3 mt-auto border-top">
-    <p class="mb-0 small">
-      ©️ 2025 Designed By
-      <strong>
-        <a href="https://t.me/Sujan_BotZ" target="_blank" rel="noopener noreferrer"
-          style="color: inherit; text-decoration: underline;">
-          @Sujan_BotZ
-        </a>
-      </strong>
-    </p>
-  </footer>
+                        </div>
+                        <div class="movieimg">
+                            <img src="">
+                        </div>
+                    </div>
+                    <div class="low-width-movie-dets">
+                        <div class="movieStsBar">
+                            <div class="movieDets-mini">
 
-  <!-- ✅ Theme Toggle Script -->
-  <script>
-    const themeToggleBtn = document.getElementById("theme-toggle-btn");
-    const body = document.body;
-    const currentTheme = localStorage.getItem("theme") || "dark";
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ranMovBtn" onclick="getDets()">Get More Movies Suggestion</button>
+                </div>
 
-    // Apply saved theme
-    if (currentTheme === "light") {
-      body.classList.add("light-mode");
-      themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
-      themeToggleBtn.classList.replace("btn-light", "btn-dark");
-    }
+            </center>
 
-    themeToggleBtn.addEventListener("click", () => {
-      body.classList.toggle("light-mode");
-      const isLight = body.classList.contains("light-mode");
-      if (isLight) {
-        localStorage.setItem("theme", "light");
-        themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
-        themeToggleBtn.classList.replace("btn-light", "btn-dark");
-      } else {
-        localStorage.setItem("theme", "dark");
-        themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
-        themeToggleBtn.classList.replace("btn-dark", "btn-light");
-      }
-    });
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <center>
+                <div class="copyright">
+                    <h5 class="text-center">Copyright © 2025 <a href="https://t.me/Sujan_BotZ"><span
+                                style="font-weight: 700;">Sujan BotZ</span></a>. All
+                        Rights Reserved.</h5>
+                </div>
+            </center>
+        </footer>
+    </div>
 </body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const uncopyableElement = document.querySelector(".uncopyable");
+
+        uncopyableElement.addEventListener("selectstart", function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+<script src="https://proavipatil.github.io/data/fs/src/script.js"></script>
+
 </html>
-
-
