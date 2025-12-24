@@ -287,7 +287,18 @@ BOT WORKING PROPERLY"""
 
     PREMIUM_TEXT = """<b>👋 Hᴇʏ {},
     
-🎖️ <u>Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs</u> :
+<blockquote>🎁 Pʀᴇᴍɪᴜᴍ Fᴇᴀᴛᴜʀᴇ Bᴇɴɪꜰɪᴛꜱ:</blockquote>
+
+›› Nᴏ Nᴇᴇᴅ Tᴏ Oᴘᴇɴ Lɪɴᴋꜱ
+❏ Gᴇᴛ Dɪʀᴇᴄᴛ Fɪʟᴇs   
+›› Aᴅ-Fʀᴇᴇ Exᴘᴇʀɪᴇɴᴄᴇ 
+❏ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ                         
+›› Mᴜʟᴛɪ-Pʟᴀʏᴇʀ Sᴛʀᴇᴀᴍɪɴɢ Lɪɴᴋs                           
+❏ Uɴʟɪᴍɪᴛᴇᴅ Mᴏᴠɪᴇs Aɴᴅ Sᴇʀɪᴇs                                                                        
+›› Fᴜʟʟ Aᴅᴍɪɴ Sᴜᴘᴘᴏʀᴛ                              
+❏ Rᴇǫᴜᴇsᴛ Wɪʟʟ Bᴇ Cᴏᴍᴘʟᴇᴛᴇᴅ Iɴ 24ʜ [ Iꜰ Aᴠᴀɪʟᴀʙʟᴇ ]
+
+<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:<blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
@@ -301,7 +312,18 @@ BOT WORKING PROPERLY"""
 
     CPREMIUM_TEXT = """<b>👋 Hᴇʏ {},
     
-🎖️ <u>Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs</u> :
+<blockquote>🎁 Pʀᴇᴍɪᴜᴍ Fᴇᴀᴛᴜʀᴇ Bᴇɴɪꜰɪᴛꜱ:</blockquote>
+
+›› Nᴏ Nᴇᴇᴅ Tᴏ Oᴘᴇɴ Lɪɴᴋꜱ
+❏ Gᴇᴛ Dɪʀᴇᴄᴛ Fɪʟᴇs   
+›› Aᴅ-Fʀᴇᴇ Exᴘᴇʀɪᴇɴᴄᴇ 
+❏ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ                         
+›› Mᴜʟᴛɪ-Pʟᴀʏᴇʀ Sᴛʀᴇᴀᴍɪɴɢ Lɪɴᴋs                           
+❏ Uɴʟɪᴍɪᴛᴇᴅ Mᴏᴠɪᴇs Aɴᴅ Sᴇʀɪᴇs                                                                        
+›› Fᴜʟʟ Aᴅᴍɪɴ Sᴜᴘᴘᴏʀᴛ                              
+❏ Rᴇǫᴜᴇsᴛ Wɪʟʟ Bᴇ Cᴏᴍᴘʟᴇᴛᴇᴅ Iɴ 24ʜ [ Iꜰ Aᴠᴀɪʟᴀʙʟᴇ ]
+
+<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:<blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
