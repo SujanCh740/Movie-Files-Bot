@@ -298,7 +298,7 @@ BOT WORKING PROPERLY"""
 ›› Fᴜʟʟ Aᴅᴍɪɴ Sᴜᴘᴘᴏʀᴛ                              
 ❏ Rᴇǫᴜᴇsᴛ Wɪʟʟ Bᴇ Cᴏᴍᴘʟᴇᴛᴇᴅ Iɴ 24ʜ [ Iꜰ Aᴠᴀɪʟᴀʙʟᴇ ]
 
-<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:<blockquote>
+<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
@@ -323,7 +323,7 @@ BOT WORKING PROPERLY"""
 ›› Fᴜʟʟ Aᴅᴍɪɴ Sᴜᴘᴘᴏʀᴛ                              
 ❏ Rᴇǫᴜᴇsᴛ Wɪʟʟ Bᴇ Cᴏᴍᴘʟᴇᴛᴇᴅ Iɴ 24ʜ [ Iꜰ Aᴠᴀɪʟᴀʙʟᴇ ]
 
-<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:<blockquote>
+<blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
 ● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
