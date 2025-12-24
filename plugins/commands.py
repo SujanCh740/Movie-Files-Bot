@@ -279,8 +279,7 @@ async def start(client, message):
             )
         is_valid = await check_token(client, userid, token)
         if is_valid == True:
-            await message.reply_photo(
-                photo="https://graph.org/file/6928de1539e2e80e47fb8.jpg",
+            await message.reply_text(
                 text=f"<b>👋 Hᴇʏ {message.from_user.mention}\n\nYᴏᴜ Aʀᴇ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ Vᴇʀɪꜰɪᴇᴅ ✅\n\nNᴏᴡ Yᴏᴜ'ᴠᴇ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Fᴏʀ Aʟʟ Mᴏᴠɪᴇꜱ Wɪᴛʜᴏᴜᴛ Aɴʏ Aᴅꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ 🎉.</b>",
                 protect_content=True
             )
