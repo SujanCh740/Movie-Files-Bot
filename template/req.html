@@ -18,29 +18,41 @@
         /* Custom Audio Switcher Styles */
         .audio-selector-container {
             margin-top: 15px;
-            display: none; /* Hidden by default, shown if dual audio detected */
+            display: none;
             background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .audio-selector-container h5 {
             font-size: 14px;
             margin-bottom: 8px;
-            color: #ccc;
+            color: #ff3c00;
+            font-weight: 700;
         }
         .audio-btn {
             background: #333;
             color: white;
-            padding: 5px 15px;
+            padding: 6px 18px;
             border-radius: 5px;
-            margin-right: 5px;
+            margin-right: 8px;
             font-size: 12px;
             transition: 0.3s;
+            border: 1px solid transparent;
         }
         .audio-btn.active {
-            background: #ff3c00; /* Matching theme color */
+            background: #ff3c00;
+            border-color: #fff;
             font-weight: bold;
+        }
+        .browser-warning {
+            font-size: 11px;
+            color: #888;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        .browser-warning span {
+            color: #ff3c00;
         }
     </style>
 </head>
@@ -68,14 +80,18 @@
     <div class="outer">
         <div class="inner">
             <div class="main" id="main">
-                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls width="100%"></video>
+                <!-- Video Container -->
+                <div class="video-wrapper overflow-hidden rounded-lg shadow-2xl">
+                    <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls width="100%"></video>
+                </div>
                 
                 <!-- Audio Track Selector UI -->
                 <div id="audioTrackSelector" class="audio-selector-container">
-                    <h5>Dual Audio Detected - Select Track:</h5>
+                    <h5>Audio Settings</h5>
                     <div id="audioButtons" class="flex flex-wrap gap-2">
-                        <!-- Buttons injected via JS -->
+                        <!-- Buttons or fallback message injected via JS -->
                     </div>
+                    <div id="browserNote" class="browser-warning"></div>
                 </div>
 
                 <div class="file-name">
@@ -91,7 +107,7 @@
                     <button class="magnet" onclick="copyStreamLink()">
                         <img src="https://i.ibb.co/CM4Y586/link.png" alt="Copy Link">copy link
                     </button>
-                    <button class="magnet" onclick="n_player()">
+                    <button class="magnet bg-orange-600 border-none" onclick="n_player()">
                         <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">watch in nPlayer
                     </button>
                 </div>
@@ -162,40 +178,42 @@
             const videoElement = document.getElementById('player');
             const audioSelector = document.getElementById('audioTrackSelector');
             const audioButtons = document.getElementById('audioButtons');
+            const browserNote = document.getElementById('browserNote');
 
-            // Detect and initialize Audio Tracks
+            // Logic to handle audio tracks
             videoElement.addEventListener('loadedmetadata', function() {
                 const tracks = videoElement.audioTracks;
                 
-                // Check if multiple audio tracks are supported and available
-                if (tracks && tracks.length > 1) {
-                    audioSelector.style.display = 'block';
-                    audioButtons.innerHTML = ''; // Clear existing
+                // Show container if it's potentially a movie/video
+                audioSelector.style.display = 'block';
 
+                // Check for native support (Safari mostly)
+                if (tracks && tracks.length > 1) {
+                    audioButtons.innerHTML = ''; 
                     for (let i = 0; i < tracks.length; i++) {
                         const btn = document.createElement('button');
                         btn.className = 'audio-btn magnet' + (tracks[i].enabled ? ' active' : '');
                         btn.innerText = tracks[i].label || `Track ${i + 1} (${tracks[i].language || 'Unknown'})`;
                         
                         btn.onclick = function() {
-                            // Disable all tracks first
                             for (let j = 0; j < tracks.length; j++) {
                                 tracks[j].enabled = false;
                             }
-                            // Enable selected track
                             tracks[i].enabled = true;
-                            
-                            // Update UI state
                             document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('active'));
                             btn.classList.add('active');
                         };
                         audioButtons.appendChild(btn);
                     }
-                    
-                    // Re-run Shery.js magnet effect for new buttons
-                    if (typeof Shery !== 'undefined') {
-                        Shery.makeMagnet(".audio-btn");
-                    }
+                    browserNote.innerHTML = "Native multi-audio support detected.";
+                } else {
+                    // Fallback for Chrome/Firefox/Others where audioTracks is undefined or length 1
+                    audioButtons.innerHTML = `<p class="text-gray-400 text-sm italic">Web switching is limited by your browser.</p>`;
+                    browserNote.innerHTML = `<span>Note:</span> Chrome and Firefox do not support internal audio switching for MP4 files. If this is a dual-audio file, please use the <b>"nPlayer"</b> button below for the full experience.`;
+                }
+
+                if (typeof Shery !== 'undefined') {
+                    Shery.makeMagnet(".audio-btn");
                 }
             });
 
@@ -220,7 +238,10 @@
             btn.innerText = "Copied!";
             setTimeout(() => btn.innerHTML = originalText, 2000);
         }
-        function n_player() { window.location.href = `intent:{{file_url}}#Intent;package=com.newin.nplayer.pro;end`; }
+        function n_player() { 
+            // Better intent for nPlayer
+            window.location.href = `intent:{{file_url}}#Intent;package=com.newin.nplayer.pro;end`; 
+        }
     </script>
 </body>
 </html>
