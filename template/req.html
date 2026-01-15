@@ -1,4 +1,4 @@
-<!--(c) Sujan-->
+<!--(c) Sujan - Fixed Version-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +6,7 @@
   <meta property="og:image" content="https://i.ibb.co/M8S0Zzj/live-streaming.png" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FileStream</title>
+  <title>FileStream | Premium Video Experience</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -21,2233 +21,702 @@
       --bg-glass: rgba(37, 41, 54, 0.8);
       --text-primary: #ffffff;
       --text-secondary: #a8b3cf;
-      --text-muted: #6b7395;
-      --accent-primary: #6366f1;
-      --accent-secondary: #8b5cf6;
-      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.5);
+      --error: #ef4444;
       --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --border: rgba(255, 255, 255, 0.06);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-      --radius-sm: 8px;
-      --radius-md: 12px;
       --radius-lg: 16px;
-      --radius-xl: 24px;
+      --radius-md: 12px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
 
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-    }
-
-    html {
-      overflow-x: hidden;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-primary);
+      background-color: var(--bg-primary);
       color: var(--text-primary);
-      min-height: 100vh;
-      position: relative;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
       overflow-x: hidden;
-      width: 100%;
+      min-height: 100vh;
     }
 
-    /* Subtle Background */
-    .bg-decoration {
+    /* Loading Overlay */
+    #loadingOverlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      opacity: 0.4;
-      overflow: hidden;
-      pointer-events: none;
-      background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+      inset: 0;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--bg-tertiary);
+      border-bottom-color: var(--accent);
+      border-radius: 50%;
+      animation: rotation 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Main Container */
-    .app-wrapper {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      overflow-x: hidden;
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      padding-bottom: 5rem;
     }
 
     /* Header */
     header {
-      background: rgba(26, 29, 41, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 16px 4%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      width: 100%;
-      gap: 12px;
-    }
-
-    .logo-wrapper {
-      display: flex;
       align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
+      margin-bottom: 2rem;
+      padding: 0.5rem 0;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
+      font-family: 'Space+Grotesk', sans-serif;
+      font-size: 1.75rem;
       font-weight: 700;
-      background: var(--accent-gradient);
+      background: linear-gradient(135deg, #fff 0%, #3b82f6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-      white-space: nowrap;
-    }
-
-    .logo-icon {
-      width: 42px;
-      height: 42px;
-      background: var(--accent-gradient);
-      border-radius: 12px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: white;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-      flex-shrink: 0;
+      gap: 10px;
     }
 
-    .live-badge {
-      background: var(--danger);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .live-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    #file-name {
-      flex: 1;
-      margin: 0 12px;
-      overflow: hidden;
-      min-width: 0;
-    }
-
-    #file-name marquee {
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: 15px;
+    .logo i {
+      -webkit-text-fill-color: var(--accent);
     }
 
     .header-actions {
       display: flex;
-      align-items: center;
       gap: 12px;
-      flex-shrink: 0;
     }
 
-    .theme-switcher {
-      display: flex;
-      background: var(--bg-tertiary);
-      border-radius: 50px;
-      padding: 4px;
-      gap: 4px;
-      border: 1px solid var(--border);
-    }
-
-    .theme-btn {
-      width: 36px;
-      height: 36px;
-      border: none;
-      background: transparent;
+    .btn-circle {
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.2s ease;
+      background: var(--bg-secondary);
+      border: 1px solid var(--bg-tertiary);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-muted);
-      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .theme-btn.active {
-      background: var(--accent-gradient);
-      color: white;
-      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    .btn-circle:hover {
+      background: var(--bg-tertiary);
+      transform: translateY(-2px);
+      border-color: var(--accent);
     }
 
-    .theme-btn:hover:not(.active) {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    /* Main Content */
-    .main-container {
-      flex: 1;
-      padding: 30px 4%;
-      max-width: 1600px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 24px;
-      align-items: start;
-    }
-
-    /* Player Section */
-    .player-wrapper {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .player-container {
+    /* Hero/Player Section */
+    .player-section {
       background: var(--bg-secondary);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      position: relative;
-      width: 100%;
-      transition: box-shadow 0.3s ease;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--bg-tertiary);
+      margin-bottom: 2rem;
     }
 
-    .player-container:hover {
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .player {
+    .video-container {
       width: 100%;
       aspect-ratio: 16/9;
       background: #000;
-      display: block;
     }
 
-    /* Plyr Custom Styles for Mobile */
-    @media (max-width: 768px) {
-      .plyr__controls {
-        padding: 8px !important;
-      }
-
-      .plyr__controls button {
-        padding: 6px !important;
-      }
-
-      .plyr__control {
-        padding: 5px 8px !important;
-      }
-
-      .plyr__controls .plyr__controls__item:first-child {
-        margin-left: 0 !important;
-      }
-
-      .plyr__time {
-        font-size: 12px !important;
-        padding: 0 4px !important;
-      }
-
-      .plyr__volume {
-        max-width: 60px !important;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .plyr__controls {
-        padding: 6px 4px !important;
-      }
-
-      .plyr__controls button {
-        padding: 4px !important;
-      }
-
-      .plyr__control {
-        padding: 4px 6px !important;
-      }
-
-      .plyr__control svg {
-        width: 16px !important;
-        height: 16px !important;
-      }
-
-      .plyr__time {
-        font-size: 11px !important;
-        padding: 0 3px !important;
-      }
-
-      .plyr__progress {
-        margin: 0 2px !important;
-      }
-
-      .plyr__volume {
-        max-width: 50px !important;
-        min-width: 50px !important;
-      }
-
-      .plyr__menu {
-        margin-right: 2px !important;
-      }
-    }
-
-    /* Video Info */
     .video-info {
-      padding: 24px;
-      background: linear-gradient(to bottom, var(--bg-secondary), transparent);
-    }
-
-    .video-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
+      padding: 1.5rem;
     }
 
     .video-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.3;
-      flex: 1;
-      word-wrap: break-word;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
     }
 
-    /* Enhanced Bookmark Button */
-    .bookmark-btn {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      background: var(--bg-tertiary);
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
+    .video-meta {
+      display: flex;
+      gap: 15px;
       color: var(--text-secondary);
-      transition: all 0.3s ease;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-meta span {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
+      gap: 5px;
     }
 
-    .bookmark-btn.bookmarked {
-      background: var(--success);
-      color: white;
-      border-color: var(--success);
-      animation: bookmarkAdded 0.5s ease;
+    /* URL Input Section */
+    .action-panel {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--bg-tertiary);
     }
 
-    @keyframes bookmarkAdded {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2) rotate(10deg); }
-      100% { transform: scale(1); }
-    }
-
-    .bookmark-btn.bookmarked i {
-      animation: checkmark 0.5s ease;
-    }
-
-    @keyframes checkmark {
-      0% { transform: scale(0) rotate(-180deg); }
-      50% { transform: scale(1.2) rotate(10deg); }
-      100% { transform: scale(1) rotate(0deg); }
-    }
-
-    .bookmark-btn:hover:not(.bookmarked) {
-      background: var(--accent-gradient);
-      color: white;
-      border-color: transparent;
-      transform: scale(1.05);
-    }
-
-    .bookmark-btn .bookmark-icon {
-      transition: all 0.3s ease;
-    }
-
-    .bookmark-btn .check-icon {
-      position: absolute;
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    .bookmark-btn.bookmarked .bookmark-icon {
-      opacity: 0;
-      transform: scale(0);
-    }
-
-    .bookmark-btn.bookmarked .check-icon {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .video-stats {
+    .input-group {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .stat-item:hover {
-      border-color: var(--accent-primary);
-      background: rgba(99, 102, 241, 0.1);
-    }
-
-    .stat-item i {
-      color: var(--accent-primary);
-      font-size: 14px;
-    }
-
-    .stat-item.quality {
-      background: rgba(99, 102, 241, 0.15);
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
-      font-weight: 700;
-    }
-
-    /* Action Buttons */
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 10px;
-      margin-bottom: 24px;
+      position: relative;
     }
 
-    .action-btn {
+    input[type="text"] {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--bg-tertiary);
       padding: 12px 16px;
-      border: 1px solid var(--border);
-      background: var(--bg-tertiary);
       border-radius: var(--radius-md);
-      cursor: pointer;
-      font-size: 13px;
+      color: #fff;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0 24px;
+      border-radius: var(--radius-md);
       font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    /* Controls Row */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 1.5rem;
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid transparent;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s ease;
-      font-family: 'Inter', sans-serif;
-      color: var(--text-primary);
-      white-space: nowrap;
     }
 
-    .action-btn:hover {
-      border-color: var(--accent-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    .btn-secondary:hover {
+      background: #2d3242;
+      border-color: var(--bg-tertiary);
     }
 
-    .action-btn i {
-      font-size: 14px;
-    }
-
-    .btn-primary {
-      background: var(--accent-gradient);
-      border-color: transparent;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
-    }
-
-    .btn-watchlist {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      border-color: transparent;
-      color: white;
-      position: relative;
-    }
-
-    .btn-watchlist:hover {
-      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
-    }
-
-    .watchlist-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--danger);
-      color: white;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-weight: 700;
-      min-width: 18px;
-      text-align: center;
-      border: 2px solid var(--bg-secondary);
-    }
-
-    /* Watchlist Modal */
-    .watchlist-modal {
+    /* Watchlist Sidebar */
+    .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-      padding: 20px;
     }
 
-    .watchlist-modal.active {
+    .modal-overlay.active {
       opacity: 1;
       visibility: visible;
     }
 
-    .watchlist-container {
+    .watchlist-sidebar {
+      position: fixed;
+      right: -350px;
+      top: 0;
+      width: 350px;
+      height: 100%;
       background: var(--bg-secondary);
-      border-radius: var(--radius-xl);
-      max-width: 600px;
-      width: 100%;
-      max-height: 80vh;
+      z-index: 1001;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 2rem;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      border: 1px solid var(--border);
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
     }
 
-    .watchlist-modal.active .watchlist-container {
-      transform: scale(1);
+    .watchlist-sidebar.active {
+      right: 0;
     }
 
     .watchlist-header {
-      padding: 24px;
-      border-bottom: 1px solid var(--border);
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      background: var(--bg-glass);
-      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    }
-
-    .watchlist-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-      display: flex;
       align-items: center;
-      gap: 10px;
-    }
-
-    .watchlist-title i {
-      color: var(--warning);
-      font-size: 22px;
-    }
-
-    .close-watchlist {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border);
-      background: var(--bg-tertiary);
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
-      color: var(--text-secondary);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .close-watchlist:hover {
-      background: var(--danger);
-      color: white;
-      border-color: var(--danger);
-      transform: rotate(90deg);
-    }
-
-    .watchlist-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .watchlist-empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-muted);
-    }
-
-    .watchlist-empty i {
-      font-size: 48px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      opacity: 0.5;
-    }
-
-    .watchlist-empty p {
-      font-size: 14px;
-      margin-top: 8px;
+      margin-bottom: 2rem;
     }
 
     .watchlist-items {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 5px;
     }
 
     .watchlist-item {
       background: var(--bg-tertiary);
-      padding: 16px;
       border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.2s ease;
+      padding: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
       position: relative;
-      overflow: hidden;
-    }
-
-    .watchlist-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--accent-gradient);
-      opacity: 0;
-      transition: opacity 0.2s ease;
+      border: 1px solid transparent;
     }
 
     .watchlist-item:hover {
-      border-color: var(--accent-primary);
-      transform: translateX(4px);
+      transform: translateX(-5px);
+      border-color: var(--accent);
     }
 
-    .watchlist-item:hover::before {
-      opacity: 1;
-    }
-
-    .watchlist-item-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--accent-gradient);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .watchlist-item-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .watchlist-item-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
+    .watchlist-item h4 {
+      font-size: 0.9rem;
       margin-bottom: 4px;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      padding-right: 25px;
     }
 
-    .watchlist-item-date {
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .watchlist-item-date i {
-      font-size: 10px;
-    }
-
-    .watchlist-item-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .watchlist-action-btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--border);
-      background: var(--bg-secondary);
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 12px;
+    .watchlist-item p {
+      font-size: 0.75rem;
       color: var(--text-secondary);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
     }
 
-    .watchlist-action-btn:hover.btn-play {
-      background: var(--success);
-      color: white;
-      border-color: var(--success);
-    }
-
-    .watchlist-action-btn:hover.btn-remove {
-      background: var(--danger);
-      color: white;
-      border-color: var(--danger);
-      transform: scale(1.1);
-    }
-
-    .watchlist-footer {
-      padding: 16px 24px;
-      border-top: 1px solid var(--border);
-      background: var(--bg-glass);
-      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .watchlist-stats {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .clear-watchlist {
-      padding: 8px 16px;
-      background: var(--danger);
-      color: white;
+    .remove-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: var(--text-secondary);
+      background: none;
       border: none;
-      border-radius: var(--radius-md);
-      font-size: 12px;
-      font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .clear-watchlist:hover {
-      background: #dc2626;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    .remove-btn:hover {
+      color: var(--error);
     }
 
-    /* Share Section */
-    .share-section {
-      margin-top: 24px;
-      padding: 20px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .share-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .share-title i {
-      color: var(--accent-primary);
-      font-size: 18px;
-    }
-
-    .share-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .share-btn {
-      padding: 12px 8px;
-      border: none;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      font-family: 'Inter', sans-serif;
-      text-decoration: none;
-    }
-
-    .share-btn i {
-      font-size: 20px;
-      transition: transform 0.2s ease;
-    }
-
-    .share-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .share-btn:hover i {
-      transform: scale(1.1);
-    }
-
-    .btn-copy { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-    .btn-whatsapp { background: #25D366; color: white; }
-    .btn-telegram { background: #0088cc; color: white; }
-    .btn-facebook { background: #1877f2; color: white; }
-    .btn-twitter { background: #1DA1F2; color: white; }
-    .btn-instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: white; }
-    .btn-messenger { background: #0084ff; color: white; }
-    .btn-email { background: #ea4335; color: white; }
-
-    /* Sidebar */
-    .sidebar {
-      position: sticky;
-      top: 100px;
-      width: 100%;
-      max-width: 360px;
-    }
-
-    .sidebar-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      border: 1px solid var(--border);
-      margin-bottom: 20px;
-      box-shadow: var(--shadow-md);
-      width: 100%;
-    }
-
-    .sidebar-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      font-family: 'Space Grotesk', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sidebar-title i {
-      color: var(--accent-primary);
-    }
-
-    .stats-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .stat-card {
-      background: var(--bg-tertiary);
-      padding: 14px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      transition: all 0.2s ease;
-    }
-
-    .stat-card:hover {
-      border-color: var(--accent-primary);
-      transform: translateX(2px);
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .stat-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .quality-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--accent-gradient);
-      color: white;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Enhanced Footer */
-    footer {
-      background: linear-gradient(to bottom, var(--bg-secondary), rgba(26, 29, 41, 0.98));
-      padding: 60px 4% 30px;
-      border-top: 1px solid var(--border);
-      margin-top: 60px;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--accent-gradient);
-      opacity: 0.5;
-    }
-
-    .footer-content {
-      max-width: 1600px;
-      margin: 0 auto;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 40px;
-      margin-bottom: 50px;
-    }
-
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .footer-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 26px;
-      font-weight: 700;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .footer-description {
-      color: var(--text-secondary);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .footer-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 24px;
-      background: var(--accent-gradient);
-      color: white;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 14px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
-      align-self: flex-start;
-      white-space: nowrap;
-    }
-
-    .footer-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .social-link {
-      width: 40px;
-      height: 40px;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 16px;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .social-link:hover {
-      background: var(--accent-gradient);
-      color: white;
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-    }
-
-    .footer-section-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    /* Enhanced Copyright Section */
-    .footer-bottom {
-      padding-top: 30px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      position: relative;
-    }
-
-    .copyright-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .footer-copyright {
-      font-size: 14px;
-      color: var(--text-secondary);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .footer-copyright::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--accent-gradient);
-      opacity: 0.1;
-      transition: left 0.5s ease;
-    }
-
-    .footer-copyright:hover::before {
-      left: 0;
-    }
-
-    .footer-copyright i {
-      color: #ef4444;
-      font-size: 12px;
-      animation: heartbeat 1.5s ease-in-out infinite;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    .footer-copyright a {
-      color: var(--accent-primary);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      position: relative;
-    }
-
-    .footer-copyright a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent-gradient);
-      transition: width 0.3s ease;
-    }
-
-    .footer-copyright a:hover::after {
-      width: 100%;
-    }
-
-    .footer-copyright a:hover {
-      text-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
-    }
-
-    .footer-bottom-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .footer-bottom-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 13px;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: transparent;
-    }
-
-    .footer-bottom-links a:hover {
-      color: var(--accent-primary);
-      background: rgba(99, 102, 241, 0.1);
-    }
-
-    /* Developer Credit Badge */
-    .dev-credit {
-      margin-top: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-      border: 1px solid var(--accent-primary);
-      border-radius: 30px;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .dev-credit i {
-      color: var(--accent-primary);
-      font-size: 12px;
-    }
-
-    /* Toast Notification */
-    .toast {
+    /* Toast Notifications */
+    .toast-container {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      color: var(--text-primary);
-      padding: 16px 20px;
-      border-radius: var(--radius-md);
-      font-weight: 600;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+    }
+
+    .toast {
+      background: var(--bg-tertiary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--success);
-      transform: translateY(150px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 1px solid var(--accent);
       opacity: 0;
+      transform: translateY(20px);
       transition: all 0.3s ease;
-      z-index: 10000;
-      min-width: 260px;
-      max-width: 400px;
     }
 
     .toast.show {
-      transform: translateY(0);
       opacity: 1;
+      transform: translateY(0);
     }
 
-    .toast.warning {
-      border-color: var(--warning);
-    }
-
-    .toast.warning i {
-      background: var(--warning);
-    }
-
-    .toast.error {
-      border-color: var(--danger);
-    }
-
-    .toast.error i {
-      background: var(--danger);
-    }
-
-    .toast i {
-      width: 32px;
-      height: 32px;
-      background: var(--success);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .toast-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .toast-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
-    .toast-message {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-
-    /* Dark Theme */
-    body.dark {
-      --bg-primary: #000000;
-      --bg-secondary: #0a0a0a;
-      --bg-tertiary: #151515;
-      --border: rgba(255, 255, 255, 0.05);
-    }
-
-    body.light {
-      --bg-primary: #f8f9fa;
-      --bg-secondary: #ffffff;
-      --bg-tertiary: #f1f3f5;
-      --text-primary: #1a1a1a;
-      --text-secondary: #4a4a4a;
-      --text-muted: #6b6b6b;
-      --border: rgba(0, 0, 0, 0.1);
-    }
-
-    /* Loading Animation */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .loading-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 4px solid var(--bg-tertiary);
-      border-top-color: var(--accent-primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Responsive - Tablet */
-    @media (max-width: 1200px) {
-      .main-container {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-
-      .sidebar {
-        position: static;
-        max-width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .share-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    /* Responsive - Mobile Large */
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      header {
-        padding: 12px 4%;
-        gap: 8px;
-      }
-
-      .logo {
-        font-size: 20px;
-      }
-
-      .logo span {
-        display: none;
-      }
-
-      .logo-icon {
-        width: 38px;
-        height: 38px;
-        font-size: 18px;
-      }
-
-      .live-badge {
-        padding: 4px 8px;
-        font-size: 10px;
-      }
-
-      #file-name {
-        margin: 0 8px;
-      }
-
-      #file-name marquee {
-        font-size: 13px;
-      }
-
-      .theme-switcher {
-        padding: 3px;
-        gap: 3px;
-      }
-
-      .theme-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-      }
-
-      .main-container {
-        padding: 20px 4%;
-        gap: 20px;
-        grid-template-columns: 1fr;
-      }
-
-      .player-container {
-        border-radius: var(--radius-lg);
-      }
-
-      .video-info {
-        padding: 20px;
-      }
-
-      .video-title {
-        font-size: 20px;
-      }
-
-      .video-header {
-        gap: 12px;
-      }
-
-      .bookmark-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-
-      .video-stats {
-        gap: 8px;
-      }
-
-      .stat-item {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-
-      .action-buttons {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-
-      .action-btn {
-        padding: 10px 12px;
-        font-size: 12px;
-      }
-
-      .share-section {
-        padding: 16px;
-      }
-
-      .share-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-      }
-
-      .share-btn {
-        padding: 10px 6px;
-        font-size: 10px;
-      }
-
-      .share-btn i {
-        font-size: 18px;
-      }
-
-      .sidebar {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .sidebar-card {
-        padding: 16px;
-        margin-bottom: 0;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
-      .footer-copyright {
-        font-size: 12px;
-        padding: 10px 20px;
-      }
-
-      .footer-bottom-links {
-        gap: 16px;
-      }
-
-      .footer-bottom-links a {
-        font-size: 12px;
-        padding: 6px 12px;
-      }
-
-      .toast {
-        bottom: 16px;
-        right: 16px;
-        left: 16px;
-        min-width: unset;
-        max-width: unset;
-      }
-
-      .watchlist-container {
-        max-height: 90vh;
-      }
+      .container { padding: 1rem; }
+      .watchlist-sidebar { width: 100%; right: -100%; }
+      .video-title { font-size: 1.1rem; }
+      .controls-grid { grid-template-columns: 1fr 1fr; }
+      .logo { font-size: 1.4rem; }
     }
 
-    /* Responsive - Mobile Small */
-    @media (max-width: 480px) {
-      .logo-wrapper {
-        gap: 8px;
-      }
-
-      .logo-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 16px;
-      }
-
-      .live-badge {
-        padding: 3px 6px;
-        font-size: 9px;
-        gap: 4px;
-      }
-
-      .live-badge::before {
-        width: 5px;
-        height: 5px;
-      }
-
-      .theme-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 13px;
-      }
-
-      .main-container {
-        padding: 16px 3%;
-      }
-
-      .video-info {
-        padding: 16px;
-      }
-
-      .video-title {
-        font-size: 18px;
-      }
-
-      .video-stats {
-        gap: 6px;
-      }
-
-      .stat-item {
-        font-size: 11px;
-        padding: 6px 8px;
-      }
-
-      .action-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .action-btn {
-        padding: 12px 16px;
-      }
-
-      .share-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .share-btn {
-        padding: 12px 8px;
-      }
-
-      footer {
-        padding: 40px 4% 24px;
-      }
-
-      .footer-logo {
-        font-size: 22px;
-      }
-
-      .footer-description {
-        font-size: 13px;
-      }
-
-      .footer-cta {
-        padding: 12px 20px;
-        font-size: 13px;
-      }
-
-      .footer-copyright {
-        font-size: 11px;
-        padding: 8px 16px;
-      }
-
-      .dev-credit {
-        font-size: 10px;
-        padding: 6px 12px;
-      }
-
-      .footer-bottom-links a {
-        font-size: 11px;
-        padding: 4px 8px;
-      }
-
-      .watchlist-count {
-        top: -6px;
-        right: -6px;
-        font-size: 9px;
-        padding: 1px 4px;
-      }
-    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 10px; }
   </style>
 </head>
-
 <body>
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
+
+  <!-- Loading Screen -->
+  <div id="loadingOverlay">
     <div class="loader"></div>
+    <p style="font-weight: 500; letter-spacing: 1px;">INITIALIZING FILESTREAM</p>
   </div>
 
-  <!-- Subtle Background -->
-  <div class="bg-decoration"></div>
-
-  <!-- App Wrapper -->
-  <div class="app-wrapper">
-    <!-- Header -->
+  <div class="container">
     <header>
-      <div class="logo-wrapper">
-        <div class="logo">
-          <div class="logo-icon">
-            <i class="fas fa-play"></i>
-          </div>
-          <span>STREAMING</span>
-        </div>
-        <div class="live-badge">
-          <span>Live</span>
-        </div>
+      <div class="logo">
+        <i class="fas fa-play-circle"></i> FileStream
       </div>
-      
-      <div id="file-name">
-        <marquee direction="left">$filename</marquee>
-      </div>
-
       <div class="header-actions">
-        <div class="theme-switcher">
-          <button class="theme-btn active" data-theme="default" title="Default Theme">
-            🌈
-          </button>
-          <button class="theme-btn" data-theme="dark" title="Dark Theme">
-            🌙
-          </button>
-        </div>
+        <button class="btn-circle" id="watchlistToggle" title="Watchlist">
+          <i class="fas fa-list-ul"></i>
+        </button>
       </div>
     </header>
 
-    <!-- Main Container -->
-    <div class="main-container">
-      <!-- Player Section -->
-      <div class="player-wrapper">
-        <div class="player-container">
-          <$tag src="$src" class="player" controls></$tag>
-          
-          <div class="video-info">
-            <div class="video-header">
-              <h1 class="video-title">$filename</h1>
-              <button class="bookmark-btn" id="bookmarkBtn" title="Add to Watchlist">
-                <i class="far fa-bookmark bookmark-icon"></i>
-                <i class="fas fa-check check-icon"></i>
-              </button>
-            </div>
-            
-            <div class="video-stats">
-              <div class="stat-item">
-                <i class="fas fa-eye"></i>
-                <span>Streaming</span>
-              </div>
-              <div class="stat-item">
-                <i class="fas fa-clock"></i>
-                <span>Just Now</span>
-              </div>
-              <div class="stat-item quality">
-                <i class="fas fa-crown"></i>
-                <span>HD</span>
-              </div>
-              <div class="stat-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Secure</span>
-              </div>
-            </div>
-<div id="streamnow"></div>
-            <div class="action-buttons">
-              <button class="action-btn btn-watchlist" onclick="openWatchlist()">
-                <i class="fas fa-list"></i>
-                <span>Watchlist</span>
-                <span class="watchlist-count" id="watchlistCount" style="display: none;">0</span>
-              </button>
-              <button class="action-btn btn-primary" onclick="copyLink()">
-                <i class="fas fa-link"></i>
-                <span>Copy Link</span>
-              </button>
-              <button class="action-btn" onclick="shareVideo()">
-                <i class="fas fa-share-nodes"></i>
-                <span>Share</span>
-              </button>
-              <button class="action-btn" onclick="reportIssue()">
-                <i class="fas fa-flag"></i>
-                <span>Report</span>
-              </button>
-            </div>
-
-            <div class="share-section">
-              <div class="section-header">
-                <div class="share-title">
-                  <i class="fas fa-share-alt"></i>
-                  Share on Social
-                </div>
-              </div>
-              <div class="share-grid">
-                <button class="share-btn btn-copy" onclick="copyLink()">
-                  <i class="fas fa-link"></i>
-                  <span>Copy</span>
-                </button>
-                <a class="share-btn btn-whatsapp" id="whatsapp-share" target="_blank">
-                  <i class="fab fa-whatsapp"></i>
-                  <span>WhatsApp</span>
-                </a>
-                <a class="share-btn btn-telegram" id="telegram-share" target="_blank">
-                  <i class="fab fa-telegram"></i>
-                  <span>Telegram</span>
-                </a>
-                <a class="share-btn btn-facebook" id="facebook-share" target="_blank">
-                  <i class="fab fa-facebook-f"></i>
-                  <span>Facebook</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Player Card -->
+    <div class="player-section">
+      <div class="video-container">
+        <video id="player" playsinline controls>
+          <source src="" type="video/mp4" />
+        </video>
       </div>
-
-    <!-- Watchlist Modal -->
-    <div class="watchlist-modal" id="watchlistModal">
-      <div class="watchlist-container">
-        <div class="watchlist-header">
-          <div class="watchlist-title">
-            <i class="fas fa-list"></i>
-            My Watchlist
-          </div>
-          <button class="close-watchlist" onclick="closeWatchlist()">
-            <i class="fas fa-times"></i>
+      <div class="video-info">
+        <div class="video-title">
+          <span id="displayTitle">No Video Loaded</span>
+          <button class="btn-circle" id="bookmarkBtn" title="Add to Watchlist">
+            <i class="far fa-bookmark"></i>
           </button>
         </div>
-        <div class="watchlist-content" id="watchlistContent">
-          <!-- Content will be dynamically added here -->
-        </div>
-        <div class="watchlist-footer">
-          <div class="watchlist-stats" id="watchlistStats">
-            0 items in watchlist
-          </div>
-          <button class="clear-watchlist" onclick="clearWatchlist()" id="clearWatchlistBtn" style="display: none;">
-            Clear All
-          </button>
+        <div class="video-meta">
+          <span><i class="far fa-clock"></i> <span id="videoDuration">00:00</span></span>
+          <span><i class="fas fa-link"></i> <span id="videoFormat">Auto Detect</span></span>
         </div>
       </div>
     </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast">
-    <i class="fas fa-check-circle"></i>
-    <div class="toast-content">
-      <div class="toast-title">Success!</div>
-      <div class="toast-message">Link copied to clipboard</div>
+    <!-- Input Area -->
+    <div class="action-panel">
+      <div class="input-group">
+        <input type="text" id="videoUrl" placeholder="Paste your direct video link here..." autocomplete="off">
+        <button class="btn-primary" id="loadBtn">
+          <i class="fas fa-magic"></i> Load
+        </button>
+      </div>
+
+      <div class="controls-grid">
+        <button class="btn-secondary" id="copyBtn">
+          <i class="far fa-copy"></i> Copy Link
+        </button>
+        <button class="btn-secondary" id="downloadBtn">
+          <i class="fas fa-download"></i> Download
+        </button>
+        <button class="btn-secondary" id="shareBtn">
+          <i class="fas fa-share-alt"></i> Share
+        </button>
+        <button class="btn-secondary" id="clearBtn">
+          <i class="fas fa-trash-alt"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-secondary); font-size: 0.8rem; opacity: 0.7;">
+      &copy; 2024 FileStream • Premium Cloud Media Player
     </div>
   </div>
 
-  <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
-  <script src="https://innoshiv.github.io/Sources/assets/js/add/streampage.js"></script>
+  <!-- Watchlist Sidebar -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="watchlist-sidebar" id="watchlistSidebar">
+    <div class="watchlist-header">
+      <h3 style="font-family: 'Space Grotesk'">My Watchlist</h3>
+      <button class="btn-circle" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="watchlist-items" id="watchlistContainer">
+      <!-- Items added here dynamically -->
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container">
+    <div id="toast" class="toast">
+      <i id="toastIcon"></i>
+      <span id="toastMsg"></span>
+    </div>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
   <script>
-    // Watchlist Management
-    class WatchlistManager {
-      constructor() {
-        this.storageKey = 'streamx-watchlist';
-        this.watchlist = this.load();
-        this.updateCount();
-      }
+    // App State
+    const state = {
+      player: null,
+      currentUrl: '',
+      watchlist: JSON.parse(localStorage.getItem('fs_watchlist') || '[]'),
+      isSidebarOpen: false
+    };
 
-      load() {
-        const saved = localStorage.getItem(this.storageKey);
-        return saved ? JSON.parse(saved) : [];
-      }
-
-      save() {
-        localStorage.setItem(this.storageKey, JSON.stringify(this.watchlist));
-        this.updateCount();
-      }
-
-      add(item) {
-        // Check if already exists
-        const exists = this.watchlist.find(i => i.url === item.url);
-        if (!exists) {
-          this.watchlist.unshift({
-            ...item,
-            id: Date.now(),
-            addedAt: new Date().toISOString()
-          });
-          this.save();
-          return true;
-        }
-        return false;
-      }
-
-      remove(id) {
-        this.watchlist = this.watchlist.filter(item => item.id !== id);
-        this.save();
-      }
-
-      clear() {
-        this.watchlist = [];
-        this.save();
-      }
-
-      isInWatchlist(url) {
-        return this.watchlist.some(item => item.url === url);
-      }
-
-      updateCount() {
-        const count = this.watchlist.length;
-        const countElement = document.getElementById('watchlistCount');
-        if (countElement) {
-          countElement.textContent = count;
-          countElement.style.display = count > 0 ? 'flex' : 'none';
-        }
-      }
-
-      getAll() {
-        return this.watchlist;
-      }
-    }
-
-    // Initialize watchlist manager
-    const watchlistManager = new WatchlistManager();
-
-    // Hide loading immediately when page loads
-    window.addEventListener('load', function() {
-      document.getElementById('loadingOverlay').classList.add('hidden');
-    });
-
-    // Fallback: Hide loading after 2 seconds regardless
-    setTimeout(() => {
-      document.getElementById('loadingOverlay').classList.add('hidden');
-    }, 2000);
-
-    // Detect device type
-    const isMobile = window.innerWidth <= 768;
-    const isSmallMobile = window.innerWidth <= 480;
-    
-    // Different controls for different screen sizes
-    let controls;
-    
-    if (isSmallMobile) {
-      controls = [
-        "play-large",
-        "rewind",
-        "play",
-        "fast-forward",
-        "progress",
-        "current-time",
-        "duration",
-        "mute",
-        "volume",
-        "settings",
-        "fullscreen"
-      ];
-    } else if (isMobile) {
-      controls = [
-        "play-large",
-        "rewind",
-        "play",
-        "fast-forward",
-        "progress",
-        "current-time",
-        "duration",
-        "mute",
-        "volume",
-        "settings",
-        "fullscreen"
-      ];
-    } else {
-      controls = [
-        "play-large",
-        "rewind",
-        "play",
-        "fast-forward",
-        "progress",
-        "current-time",
-        "duration",
-        "mute",
-        "volume",
-        "captions",
-        "settings",
-        "pip",
-        "airplay",
-        "download",
-        "fullscreen"
-      ];
-    }
-    
-    // Initialize player
-    document.addEventListener("DOMContentLoaded", () => {
-      try {
-        const player = Plyr.setup(".player", { 
-          controls,
-          quality: { 
-            default: 1080, 
-            options: [4320, 2160, 1080, 720, 480, 360] 
-          },
-          tooltips: { 
-            controls: !isSmallMobile, 
-            seek: !isSmallMobile 
-          },
-          keyboard: { 
-            focused: true, 
-            global: true 
-          }
-        });
-      } catch(e) {
-        console.log('Plyr initialization error:', e);
-      }
-      
-      setupShareLinks();
-      initializeBookmark();
-      
-      // Hide loading overlay
-      document.getElementById('loadingOverlay').classList.add('hidden');
-    });
-
-    // Theme Switcher
-    const themeBtns = document.querySelectorAll('.theme-btn');
-    const body = document.body;
-
-    themeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        themeBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const theme = btn.dataset.theme;
-        body.classList.remove('dark', 'light');
-        if (theme !== 'default') {
-          body.classList.add(theme);
-        }
-        
-        localStorage.setItem('streamx-theme', theme);
+    // Initialize Player
+    window.addEventListener('load', () => {
+      state.player = new Plyr('#player', {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+        keyboard: { focused: true, global: true },
+        tooltips: { controls: true, seek: true }
       });
-    });
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('streamx-theme');
-    if (savedTheme) {
-      themeBtns.forEach(btn => {
-        if (btn.dataset.theme === savedTheme) {
-          btn.click();
-        }
-      });
-    }
+      // Hide Loader
+      setTimeout(() => {
+        document.getElementById('loadingOverlay').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loadingOverlay').style.display = 'none';
+        }, 500);
+      }, 1000);
 
-    // Enhanced Bookmark functionality
-    function initializeBookmark() {
-      const bookmarkBtn = document.getElementById('bookmarkBtn');
-      const currentUrl = window.location.href;
-      
-      // Check if already bookmarked
-      if (watchlistManager.isInWatchlist(currentUrl)) {
-        bookmarkBtn.classList.add('bookmarked');
-        bookmarkBtn.title = 'Already in Watchlist';
-      }
-      
-      bookmarkBtn.addEventListener('click', () => {
-        const isBookmarked = bookmarkBtn.classList.contains('bookmarked');
-        
-        if (!isBookmarked) {
-          const title = document.querySelector('.video-title').textContent;
-          const added = watchlistManager.add({
-            name: title,
-            url: currentUrl
-          });
-          
-          if (added) {
-            bookmarkBtn.classList.add('bookmarked');
-            bookmarkBtn.title = 'Already in Watchlist';
-            showToast('Added to Watchlist!', 'Video saved successfully', 'success');
-          } else {
-            showToast('Already in Watchlist', 'This video is already saved', 'warning');
-          }
-        } else {
-          showToast('Already Saved', 'This video is in your watchlist', 'warning');
-        }
-      });
-    }
-
-    // Watchlist Modal Functions
-    function openWatchlist() {
-      const modal = document.getElementById('watchlistModal');
-      modal.classList.add('active');
       renderWatchlist();
-      document.body.style.overflow = 'hidden';
+      
+      // Load last video if available
+      const lastVideo = localStorage.getItem('fs_last_video');
+      if (lastVideo) {
+        document.getElementById('videoUrl').value = lastVideo;
+        loadVideo(lastVideo, false);
+      }
+    });
+
+    // Elements
+    const urlInput = document.getElementById('videoUrl');
+    const loadBtn = document.getElementById('loadBtn');
+    const displayTitle = document.getElementById('displayTitle');
+    const videoDuration = document.getElementById('videoDuration');
+    const watchlistToggle = document.getElementById('watchlistToggle');
+    const watchlistSidebar = document.getElementById('watchlistSidebar');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
+
+    // Load Video Logic
+    async function loadVideo(url, showToast = true) {
+      if (!url) return;
+      
+      // Clean URL
+      url = url.trim();
+      
+      try {
+        // Simple regex check for common video formats or generic URLs
+        // We avoid heavy pre-fetching to prevent the errors seen in your screenshot
+        state.player.source = {
+          type: 'video',
+          sources: [{ src: url, type: 'video/mp4' }]
+        };
+
+        state.currentUrl = url;
+        localStorage.setItem('fs_last_video', url);
+        
+        // Update UI
+        const fileName = url.split('/').pop().split('#')[0].split('?')[0];
+        displayTitle.textContent = decodeURIComponent(fileName) || "Stream Link";
+        
+        if (showToast) notify('Video loaded successfully', 'success');
+
+        // Try to get metadata without triggering CORS errors
+        // If it fails, we just use the filename
+        try {
+          state.player.on('loadedmetadata', () => {
+            const mins = Math.floor(state.player.duration / 60);
+            const secs = Math.floor(state.player.duration % 60);
+            videoDuration.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+          });
+        } catch(e) { /* ignore metadata errors */ }
+
+      } catch (err) {
+        notify('Failed to load video source', 'error');
+        console.error(err);
+      }
     }
 
-    function closeWatchlist() {
-      const modal = document.getElementById('watchlistModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
+    // Event Listeners
+    loadBtn.addEventListener('click', () => loadVideo(urlInput.value));
+
+    urlInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') loadVideo(urlInput.value);
+    });
+
+    // Copy Link
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      if (!state.currentUrl) return notify('No video loaded', 'error');
+      
+      const tempInput = document.createElement('input');
+      tempInput.value = state.currentUrl;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      
+      notify('Link copied to clipboard', 'success');
+    });
+
+    // Reset
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      urlInput.value = '';
+      state.player.source = { type: 'video', sources: [{ src: '', type: 'video/mp4' }] };
+      displayTitle.textContent = "No Video Loaded";
+      videoDuration.textContent = "00:00";
+      state.currentUrl = '';
+      localStorage.removeItem('fs_last_video');
+      notify('Player reset', 'success');
+    });
+
+    // Bookmark/Watchlist
+    bookmarkBtn.addEventListener('click', () => {
+      if (!state.currentUrl) return notify('Load a video first', 'error');
+      
+      const alreadyExists = state.watchlist.some(item => item.url === state.currentUrl);
+      if (alreadyExists) return notify('Already in watchlist', 'info');
+
+      const newItem = {
+        id: Date.now(),
+        title: displayTitle.textContent,
+        url: state.currentUrl,
+        date: new Date().toLocaleDateString()
+      };
+
+      state.watchlist.unshift(newItem);
+      saveWatchlist();
+      renderWatchlist();
+      notify('Added to watchlist', 'success');
+    });
+
+    function saveWatchlist() {
+      localStorage.setItem('fs_watchlist', JSON.stringify(state.watchlist));
     }
 
     function renderWatchlist() {
-      const content = document.getElementById('watchlistContent');
-      const stats = document.getElementById('watchlistStats');
-      const clearBtn = document.getElementById('clearWatchlistBtn');
-      const items = watchlistManager.getAll();
-      
-      if (items.length === 0) {
-        content.innerHTML = `
-          <div class="watchlist-empty">
-            <i class="fas fa-inbox"></i>
-            <h3>Your watchlist is empty</h3>
-            <p>Videos you bookmark will appear here</p>
-          </div>
-        `;
-        clearBtn.style.display = 'none';
-      } else {
-        content.innerHTML = `
-          <div class="watchlist-items">
-            ${items.map(item => `
-              <div class="watchlist-item">
-                <div class="watchlist-item-icon">
-                  <i class="fas fa-play"></i>
-                </div>
-                <div class="watchlist-item-info">
-                  <div class="watchlist-item-name">${item.name}</div>
-                  <div class="watchlist-item-date">
-                    <i class="fas fa-clock"></i>
-                    Added ${formatDate(item.addedAt)}
-                  </div>
-                </div>
-                <div class="watchlist-item-actions">
-                  <a href="${item.url}" class="watchlist-action-btn btn-play" title="Play">
-                    <i class="fas fa-play"></i>
-                  </a>
-                  <button class="watchlist-action-btn btn-remove" onclick="removeFromWatchlist(${item.id})" title="Remove">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        clearBtn.style.display = 'block';
+      const container = document.getElementById('watchlistContainer');
+      if (state.watchlist.length === 0) {
+        container.innerHTML = '<div style="text-align:center; margin-top:3rem; color:var(--text-secondary); opacity:0.5"><i class="fas fa-folder-open fa-3x mb-3"></i><p>Your list is empty</p></div>';
+        return;
       }
-      
-      stats.textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} in watchlist`;
+
+      container.innerHTML = state.watchlist.map(item => `
+        <div class="watchlist-item" onclick="loadVideo('${item.url}')">
+          <button class="remove-btn" onclick="event.stopPropagation(); removeFromWatchlist(${item.id})">
+            <i class="fas fa-times"></i>
+          </button>
+          <h4>${item.title}</h4>
+          <p>${item.date} • ${new URL(item.url).hostname}</p>
+        </div>
+      `).join('');
     }
 
-    function removeFromWatchlist(id) {
-      watchlistManager.remove(id);
+    window.removeFromWatchlist = (id) => {
+      state.watchlist = state.watchlist.filter(i => i.id !== id);
+      saveWatchlist();
       renderWatchlist();
-      
-      // Check if current video was removed
-      const currentUrl = window.location.href;
-      if (!watchlistManager.isInWatchlist(currentUrl)) {
-        const bookmarkBtn = document.getElementById('bookmarkBtn');
-        bookmarkBtn.classList.remove('bookmarked');
-        bookmarkBtn.title = 'Add to Watchlist';
-      }
-      
-      showToast('Removed', 'Video removed from watchlist', 'error');
-    }
+      notify('Removed from watchlist', 'info');
+    };
 
-    function clearWatchlist() {
-      if (confirm('Are you sure you want to clear your entire watchlist?')) {
-        watchlistManager.clear();
-        renderWatchlist();
-        
-        // Update bookmark button
-        const bookmarkBtn = document.getElementById('bookmarkBtn');
-        bookmarkBtn.classList.remove('bookmarked');
-        bookmarkBtn.title = 'Add to Watchlist';
-        
-        showToast('Cleared', 'Watchlist has been cleared', 'error');
-      }
-    }
-
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      const now = new Date();
-      const diffMs = now - date;
-      const diffMins = Math.floor(diffMs / 60000);
-      const diffHours = Math.floor(diffMs / 3600000);
-      const diffDays = Math.floor(diffMs / 86400000);
-      
-      if (diffMins < 1) return 'just now';
-      if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
-      if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-      if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-      
-      return date.toLocaleDateString();
-    }
-
-    // Close modal on outside click
-    document.getElementById('watchlistModal').addEventListener('click', (e) => {
-      if (e.target.id === 'watchlistModal') {
-        closeWatchlist();
-      }
+    // UI Toggles
+    watchlistToggle.addEventListener('click', () => {
+      watchlistSidebar.classList.add('active');
+      modalOverlay.classList.add('active');
     });
 
-    // Share Functions
-    function setupShareLinks() {
-      const currentUrl = encodeURIComponent(window.location.href);
-      const titleElem = document.querySelector('.video-title');
-      const title = titleElem ? encodeURIComponent(titleElem.textContent) : '';
+    const closeAll = () => {
+      watchlistSidebar.classList.remove('active');
+      modalOverlay.classList.remove('active');
+    };
 
-      const whatsapp = document.getElementById('whatsapp-share');
-      const telegram = document.getElementById('telegram-share');
-      const facebook = document.getElementById('facebook-share');
-      const twitter = document.getElementById('twitter-share');
-      const messenger = document.getElementById('messenger-share');
-      const email = document.getElementById('email-share');
+    closeSidebar.addEventListener('click', closeAll);
+    modalOverlay.addEventListener('click', closeAll);
 
-      if (whatsapp) whatsapp.href = `https://wa.me/?text=${title}%20${currentUrl}`;
-      if (telegram) telegram.href = `https://t.me/share/url?url=${currentUrl}&text=${title}`;
-      if (facebook) facebook.href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-      if (twitter) twitter.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${title}`;
-      if (messenger) messenger.href = `fb-messenger://share/?link=${currentUrl}`;
-      if (email) email.href = `mailto:?subject=${title}&body=Check out this video: ${currentUrl}`;
-    }
-
-    function copyLink() {
-      const url = window.location.href;
-      navigator.clipboard.writeText(url).then(() => {
-        showToast('Success!', 'Link copied to clipboard');
-      }).catch(() => {
-        const input = document.createElement('input');
-        input.value = url;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand('copy');
-        document.body.removeChild(input);
-        showToast('Success!', 'Link copied to clipboard');
-      });
-    }
-
-    function shareToInstagram() {
-      showToast('Info', 'Instagram sharing works best through the app. Link copied!');
-      copyLink();
-    }
-
-    function shareVideo() {
+    // Share
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      if (!state.currentUrl) return notify('No video to share', 'error');
+      
       if (navigator.share) {
         navigator.share({
-          title: document.querySelector('.video-title').textContent,
+          title: 'Check out this video on FileStream',
           url: window.location.href
         }).catch(() => {});
       } else {
-        copyLink();
-      }
-    }
-
-    function downloadVideo() {
-      showToast('Info', 'Download Will Start Shortly...');
-      const player = document.querySelector('.player');
-      const link = document.createElement('a');
-      link.href = player.src;
-      link.download = '$filename';
-      link.click();
-    }
-
-    function reportIssue() {
-      showToast('Info', 'Opening report form...');
-      setTimeout(() => {
-        window.open('https://t.me/Sujan_Ch', '_blank');
-      }, 500);
-    }
-
-    function showToast(title, message, type = 'success') {
-      const toast = document.getElementById('toast');
-      const toastTitle = toast.querySelector('.toast-title');
-      const toastMessage = toast.querySelector('.toast-message');
-      const toastIcon = toast.querySelector('i');
-      
-      // Reset classes
-      toast.classList.remove('warning', 'error');
-      
-      // Set type
-      if (type === 'warning') {
-        toast.classList.add('warning');
-        toastIcon.className = 'fas fa-exclamation-circle';
-      } else if (type === 'error') {
-        toast.classList.add('error');
-        toastIcon.className = 'fas fa-times-circle';
-      } else {
-        toastIcon.className = 'fas fa-check-circle';
-      }
-      
-      toastTitle.textContent = title;
-      toastMessage.textContent = message;
-      
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'c') {
-          e.preventDefault();
-          copyLink();
-        } else if (e.key === 'd') {
-          e.preventDefault();
-          downloadVideo();
-        } else if (e.key === 'b') {
-          e.preventDefault();
-          document.getElementById('bookmarkBtn').click();
-        } else if (e.key === 'w') {
-          e.preventDefault();
-          openWatchlist();
-        }
-      }
-      
-      // Close watchlist on Escape
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('watchlistModal');
-        if (modal.classList.contains('active')) {
-          closeWatchlist();
-        }
+        notify('Share API not supported', 'error');
       }
     });
-    
-    
+
+    // Helper: Notify
+    function notify(msg, type = 'info') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+      
+      toastMsg.textContent = msg;
+      
+      // Update icons
+      toastIcon.className = 'fas ';
+      if (type === 'success') {
+        toastIcon.className += 'fa-check-circle';
+        toast.style.borderColor = 'var(--success)';
+      } else if (type === 'error') {
+        toastIcon.className += 'fa-exclamation-triangle';
+        toast.style.borderColor = 'var(--error)';
+      } else {
+        toastIcon.className += 'fa-info-circle';
+        toast.style.borderColor = 'var(--accent)';
+      }
+
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Download Handler
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+            if (!state.currentUrl) return notify('No video to download', 'error');
+      const a = document.createElement('a');
+      a.href = state.currentUrl;
+      a.download = displayTitle.textContent;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      notify('Download starting...', 'success');
+    });
+
   </script>
 </body>
-    </html>
+</html>
