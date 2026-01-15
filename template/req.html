@@ -36,13 +36,12 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
     </style>
 </head>
-<body class="no-scrollbar">
+<body class="no-scrollbar min-h-screen flex flex-col">
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4">
@@ -54,14 +53,13 @@
                 <span class="text-xl font-extrabold tracking-tighter uppercase">Sujan Botz</span>
             </a>
             <div class="flex gap-6 text-sm font-bold uppercase tracking-widest">
-                <a href="#main" class="hover:text-blue-500 transition">Home</a>
-                <a href="#about" class="hover:text-blue-500 transition">About</a>
+                <a href="https://t.me/Sujan_BotZ" class="hover:text-blue-500 transition">Support</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Content -->
-    <main id="main" class="pt-28 pb-20 px-4 max-w-7xl mx-auto">
+    <main id="main" class="pt-28 pb-20 px-4 max-w-7xl mx-auto flex-grow w-full">
         <div class="grid lg:grid-cols-12 gap-8">
             
             <!-- Player Section -->
@@ -72,7 +70,7 @@
                         class="w-full aspect-video" 
                         controls 
                         poster="https://images.unsplash.com/photo-1574267432553-4b20266663f3?q=80&w=2000&auto=format&fit=crop"
-                        src="https://www.w3schools.com/html/mov_bbb.mp4">
+                        src="{{file_url}}">
                     </video>
                 </div>
 
@@ -81,9 +79,9 @@
                         <span class="bg-blue-600/20 text-blue-500 text-[10px] font-black px-2 py-1 rounded-md uppercase">Streaming Now</span>
                         <span class="bg-green-600/20 text-green-500 text-[10px] font-black px-2 py-1 rounded-md uppercase">Online</span>
                     </div>
-                    <h1 id="fileNameLabel" class="text-2xl md:text-3xl font-extrabold mb-2 break-words">Sujan_BotZ_Special_Movie.mp4</h1>
+                    <h1 id="fileNameLabel" class="text-2xl md:text-3xl font-extrabold mb-2 break-words">{{file_name}}</h1>
                     <p class="text-slate-400 text-sm leading-relaxed max-w-2xl">
-                        Streamed via High-Speed Cloud Server. Use external players below for features like multi-subtitles, hardware acceleration, and background play.
+                        Streamed via High-Speed Cloud Server. Use external players for advanced features like hardware acceleration and background playback.
                     </p>
                 </div>
             </div>
@@ -101,7 +99,7 @@
                             <img src="https://i.postimg.cc/15TQ4y7B/vlc.png" class="w-8 h-8 object-contain" alt="VLC">
                             <div class="text-left">
                                 <p class="text-sm font-bold">VLC Media Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Best for all formats</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Professional choice</p>
                             </div>
                         </button>
 
@@ -109,7 +107,7 @@
                             <img src="https://i.postimg.cc/sx4Msv4T/mx.png" class="w-8 h-8 object-contain" alt="MX">
                             <div class="text-left">
                                 <p class="text-sm font-bold">MX Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Hardware acceleration</p>
+                                <p class="text-[10px] text-slate-500 font-medium">HW+ Acceleration</p>
                             </div>
                         </button>
 
@@ -117,7 +115,7 @@
                             <img src="https://i.postimg.cc/RVGWYJFF/playit.png" class="w-8 h-8 object-contain" alt="PlayIt">
                             <div class="text-left">
                                 <p class="text-sm font-bold">Playit Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Smooth playback</p>
+                                <p class="text-[10px] text-slate-500 font-medium">All-in-one player</p>
                             </div>
                         </button>
 
@@ -125,7 +123,7 @@
                             <img src="https://i.postimg.cc/XYJr6NGg/s.png" class="w-8 h-8 object-contain" alt="S Player">
                             <div class="text-left">
                                 <p class="text-sm font-bold">S Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Lightweight performance</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Fast & Light</p>
                             </div>
                         </button>
 
@@ -137,31 +135,18 @@
             </div>
 
         </div>
-
-        <!-- About Section -->
-        <section id="about" class="mt-20 pt-20 border-t border-slate-800/50">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">OUR BOT <span class="text-blue-500">ECOSYSTEM</span></h2>
-                <p class="text-slate-500">Connect with our specialized bots for the best movie experience.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800/50 py-16 px-4">
+    <footer class="bg-slate-950 border-t border-slate-800/50 py-12 px-4 mt-auto">
         <div class="max-w-7xl mx-auto text-center">
-            <h4 class="font-black text-xl mb-4">SUJAN <span class="text-blue-500">BOTZ</span></h4>
-            <div class="flex justify-center gap-6 mb-8 text-slate-400">
+            <h4 class="font-black text-xl mb-4 uppercase tracking-tighter">SUJAN <span class="text-blue-500">BOTZ</span></h4>
+            <div class="flex justify-center gap-6 mb-6 text-slate-400">
                 <a href="https://t.me/Sujan_BotZ" class="hover:text-blue-500 transition"><i class="fa-brands fa-telegram fa-xl"></i></a>
                 <a href="https://t.me/Sujan_Bots" class="hover:text-blue-500 transition"><i class="fa-solid fa-headset fa-xl"></i></a>
             </div>
-            <p class="text-slate-500 text-xs max-w-xl mx-auto mb-8 leading-relaxed">
-                Our platform provides instant streaming for your files. We do not store any media locally. Users are responsible for the content they stream.
+            <p class="text-slate-500 text-xs max-w-xl mx-auto mb-6 leading-relaxed">
+                Streamed via Telegram Cloud. Users are responsible for the content shared through this service.
             </p>
             <div class="text-slate-600 text-[10px] uppercase font-bold tracking-[0.2em]">
                 Copyright © 2026 Sujan Botz • Designed by Sujan
@@ -170,11 +155,9 @@
     </footer>
 
     <script>
-        // Use your dynamic variables here
-        const fileUrl = "https://www.w3schools.com/html/mov_bbb.mp4"; // Replace with {{file_url}}
-        const fileName = "Sujan_BotZ_Special_Movie.mp4"; // Replace with {{file_name}}
+        const fileUrl = "{{file_url}}"; 
+        const fileName = "{{file_name}}";
 
-        // Launch Player Function
         function launchPlayer(type) {
             const encodedUrl = encodeURIComponent(fileUrl);
             const encodedTitle = encodeURIComponent(fileName);
@@ -198,13 +181,7 @@
                     return;
             }
 
-            // On Mobile, this triggers the intent. On desktop, it usually prompts or does nothing.
             window.location.href = intentUrl;
-            
-            // Fallback for browsers that block intent
-            setTimeout(() => {
-                console.log("If the player didn't open, ensure you have it installed.");
-            }, 500);
         }
 
         function downloadFile() {
