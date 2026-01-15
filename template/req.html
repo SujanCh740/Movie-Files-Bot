@@ -2,246 +2,158 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stream Bot | {{file_name}}</title>
-    <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/plyr.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom Audio Switcher Styles */
-        .audio-selector-container {
-            margin-top: 15px;
-            display: none;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .audio-selector-container h5 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #ff3c00;
-            font-weight: 700;
-        }
-        .audio-btn {
-            background: #333;
-            color: white;
-            padding: 6px 18px;
-            border-radius: 5px;
-            margin-right: 8px;
-            font-size: 12px;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-        .audio-btn.active {
-            background: #ff3c00;
-            border-color: #fff;
-            font-weight: bold;
-        }
-        .browser-warning {
-            font-size: 11px;
-            color: #888;
-            margin-top: 10px;
-            line-height: 1.4;
-        }
-        .browser-warning span {
-            color: #ff3c00;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Bot | {{file_name}}</title>
+    <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/proavipatil/data@main/fs/src/plyr.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body>
-    <nav>
-        <div class="nleft">
-            <a href="#">
-                <h3 id="heading" style="z-index: 100;" class="magnet title">FILE STREAM</h3>
-            </a>
-        </div>
-        <div class="nryt">
-            <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)">HOME</a>
-            <a href="#abtus" class="about-btn magnet" onclick="toggleWidthnav(this)">ABOUT</a>
-        </div>
-    </nav>
-    <center>
-        <div class="about-nav">
-            <a href="#abtus" class="wlcm magnet" onclick="toggleWidth(this)">WELCOME</a>
-            <a href="#channels" class="abt-chnl magnet" onclick="toggleWidth(this)">CHANNELS</a>
-            <a href="#contact" class="magnet contact-btn" onclick="toggleWidth(this)">CONTACT</a>
-        </div>
-    </center>
+    <nav>
+        <div class="nleft">
+            <a href="#">
+                <h3 id="heading" style="z-index: 100;" class="magnet title">FILE STREAM</h3>
+            </a>
+        </div>
+        <div class="nryt">
+            <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)">HOME</a>
 
-    <div class="outer">
-        <div class="inner">
-            <div class="main" id="main">
-                <!-- Video Container -->
-                <div class="video-wrapper overflow-hidden rounded-lg shadow-2xl">
-                    <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls width="100%"></video>
-                </div>
-                
-                <!-- Audio Track Selector UI -->
-                <div id="audioTrackSelector" class="audio-selector-container">
-                    <h5>Audio Settings</h5>
-                    <div id="audioButtons" class="flex flex-wrap gap-2">
-                        <!-- Buttons or fallback message injected via JS -->
-                    </div>
-                    <div id="browserNote" class="browser-warning"></div>
-                </div>
+            <a href="#abtus" class="about-btn magnet" onclick="toggleWidthnav(this)">ABOUT</a>
+        </div>
+    </nav>
+    <center>
+        <div class="about-nav">
+            <a href="#abtus" class="wlcm magnet" onclick="toggleWidth(this)">WELCOME</a>
+            <a href="#channels" class="abt-chnl magnet" onclick="toggleWidth(this)">CHANNELS</a>
+            <a href="#contact" class="magnet contact-btn" onclick="toggleWidth(this)">CONTACT</a>
+        </div>
+    </center>
 
-                <div class="file-name">
-                    <h4 style="display: inline;">File Name: </h4>
-                    <p style="display: inline;" id="myDiv">{{file_name}}</p><br>
-                    <h4 style="display: inline;">File Size: </h4>
-                    <p style="display: inline;">{{file_size}}</p>
-                </div>
-                <div class="downloadBtn">
-                    <button class="magnet" onclick="streamDownload()">
-                        <img style="height: 30px;" src="https://i.ibb.co/RjzYttX/dl.png" alt="">download video
-                    </button>
-                    <button class="magnet" onclick="copyStreamLink()">
-                        <img src="https://i.ibb.co/CM4Y586/link.png" alt="Copy Link">copy link
-                    </button>
-                    <button class="magnet bg-orange-600 border-none" onclick="n_player()">
-                        <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">watch in nPlayer
-                    </button>
-                </div>
+    <div class="outer">
+        <div class="inner">
+            <div class="main" id="main">
+                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
+                    width="100%"></video>
+                <div class="player"></div>
+                <div class="file-name">
+                    <h4 style="display: inline;">File Name: </h4>
+                    <p style="display: inline;" id="myDiv">{{file_name}}</p><br>
+                    <h4 style="display: inline;">File Size: </h4>
+                    <p style="display: inline;">{{file_size}}</p>
+                </div>
+                <div class="downloadBtn">
+                    <button class="magnet" onclick="streamDownload()">
+                        <img style="height: 30px;" src="https://i.ibb.co/RjzYttX/dl.png" alt="">download video
+                    </button>
+                    <button class="magnet" onclick="copyStreamLink()">
+                        <img src="https://i.ibb.co/CM4Y586/link.png" alt="Copy Link">copy link
+                    </button>
+                    <button class="magnet" onclick="n_player()">
+                        <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">watch in nPlayer
+                    </button>
+                </div>
 
-            </div>
-            <div class="abt">
-                <div class="about">
-                    <div class="about-dets">
-                        <div class="abt-sec" id="abtus" style="padding: 160px 30px;">
-                            <h1 style="text-align: center;">WELCOME TO OUR <Span>FILE STREAM</Span> BOT</h1>
-                            <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
-                                This is a Telegram Bot to Stream <span>Movies</span> and <span>Series</span> directly on
-                                Telegram. You can also
-                                <span>download</span> them if you want.
-                                <br><br>If you like this bot, share it with your friends.
-                            </p>
-                        </div>
-                        <div class="abt-sec" id="channels">
-                            <h1>JOIN OUR <span>TELEGRAM</span> CHANNELS</h1>
-                            <div class="links chnl-link">
-                                <a class="magnet" href="https://t.me/Sujan_Ch">
-                                    <button>Owner Channel</button>
-                                </a>
-                                <a class="magnet" href="https://t.me/Sujan_BotZ">
-                                    <button>BotZ Channel</button>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="abt-sec" id="contact">
-                            <p style="text-align: center;">Report Bugs and Contact us on Telegram Below</p>
-                            <div class="links contact">
-                                <a href="https://t.me/Sujan_Ch">
-                                    <button>CONTACT</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer>
-            <center>
-                <div class="movie-cont">
-                    <button class="ranMovBtn" onclick="getDets()">Get More Movies Suggestion</button>
-                </div>
-                <div class="copyright">
-                    <h5 class="text-center">Copyright © 2025 <a href="https://t.me/Sujan_BotZ"><span style="font-weight: 700;">Sujan BotZ</span></a>. All Rights Reserved.</h5>
-                </div>
-            </center>
-        </footer>
-    </div>
+            </div>
+            <div class="abt">
+                <div class="about">
+                    <div class="about-dets">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
-    <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+                        <div class="abt-sec" id="abtus" style="padding: 160px 30px;">
+                            <h1 style="text-align: center;">WELCOME TO OUR <Span>FILE STREAM</Span> BOT</h1>
+                            <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
+                                This is a Telegram Bot to Stream <span>Movies</span> and <span>Series</span> directly on
+                                Telegram. You can also
+                                <span>download</span> them if you want. This bot is developed by <a
+                                    href="https://t.me/Sujan_Ch"><span style="font-weight: 700;">Sujan</span></a>
+                                <br><br>If you like this bot, then don't
+                                forget to share it with your friends and family.
+                            </p>
+                        </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Initialize Plyr
-            const player = new Plyr('#player', {
-                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-                settings: ['quality', 'speed']
-            });
+                        <div class="abt-sec" id="channels">
+                            <h1>JOIN OUR <span>TELEGRAM</span> CHANNELS</h1>
+                            <div class="links chnl-link">
+                                <a class="magnet" href="https://t.me/Sujan_Ch">
+                                    <button>Owner Channel</button>
+                                </a>
+                                <a class="magnet" href="https://t.me/Sujan_BotZ">
+                                    <button>BotZ Channel</button>
+                                </a>
+                            </div>
+                        </div>
 
-            const videoElement = document.getElementById('player');
-            const audioSelector = document.getElementById('audioTrackSelector');
-            const audioButtons = document.getElementById('audioButtons');
-            const browserNote = document.getElementById('browserNote');
+                        <div class="abt-sec" id="contact">
+                            <p style="text-align: center;">Report Bugs and Contact us on Telegram Below</p>
+                            <div class="links contact">
+                                <a href="https://t.me/Sujan_Ch">
+                                    <button>CONTACT</button>
+                                </a>
+                            </div>
+                        </div>
 
-            // Logic to handle audio tracks
-            videoElement.addEventListener('loadedmetadata', function() {
-                const tracks = videoElement.audioTracks;
-                
-                // Show container if it's potentially a movie/video
-                audioSelector.style.display = 'block';
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <center>
 
-                // Check for native support (Safari mostly)
-                if (tracks && tracks.length > 1) {
-                    audioButtons.innerHTML = ''; 
-                    for (let i = 0; i < tracks.length; i++) {
-                        const btn = document.createElement('button');
-                        btn.className = 'audio-btn magnet' + (tracks[i].enabled ? ' active' : '');
-                        btn.innerText = tracks[i].label || `Track ${i + 1} (${tracks[i].language || 'Unknown'})`;
-                        
-                        btn.onclick = function() {
-                            for (let j = 0; j < tracks.length; j++) {
-                                tracks[j].enabled = false;
-                            }
-                            tracks[i].enabled = true;
-                            document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('active'));
-                            btn.classList.add('active');
-                        };
-                        audioButtons.appendChild(btn);
-                    }
-                    browserNote.innerHTML = "Native multi-audio support detected.";
-                } else {
-                    // Fallback for Chrome/Firefox/Others where audioTracks is undefined or length 1
-                    audioButtons.innerHTML = `<p class="text-gray-400 text-sm italic">Web switching is limited by your browser.</p>`;
-                    browserNote.innerHTML = `<span>Note:</span> Chrome and Firefox do not support internal audio switching for MP4 files. If this is a dual-audio file, please use the <b>"nPlayer"</b> button below for the full experience.`;
-                }
+                <div class="movie-cont">
+                    <div class="movieSug">
+                        <div class="movieDets">
 
-                if (typeof Shery !== 'undefined') {
-                    Shery.makeMagnet(".audio-btn");
-                }
-            });
+                        </div>
+                        <div class="movieimg">
+                            <img src="">
+                        </div>
+                    </div>
+                    <div class="low-width-movie-dets">
+                        <div class="movieStsBar">
+                            <div class="movieDets-mini">
 
-            // Initialize Shery Effects
-            if (typeof Shery !== 'undefined') {
-                Shery.makeMagnet(".magnet");
-            }
-        });
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ranMovBtn" onclick="getDets()">Get More Movies Suggestion</button>
+                </div>
 
-        // Global functions for buttons
-        function streamDownload() { window.open("{{file_url}}", "_blank"); }
-        function copyStreamLink() {
-            const el = document.createElement('textarea');
-            el.value = window.location.href;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
-            btn.innerText = "Copied!";
-            setTimeout(() => btn.innerHTML = originalText, 2000);
-        }
-        function n_player() { 
-            // Better intent for nPlayer
-            window.location.href = `intent:{{file_url}}#Intent;package=com.newin.nplayer.pro;end`; 
-        }
-    </script>
+            </center>
+
+            <center>
+                <div class="copyright">
+                    <h5 class="text-center">Copyright © 2025 <a href="https://t.me/Sujan_BotZ"><span
+                                style="font-weight: 700;">Sujan BotZ</span></a>. All
+                        Rights Reserved.</h5>
+                </div>
+            </center>
+        </footer>
+    </div>
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const uncopyableElement = document.querySelector(".uncopyable");
+
+        uncopyableElement.addEventListener("selectstart", function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+<script src="https://proavipatil.github.io/data/fs/src/script.js"></script>
+
 </html>
