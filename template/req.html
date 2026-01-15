@@ -24,6 +24,7 @@
 
         .btn-player {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
         .btn-player:hover {
@@ -81,7 +82,7 @@
                     </div>
                     <h1 id="fileNameLabel" class="text-2xl md:text-3xl font-extrabold mb-2 break-words">{{file_name}}</h1>
                     <p class="text-slate-400 text-sm leading-relaxed max-w-2xl">
-                        Streamed via High-Speed Cloud Server. Use external players for advanced features like hardware acceleration and background playback.
+                        Streamed via High-Speed Cloud Server. Click the buttons below to open directly in your installed media player.
                     </p>
                 </div>
             </div>
@@ -95,37 +96,41 @@
                     </h3>
 
                     <div class="space-y-3">
-                        <button onclick="launchPlayer('vlc')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
+                        <!-- VLC -->
+                        <div onclick="launchPlayer('vlc')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
                             <img src="https://i.postimg.cc/15TQ4y7B/vlc.png" class="w-8 h-8 object-contain" alt="VLC">
                             <div class="text-left">
                                 <p class="text-sm font-bold">VLC Media Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Professional choice</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Open in VLC</p>
                             </div>
-                        </button>
+                        </div>
 
-                        <button onclick="launchPlayer('mx')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
+                        <!-- MX PLAYER -->
+                        <div onclick="launchPlayer('mx')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
                             <img src="https://i.postimg.cc/sx4Msv4T/mx.png" class="w-8 h-8 object-contain" alt="MX">
                             <div class="text-left">
                                 <p class="text-sm font-bold">MX Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">HW+ Acceleration</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Open in MX</p>
                             </div>
-                        </button>
+                        </div>
 
-                        <button onclick="launchPlayer('playit')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
+                        <!-- PLAYIT -->
+                        <div onclick="launchPlayer('playit')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
                             <img src="https://i.postimg.cc/RVGWYJFF/playit.png" class="w-8 h-8 object-contain" alt="PlayIt">
                             <div class="text-left">
                                 <p class="text-sm font-bold">Playit Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">All-in-one player</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Open in PlayIt</p>
                             </div>
-                        </button>
+                        </div>
 
-                        <button onclick="launchPlayer('splayer')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
+                        <!-- S PLAYER -->
+                        <div onclick="launchPlayer('splayer')" class="btn-player w-full flex items-center gap-4 p-4 rounded-2xl border border-slate-700/50 bg-slate-800/30">
                             <img src="https://i.postimg.cc/XYJr6NGg/s.png" class="w-8 h-8 object-contain" alt="S Player">
                             <div class="text-left">
                                 <p class="text-sm font-bold">S Player</p>
-                                <p class="text-[10px] text-slate-500 font-medium">Fast & Light</p>
+                                <p class="text-[10px] text-slate-500 font-medium">Open in S Player</p>
                             </div>
-                        </button>
+                        </div>
 
                         <button onclick="downloadFile()" class="w-full mt-4 py-4 bg-blue-600 hover:bg-blue-500 transition rounded-2xl font-black text-sm uppercase flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20">
                             <i class="fa-solid fa-download"></i> Download Video
@@ -145,9 +150,6 @@
                 <a href="https://t.me/Sujan_BotZ" class="hover:text-blue-500 transition"><i class="fa-brands fa-telegram fa-xl"></i></a>
                 <a href="https://t.me/Sujan_Bots" class="hover:text-blue-500 transition"><i class="fa-solid fa-headset fa-xl"></i></a>
             </div>
-            <p class="text-slate-500 text-xs max-w-xl mx-auto mb-6 leading-relaxed">
-                Streamed via Telegram Cloud. Users are responsible for the content shared through this service.
-            </p>
             <div class="text-slate-600 text-[10px] uppercase font-bold tracking-[0.2em]">
                 Copyright © 2026 Sujan Botz • Designed by Sujan
             </div>
@@ -163,24 +165,27 @@
             const encodedTitle = encodeURIComponent(fileName);
             let intentUrl = "";
 
+            // We use 'intent' scheme with ACTION_VIEW to force the app to open the content 
+            // instead of just checking for the package.
             switch(type) {
                 case 'vlc':
-                    intentUrl = `intent:${fileUrl}#Intent;package=org.videolan.vlc;S.title=${encodedTitle};end`;
+                    intentUrl = `intent:${fileUrl}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/*;package=org.videolan.vlc;S.title=${encodedTitle};end`;
                     break;
                 case 'mx':
-                    intentUrl = `intent:${fileUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=${encodedTitle};end`;
+                    intentUrl = `intent:${fileUrl}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/*;package=com.mxtech.videoplayer.ad;S.title=${encodedTitle};end`;
                     break;
                 case 'playit':
-                    intentUrl = `intent:${fileUrl}#Intent;package=com.weplayer.playit;S.title=${encodedTitle};end`;
+                    intentUrl = `intent:${fileUrl}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/*;package=com.weplayer.playit;S.title=${encodedTitle};end`;
                     break;
                 case 'splayer':
-                    intentUrl = `intent:${fileUrl}#Intent;package=com.xeenon.splayer;S.title=${encodedTitle};end`;
+                    intentUrl = `intent:${fileUrl}#Intent;action=android.intent.action.VIEW;scheme=http;type=video/*;package=com.xeenon.splayer;S.title=${encodedTitle};end`;
                     break;
                 default:
                     window.location.href = fileUrl;
                     return;
             }
 
+            // Execute the intent
             window.location.href = intentUrl;
         }
 
