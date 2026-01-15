@@ -1762,4 +1762,492 @@
             <i class="fas fa-times"></i>
           </button>
         </div>
-        <div class=
+        <div class="watchlist-content" id="watchlistContent">
+          <!-- Content will be dynamically added here -->
+        </div>
+        <div class="watchlist-footer">
+          <div class="watchlist-stats" id="watchlistStats">
+            0 items in watchlist
+          </div>
+          <button class="clear-watchlist" onclick="clearWatchlist()" id="clearWatchlistBtn" style="display: none;">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <div class="toast-content">
+      <div class="toast-title">Success!</div>
+      <div class="toast-message">Link copied to clipboard</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+  <script src="https://innoshiv.github.io/Sources/assets/js/add/streampage.js"></script>
+  <script>
+    // Watchlist Management
+    class WatchlistManager {
+      constructor() {
+        this.storageKey = 'streamx-watchlist';
+        this.watchlist = this.load();
+        this.updateCount();
+      }
+
+      load() {
+        const saved = localStorage.getItem(this.storageKey);
+        return saved ? JSON.parse(saved) : [];
+      }
+
+      save() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.watchlist));
+        this.updateCount();
+      }
+
+      add(item) {
+        // Check if already exists
+        const exists = this.watchlist.find(i => i.url === item.url);
+        if (!exists) {
+          this.watchlist.unshift({
+            ...item,
+            id: Date.now(),
+            addedAt: new Date().toISOString()
+          });
+          this.save();
+          return true;
+        }
+        return false;
+      }
+
+      remove(id) {
+        this.watchlist = this.watchlist.filter(item => item.id !== id);
+        this.save();
+      }
+
+      clear() {
+        this.watchlist = [];
+        this.save();
+      }
+
+      isInWatchlist(url) {
+        return this.watchlist.some(item => item.url === url);
+      }
+
+      updateCount() {
+        const count = this.watchlist.length;
+        const countElement = document.getElementById('watchlistCount');
+        if (countElement) {
+          countElement.textContent = count;
+          countElement.style.display = count > 0 ? 'flex' : 'none';
+        }
+      }
+
+      getAll() {
+        return this.watchlist;
+      }
+    }
+
+    // Initialize watchlist manager
+    const watchlistManager = new WatchlistManager();
+
+    // Hide loading immediately when page loads
+    window.addEventListener('load', function() {
+      document.getElementById('loadingOverlay').classList.add('hidden');
+    });
+
+    // Fallback: Hide loading after 2 seconds regardless
+    setTimeout(() => {
+      document.getElementById('loadingOverlay').classList.add('hidden');
+    }, 2000);
+
+    // Detect device type
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
+    // Different controls for different screen sizes
+    let controls;
+    
+    if (isSmallMobile) {
+      controls = [
+        "play-large",
+        "rewind",
+        "play",
+        "fast-forward",
+        "progress",
+        "current-time",
+        "duration",
+        "mute",
+        "volume",
+        "settings",
+        "fullscreen"
+      ];
+    } else if (isMobile) {
+      controls = [
+        "play-large",
+        "rewind",
+        "play",
+        "fast-forward",
+        "progress",
+        "current-time",
+        "duration",
+        "mute",
+        "volume",
+        "settings",
+        "fullscreen"
+      ];
+    } else {
+      controls = [
+        "play-large",
+        "rewind",
+        "play",
+        "fast-forward",
+        "progress",
+        "current-time",
+        "duration",
+        "mute",
+        "volume",
+        "captions",
+        "settings",
+        "pip",
+        "airplay",
+        "download",
+        "fullscreen"
+      ];
+    }
+    
+    // Initialize player
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        const player = Plyr.setup(".player", { 
+          controls,
+          quality: { 
+            default: 1080, 
+            options: [4320, 2160, 1080, 720, 480, 360] 
+          },
+          tooltips: { 
+            controls: !isSmallMobile, 
+            seek: !isSmallMobile 
+          },
+          keyboard: { 
+            focused: true, 
+            global: true 
+          }
+        });
+      } catch(e) {
+        console.log('Plyr initialization error:', e);
+      }
+      
+      setupShareLinks();
+      initializeBookmark();
+      
+      // Hide loading overlay
+      document.getElementById('loadingOverlay').classList.add('hidden');
+    });
+
+    // Theme Switcher
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const body = document.body;
+
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        themeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const theme = btn.dataset.theme;
+        body.classList.remove('dark', 'light');
+        if (theme !== 'default') {
+          body.classList.add(theme);
+        }
+        
+        localStorage.setItem('streamx-theme', theme);
+      });
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('streamx-theme');
+    if (savedTheme) {
+      themeBtns.forEach(btn => {
+        if (btn.dataset.theme === savedTheme) {
+          btn.click();
+        }
+      });
+    }
+
+    // Enhanced Bookmark functionality
+    function initializeBookmark() {
+      const bookmarkBtn = document.getElementById('bookmarkBtn');
+      const currentUrl = window.location.href;
+      
+      // Check if already bookmarked
+      if (watchlistManager.isInWatchlist(currentUrl)) {
+        bookmarkBtn.classList.add('bookmarked');
+        bookmarkBtn.title = 'Already in Watchlist';
+      }
+      
+      bookmarkBtn.addEventListener('click', () => {
+        const isBookmarked = bookmarkBtn.classList.contains('bookmarked');
+        
+        if (!isBookmarked) {
+          const title = document.querySelector('.video-title').textContent;
+          const added = watchlistManager.add({
+            name: title,
+            url: currentUrl
+          });
+          
+          if (added) {
+            bookmarkBtn.classList.add('bookmarked');
+            bookmarkBtn.title = 'Already in Watchlist';
+            showToast('Added to Watchlist!', 'Video saved successfully', 'success');
+          } else {
+            showToast('Already in Watchlist', 'This video is already saved', 'warning');
+          }
+        } else {
+          showToast('Already Saved', 'This video is in your watchlist', 'warning');
+        }
+      });
+    }
+
+    // Watchlist Modal Functions
+    function openWatchlist() {
+      const modal = document.getElementById('watchlistModal');
+      modal.classList.add('active');
+      renderWatchlist();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeWatchlist() {
+      const modal = document.getElementById('watchlistModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function renderWatchlist() {
+      const content = document.getElementById('watchlistContent');
+      const stats = document.getElementById('watchlistStats');
+      const clearBtn = document.getElementById('clearWatchlistBtn');
+      const items = watchlistManager.getAll();
+      
+      if (items.length === 0) {
+        content.innerHTML = `
+          <div class="watchlist-empty">
+            <i class="fas fa-inbox"></i>
+            <h3>Your watchlist is empty</h3>
+            <p>Videos you bookmark will appear here</p>
+          </div>
+        `;
+        clearBtn.style.display = 'none';
+      } else {
+        content.innerHTML = `
+          <div class="watchlist-items">
+            ${items.map(item => `
+              <div class="watchlist-item">
+                <div class="watchlist-item-icon">
+                  <i class="fas fa-play"></i>
+                </div>
+                <div class="watchlist-item-info">
+                  <div class="watchlist-item-name">${item.name}</div>
+                  <div class="watchlist-item-date">
+                    <i class="fas fa-clock"></i>
+                    Added ${formatDate(item.addedAt)}
+                  </div>
+                </div>
+                <div class="watchlist-item-actions">
+                  <a href="${item.url}" class="watchlist-action-btn btn-play" title="Play">
+                    <i class="fas fa-play"></i>
+                  </a>
+                  <button class="watchlist-action-btn btn-remove" onclick="removeFromWatchlist(${item.id})" title="Remove">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        clearBtn.style.display = 'block';
+      }
+      
+      stats.textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'} in watchlist`;
+    }
+
+    function removeFromWatchlist(id) {
+      watchlistManager.remove(id);
+      renderWatchlist();
+      
+      // Check if current video was removed
+      const currentUrl = window.location.href;
+      if (!watchlistManager.isInWatchlist(currentUrl)) {
+        const bookmarkBtn = document.getElementById('bookmarkBtn');
+        bookmarkBtn.classList.remove('bookmarked');
+        bookmarkBtn.title = 'Add to Watchlist';
+      }
+      
+      showToast('Removed', 'Video removed from watchlist', 'error');
+    }
+
+    function clearWatchlist() {
+      if (confirm('Are you sure you want to clear your entire watchlist?')) {
+        watchlistManager.clear();
+        renderWatchlist();
+        
+        // Update bookmark button
+        const bookmarkBtn = document.getElementById('bookmarkBtn');
+        bookmarkBtn.classList.remove('bookmarked');
+        bookmarkBtn.title = 'Add to Watchlist';
+        
+        showToast('Cleared', 'Watchlist has been cleared', 'error');
+      }
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      
+      if (diffMins < 1) return 'just now';
+      if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
+      if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+      if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+      
+      return date.toLocaleDateString();
+    }
+
+    // Close modal on outside click
+    document.getElementById('watchlistModal').addEventListener('click', (e) => {
+      if (e.target.id === 'watchlistModal') {
+        closeWatchlist();
+      }
+    });
+
+    // Share Functions
+    function setupShareLinks() {
+      const currentUrl = encodeURIComponent(window.location.href);
+      const titleElem = document.querySelector('.video-title');
+      const title = titleElem ? encodeURIComponent(titleElem.textContent) : '';
+
+      const whatsapp = document.getElementById('whatsapp-share');
+      const telegram = document.getElementById('telegram-share');
+      const facebook = document.getElementById('facebook-share');
+      const twitter = document.getElementById('twitter-share');
+      const messenger = document.getElementById('messenger-share');
+      const email = document.getElementById('email-share');
+
+      if (whatsapp) whatsapp.href = `https://wa.me/?text=${title}%20${currentUrl}`;
+      if (telegram) telegram.href = `https://t.me/share/url?url=${currentUrl}&text=${title}`;
+      if (facebook) facebook.href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+      if (twitter) twitter.href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${title}`;
+      if (messenger) messenger.href = `fb-messenger://share/?link=${currentUrl}`;
+      if (email) email.href = `mailto:?subject=${title}&body=Check out this video: ${currentUrl}`;
+    }
+
+    function copyLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Success!', 'Link copied to clipboard');
+      }).catch(() => {
+        const input = document.createElement('input');
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showToast('Success!', 'Link copied to clipboard');
+      });
+    }
+
+    function shareToInstagram() {
+      showToast('Info', 'Instagram sharing works best through the app. Link copied!');
+      copyLink();
+    }
+
+    function shareVideo() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.querySelector('.video-title').textContent,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        copyLink();
+      }
+    }
+
+    function downloadVideo() {
+      showToast('Info', 'Download Will Start Shortly...');
+      const player = document.querySelector('.player');
+      const link = document.createElement('a');
+      link.href = player.src;
+      link.download = '$filename';
+      link.click();
+    }
+
+    function reportIssue() {
+      showToast('Info', 'Opening report form...');
+      setTimeout(() => {
+        window.open('https://t.me/Sujan_Ch', '_blank');
+      }, 500);
+    }
+
+    function showToast(title, message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastTitle = toast.querySelector('.toast-title');
+      const toastMessage = toast.querySelector('.toast-message');
+      const toastIcon = toast.querySelector('i');
+      
+      // Reset classes
+      toast.classList.remove('warning', 'error');
+      
+      // Set type
+      if (type === 'warning') {
+        toast.classList.add('warning');
+        toastIcon.className = 'fas fa-exclamation-circle';
+      } else if (type === 'error') {
+        toast.classList.add('error');
+        toastIcon.className = 'fas fa-times-circle';
+      } else {
+        toastIcon.className = 'fas fa-check-circle';
+      }
+      
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+      
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'c') {
+          e.preventDefault();
+          copyLink();
+        } else if (e.key === 'd') {
+          e.preventDefault();
+          downloadVideo();
+        } else if (e.key === 'b') {
+          e.preventDefault();
+          document.getElementById('bookmarkBtn').click();
+        } else if (e.key === 'w') {
+          e.preventDefault();
+          openWatchlist();
+        }
+      }
+      
+      // Close watchlist on Escape
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('watchlistModal');
+        if (modal.classList.contains('active')) {
+          closeWatchlist();
+        }
+      }
+    });
+    
+    
+  </script>
+</body>
+    </html>
