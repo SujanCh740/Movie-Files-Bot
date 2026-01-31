@@ -1489,8 +1489,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 buttons = [[
                     InlineKeyboardButton("🚀 Fᴀꜱᴛ Dᴏᴡɴʟᴏᴀᴅ", url=hp_link),
                     InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=ph_link)
-                ],[
-                    InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
+                #],[
+                    #InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
                 ]]
     
             query.message.reply_markup = query.message.reply_markup or []
@@ -1530,7 +1530,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ],[
                     InlineKeyboardButton('💠 Hᴇʟᴘ 💠', callback_data='help'),
                     InlineKeyboardButton('♻️ Aʙᴏᴜᴛ ♻️', callback_data='about')
-                #],[
+                ],[
+                    InlineKeyboardButton('✨ Mᴏᴠɪᴇ Wᴇʙꜱɪᴛᴇ ✨', url=f'https://MoviesZone.rf.gd')
                     #InlineKeyboardButton('✨ Bᴜʏ Sᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : Rᴇᴍᴏᴠᴇ Aᴅꜱ ✨', callback_data="seeplans")               
                   ]]
         
