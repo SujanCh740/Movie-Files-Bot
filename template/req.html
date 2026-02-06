@@ -41,8 +41,9 @@
     <div class="outer">
         <div class="inner">
             <div class="main" id="main">
-                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
-                    width="100%"></video>
+                <video id="player" class="player" playsinline controls width="100%">
+                    <source src="{{file_url}}" type="{{mime_type}}">
+                </video>
                 <div class="player"></div>
                 <div class="file-name">
                     <h4 style="display: inline;">File Name: </h4>
@@ -153,9 +154,11 @@
     document.addEventListener("DOMContentLoaded", function () {
         const uncopyableElement = document.querySelector(".uncopyable");
 
-        uncopyableElement.addEventListener("selectstart", function (event) {
-            event.preventDefault();
-        });
+       if (uncopyableElement) {
+            uncopyableElement.addEventListener("selectstart", function (event) {
+                event.preventDefault();
+            });
+        }
     });
 </script>
 <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
@@ -169,6 +172,13 @@
 
         if (!video || !wrapper || !selector || !note) return;
 
+        const source = video.querySelector("source");
+        const mimeType = "{{mime_type}}";
+        if (source) source.type = mimeType;
+
+        const isMatroska = mimeType === "video/x-matroska";
+        const isMp4 = mimeType === "video/mp4";
+
         const buildLabel = (track, index) => {
             if (!track) return `Track ${index + 1}`;
             const parts = [];
@@ -181,7 +191,18 @@
         const renderAudioTracks = () => {
             const audioTracks = video.audioTracks;
             if (!audioTracks || !audioTracks.length) {
-                wrapper.style.display = "none";
+                wrapper.style.display = "block";
+                selector.style.display = "none";
+                const canPlay = video.canPlayType ? video.canPlayType(mimeType) : "";
+                if (isMatroska) {
+                    note.textContent = "MKV detected (video/x-matroska). Browser audio switching is limited. Use nPlayer for multi-audio.";
+                } else if (isMp4) {
+                    note.textContent = "MP4 detected. If audio switch is missing, this browser/player does not expose alternate tracks.";
+                } else if (!canPlay) {
+                    note.textContent = `This browser has limited support for ${mimeType}. Use nPlayer for all audio tracks.`;
+                } else {
+                    note.textContent = "Audio switching is not available for this format in this browser. Try nPlayer for all tracks.";
+                }
                 return;
             }
 
@@ -210,15 +231,16 @@
         });
 
         video.addEventListener("loadedmetadata", renderAudioTracks);
-        renderAudioTracks();
+        video.addEventListener("loadeddata", renderAudioTracks);
 
-        if (!video.audioTracks) {
-            wrapper.style.display = "block";
-            selector.style.display = "none";
-            note.textContent = "Your browser does not expose audio-track switching for this format.";
+        if (video.audioTracks && typeof video.audioTracks.addEventListener === "function") {
+            video.audioTracks.addEventListener("addtrack", renderAudioTracks);
+            video.audioTracks.addEventListener("removetrack", renderAudioTracks);
+            video.audioTracks.addEventListener("change", renderAudioTracks);
         }
+
+        renderAudioTracks();
     });
 </script>
-</html>
 
 </html>
