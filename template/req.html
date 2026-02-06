@@ -62,11 +62,6 @@
                         <img src="https://i.ibb.co/Hd2dS4t/nPlayer.png" alt="">watch in nPlayer
                     </button>
                 </div>
-                <div id="audio-track-wrapper" style="margin-top: 16px; display: none;">
-                    <label for="audio-track-selector" style="font-weight: 600; margin-right: 8px;">Audio Track:</label>
-                    <select id="audio-track-selector" style="padding: 6px 8px; border-radius: 8px;"></select>
-                    <p id="audio-track-note" style="margin-top: 8px; font-size: 13px; opacity: 0.8;"></p>
-                </div>
 
             </div>
             <div class="abt">
@@ -163,84 +158,5 @@
 </script>
 <script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
 <script src="https://proavipatil.github.io/data/fs/src/script.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const video = document.getElementById("player");
-        const wrapper = document.getElementById("audio-track-wrapper");
-        const selector = document.getElementById("audio-track-selector");
-        const note = document.getElementById("audio-track-note");
-
-        if (!video || !wrapper || !selector || !note) return;
-
-        const source = video.querySelector("source");
-        const mimeType = "{{mime_type}}";
-        if (source) source.type = mimeType;
-
-        const isMatroska = mimeType === "video/x-matroska";
-        const isMp4 = mimeType === "video/mp4";
-
-        const buildLabel = (track, index) => {
-            if (!track) return `Track ${index + 1}`;
-            const parts = [];
-            if (track.label) parts.push(track.label);
-            if (track.language) parts.push(track.language.toUpperCase());
-            if (track.kind && track.kind !== "main") parts.push(track.kind);
-            return parts.length ? parts.join(" • ") : `Track ${index + 1}`;
-        };
-
-        const renderAudioTracks = () => {
-            const audioTracks = video.audioTracks;
-            if (!audioTracks || !audioTracks.length) {
-                wrapper.style.display = "block";
-                selector.style.display = "none";
-                const canPlay = video.canPlayType ? video.canPlayType(mimeType) : "";
-                if (isMatroska) {
-                    note.textContent = "MKV detected (video/x-matroska). Browser audio switching is limited. Use nPlayer for multi-audio.";
-                } else if (isMp4) {
-                    note.textContent = "MP4 detected. If audio switch is missing, this browser/player does not expose alternate tracks.";
-                } else if (!canPlay) {
-                    note.textContent = `This browser has limited support for ${mimeType}. Use nPlayer for all audio tracks.`;
-                } else {
-                    note.textContent = "Audio switching is not available for this format in this browser. Try nPlayer for all tracks.";
-                }
-                return;
-            }
-
-            wrapper.style.display = "block";
-            selector.innerHTML = "";
-
-            for (let i = 0; i < audioTracks.length; i++) {
-                const option = document.createElement("option");
-                option.value = i;
-                option.textContent = buildLabel(audioTracks[i], i);
-                option.selected = !!audioTracks[i].enabled;
-                selector.appendChild(option);
-            }
-
-            note.textContent = `${audioTracks.length} audio track(s) found. Switch track without leaving stream.`;
-        };
-
-        selector.addEventListener("change", () => {
-            const audioTracks = video.audioTracks;
-            if (!audioTracks) return;
-
-            const selectedIndex = Number(selector.value);
-            for (let i = 0; i < audioTracks.length; i++) {
-                audioTracks[i].enabled = i === selectedIndex;
-            }
-        });
-
-        video.addEventListener("loadedmetadata", renderAudioTracks);
-        video.addEventListener("loadeddata", renderAudioTracks);
-
-        if (video.audioTracks && typeof video.audioTracks.addEventListener === "function") {
-            video.audioTracks.addEventListener("addtrack", renderAudioTracks);
-            video.audioTracks.addEventListener("removetrack", renderAudioTracks);
-            video.audioTracks.addEventListener("change", renderAudioTracks);
-        }
-
-        renderAudioTracks();
-    });
-</script>
 
 </html>
