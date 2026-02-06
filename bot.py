@@ -81,6 +81,17 @@ async def Lazy_start():
     now = datetime.now(tz)
     time = now.strftime("%H:%M:%S %p")
     await LazyPrincessBot.send_message(chat_id=LOG_CHANNEL, text=script.RESTART_TXT.format(today, time))
+    
+    # ==================== START AUTOMATIC EXPIRY NOTIFICATION ====================
+    try:
+        # Import and start the auto notification task
+        from plugins.Premium import auto_notify_expired_users
+        asyncio.create_task(auto_notify_expired_users(LazyPrincessBot))
+        logging.info("✅ Automatic Premium Expiry Notification Started!")
+    except Exception as e:
+        logging.error(f"❌ Failed to start auto notification: {e}")
+    # ==================== END AUTOMATIC EXPIRY NOTIFICATION ====================
+    
     app = web.AppRunner(await web_server())
     await app.setup()
     bind_address = "0.0.0.0"
