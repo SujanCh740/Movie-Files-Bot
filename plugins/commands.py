@@ -967,7 +967,7 @@ async def requests(bot, message):
                 continue
     if success:
         link = await bot.create_chat_invite_link(int(REQST_CHANNEL))
-    btn = [
+        btn = [
             [InlineKeyboardButton('Jᴏɪɴ Cʜᴀɴɴᴇʟ', url=link.invite_link)],
             [InlineKeyboardButton('Vɪᴇᴡ Rᴇǫᴜᴇꜱᴛ', url=f"{reported_post.link}")]
         ]
