@@ -654,6 +654,11 @@ async def check_verification(bot, userid):
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
         await bot.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(user.id, user.mention))
+
+    # Premium users should not be forced through the daily verification shortener.
+    if await db.has_premium_access(user.id):
+        return True
+        
     tz = pytz.timezone('Asia/Kolkata')
     today = date.today()
     if user.id in VERIFIED.keys():
