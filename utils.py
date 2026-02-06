@@ -532,7 +532,7 @@ async def get_tutorial(chat_id):
         TUTORIAL_URL = TUTORIAL
     return TUTORIAL_URL
         
-async def get_verify_shorted_link(link, chat_id=None)::
+async def get_verify_shorted_link(link, chat_id=None):
     API = SHORTLINK_API
     URL = SHORTLINK_URL
     if chat_id is not None:
