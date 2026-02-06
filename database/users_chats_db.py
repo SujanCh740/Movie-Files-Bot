@@ -1,6 +1,6 @@
 # https://github.com/odysseusmax/animated-lamp/blob/master/bot/database/database.py
 import motor.motor_asyncio
-from info import DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL
+from info import DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, AUTH_CHANNEL, REQST_CHANNEL
 import datetime
 import pytz
 
@@ -133,7 +133,9 @@ class Database:
             'shortlink_api': SHORTLINK_API,
             'is_shortlink': IS_SHORTLINK,
             'tutorial': TUTORIAL,
-            'is_tutorial': IS_TUTORIAL
+            'is_tutorial': IS_TUTORIAL,
+            'fsub_chat': AUTH_CHANNEL,
+            'reqst_channel': REQST_CHANNEL
         }
         chat = await self.grp.find_one({'id':int(id)})
         if chat:
