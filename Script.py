@@ -301,10 +301,14 @@ BOT WORKING PROPERLY"""
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
 ● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
-📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
+🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
+
+🇳🇵 Eꜱᴇᴡᴀ Iᴅ: <code>9816366394</code>
+
+📸 Eꜱᴇᴡᴀ Qʀ - <a href='https://iili.io/ftvUziv.jpg'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
 ⚜️ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ Bʏ Uꜱɪɴɢ : /myplan
 
@@ -326,10 +330,14 @@ BOT WORKING PROPERLY"""
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
 ● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
-📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
+🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
+
+🇳🇵 Eꜱᴇᴡᴀ Iᴅ: <code>9816366394</code>
+
+📸 Eꜱᴇᴡᴀ Qʀ - <a href='https://iili.io/ftvUziv.jpg'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
 ⚜️ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ Bʏ Uꜱɪɴɢ : /myplan
 
@@ -408,7 +416,7 @@ BOT WORKING PROPERLY"""
     
 ⚜️ Pᴀʏ Aᴍᴏᴜɴᴛ Aᴄᴄᴏʀᴅɪɴɢ Tᴏ Yᴏᴜʀ Pʟᴀɴ Aɴᴅ Eɴᴊᴏʏ Pʀᴇᴍɪᴜᴍ Mᴇᴍʙᴇʀꜱʜɪᴘ !
 
-📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
+📸 Eꜱᴇᴡᴀ Qʀ - <a href='https://iili.io/ftvUziv.jpg'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
 ‼️ Mᴜsᴛ Sᴇɴᴅ Sᴄʀᴇᴇɴsʜᴏᴛ Aғᴛᴇʀ Pᴀʏᴍᴇɴᴛ.</b>"""
 
@@ -428,10 +436,14 @@ BOT WORKING PROPERLY"""
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
 ● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>75₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
 ● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
 
-📸 Qʀ Cᴏᴅᴇ - <a href='https://telegra.ph/Payment-Information-03-09'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
+🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
+
+🇳🇵 Eꜱᴇᴡᴀ Iᴅ: <code>9816366394</code>
+
+📸 Eꜱᴇᴡᴀ Qʀ - <a href='https://iili.io/ftvUziv.jpg'>Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Sᴄᴀɴ</a>
 
 ⚜️ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ Bʏ Uꜱɪɴɢ : /myplan
 
