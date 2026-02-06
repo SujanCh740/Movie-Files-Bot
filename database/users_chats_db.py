@@ -1,6 +1,6 @@
 # https://github.com/odysseusmax/animated-lamp/blob/master/bot/database/database.py
 import motor.motor_asyncio
-from info import DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL, PREMIUM_USER
+from info import DATABASE_NAME, DATABASE_URI, IMDB, IMDB_TEMPLATE, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_DELETE, MAX_BTN, AUTO_FFILTER, SHORTLINK_API, SHORTLINK_URL, IS_SHORTLINK, TUTORIAL, IS_TUTORIAL
 import datetime
 import pytz
 
@@ -13,6 +13,7 @@ class Database:
         self.grp = self.db.groups
         self.users = self.db.uersz
         self.req = self.db.requests
+        self.redeem_codes = self.db.redeem_codes
         
     async def find_join_req(self, id):
         return bool(await self.req.find_one({'id': id}))
@@ -81,12 +82,11 @@ class Database:
 
     async def get_all_users(self):
         return self.col.find({})
-
-    async def get_all_premium_users(self):
-        return self.users.find({})
     
+
     async def delete_user(self, user_id):
         await self.col.delete_many({'id': int(user_id)})
+
 
     async def get_banned(self):
         users = self.col.find({'ban_status.is_banned': True})
@@ -169,8 +169,6 @@ class Database:
         await self.users.update_one({"id": user_data["id"]}, {"$set": user_data}, upsert=True)
 
     async def has_premium_access(self, user_id):
-        if user_id in PREMIUM_USER:
-            return True
         user_data = await self.get_user(user_id)
         if user_data:
             expiry_time = user_data.get("expiry_time")
@@ -220,5 +218,125 @@ class Database:
         expiry_time = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
         user_data = {"id": user_id, "expiry_time": expiry_time, "has_free_trial": True}
         await self.users.update_one({"id": user_id}, {"$set": user_data}, upsert=True)
-        
+
+    # ==================== REDEEM CODE METHODS ====================
+    
+    async def add_redeem_code(self, redeem_data: dict):
+        """Add a new redeem code to the database"""
+        try:
+            await self.redeem_codes.insert_one(redeem_data)
+            return True
+        except Exception as e:
+            print(f"Error adding redeem code: {e}")
+            return False
+    
+    async def get_redeem_code(self, code: str):
+        """Get redeem code data by code"""
+        try:
+            return await self.redeem_codes.find_one({"code": code})
+        except Exception as e:
+            print(f"Error getting redeem code: {e}")
+            return None
+    
+    async def update_redeem_code(self, code: str, update_data: dict):
+        """Update redeem code data"""
+        try:
+            await self.redeem_codes.update_one(
+                {"code": code},
+                {"$set": update_data}
+            )
+            return True
+        except Exception as e:
+            print(f"Error updating redeem code: {e}")
+            return False
+    
+    async def delete_redeem_code(self, code: str):
+        """Delete a redeem code from the database"""
+        try:
+            await self.redeem_codes.delete_one({"code": code})
+            return True
+        except Exception as e:
+            print(f"Error deleting redeem code: {e}")
+            return False
+    
+    async def get_all_redeem_codes(self, status_filter: str = None):
+        """Get all redeem codes with optional status filter"""
+        try:
+            query = {}
+            if status_filter == "redeemed":
+                query = {"is_redeemed": True}
+            elif status_filter == "available":
+                query = {"is_redeemed": False}
+            
+            cursor = self.redeem_codes.find(query)
+            return cursor
+        except Exception as e:
+            print(f"Error getting redeem codes: {e}")
+            return []
+    
+    async def get_redeem_stats(self):
+        """Get statistics about redeem codes"""
+        try:
+            total = await self.redeem_codes.count_documents({})
+            redeemed = await self.redeem_codes.count_documents({"is_redeemed": True})
+            available = await self.redeem_codes.count_documents({"is_redeemed": False})
+            return {
+                "total": total,
+                "redeemed": redeemed,
+                "available": available
+            }
+        except Exception as e:
+            print(f"Error getting redeem stats: {e}")
+            return {"total": 0, "redeemed": 0, "available": 0}
+    
+    async def get_all_premium_users(self):
+        """Get all users with premium access"""
+        try:
+            return self.users.find({"expiry_time": {"$ne": None}})
+        except Exception as e:
+            print(f"Error getting premium users: {e}")
+            return []
+
+    # ==================== EXPIRY NOTIFICATION METHODS ====================
+
+    async def get_expired_users_not_notified(self):
+        """Get all users whose premium has expired but haven't been notified yet"""
+        try:
+            current_time = datetime.datetime.now()
+            query = {
+                "expiry_time": {"$lt": current_time},
+                "$or": [
+                    {"expiry_notified": {"$exists": False}},
+                    {"expiry_notified": False}
+                ]
+            }
+            return self.users.find(query)
+        except Exception as e:
+            print(f"Error getting expired users: {e}")
+            return []
+
+    async def mark_expiry_notified(self, user_id):
+        """Mark that a user has been notified about premium expiration"""
+        try:
+            await self.users.update_one(
+                {"id": user_id},
+                {"$set": {"expiry_notified": True, "expiry_notified_at": datetime.datetime.now()}}
+            )
+            return True
+        except Exception as e:
+            print(f"Error marking expiry notified: {e}")
+            return False
+
+    async def reset_expiry_notification(self, user_id):
+        """Reset notification status when user gets new premium"""
+        try:
+            await self.users.update_one(
+                {"id": user_id},
+                {"$set": {"expiry_notified": False, "expiry_notified_at": None}}
+            )
+            return True
+        except Exception as e:
+            print(f"Error resetting expiry notification: {e}")
+            return False
+
 db = Database(DATABASE_URI, DATABASE_NAME)
