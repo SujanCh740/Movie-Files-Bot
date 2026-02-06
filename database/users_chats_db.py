@@ -13,6 +13,7 @@ class Database:
         self.grp = self.db.groups
         self.users = self.db.uersz
         self.req = self.db.requests
+        self.redeem = self.db.redeem_codes
         
     async def find_join_req(self, id):
         return bool(await self.req.find_one({'id': id}))
@@ -205,6 +206,35 @@ class Database:
         return await self.update_one(
             {"id": user_id}, {"$set": {"expiry_time": None}}
         )
+
+    async def create_redeem_code(self, code, premium_seconds, created_by):
+        payload = {
+            "code": code,
+            "premium_seconds": premium_seconds,
+            "created_by": created_by,
+            "created_at": datetime.datetime.utcnow(),
+            "redeemed_by": None,
+            "redeemed_at": None,
+        }
+        await self.redeem.insert_one(payload)
+
+    async def get_redeem_code(self, code):
+        return await self.redeem.find_one({"code": code})
+
+    async def list_redeem_codes(self, include_redeemed=False):
+        query = {} if include_redeemed else {"redeemed_by": None}
+        return self.redeem.find(query)
+
+    async def mark_redeemed(self, code, user_id):
+        result = await self.redeem.update_one(
+            {"code": code, "redeemed_by": None},
+            {"$set": {"redeemed_by": user_id, "redeemed_at": datetime.datetime.utcnow()}},
+        )
+        return result.modified_count == 1
+
+    async def delete_redeem_code(self, code):
+        result = await self.redeem.delete_one({"code": code})
+        return result.deleted_count == 1
 
     async def check_trial_status(self, user_id):
         user_data = await self.get_user(user_id)
