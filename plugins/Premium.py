@@ -37,16 +37,15 @@ async def myplan(client, message):
 
     if not await db.has_premium_access(user_id):
     await message.reply_text(
-        f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
+            f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
+            )
         )
-    )
-    return
+        return
 
-data = await db.get_user(user_id)
-expiry = data.get("expiry_time") if data else None
-
+    data = await db.get_user(user_id)
+    expiry = data.get("expiry_time") if data else None
 
     if not expiry:
         await message.reply_text(
@@ -120,7 +119,7 @@ async def premium_user(client, message):
             continue
         data = await db.get_user(user['id'])
         expiry = data.get("expiry_time") if data else None
-		if not expiry:
+        if not expiry:
             new += f"{user_count}. {(await client.get_users(user['id'])).mention}\n👤 ᴜꜱᴇʀ ɪᴅ : {user['id']}\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : ʟɪꜰᴇᴛɪᴍᴇ\n"
             user_count += 1
             continue
