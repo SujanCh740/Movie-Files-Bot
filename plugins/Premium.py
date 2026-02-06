@@ -1,6 +1,3 @@
-# SPECIAL THANKS TO [Rishikesh Sharma] @Rk_botowner FOR THESE AMAZING CODES
-# SPECIAL THANKS TO @DeletedFromEarth FOR MODIFYING THESE AMAZING CODES
-
 from datetime import timedelta
 import pytz
 import datetime, time
@@ -49,9 +46,9 @@ async def myplan(client, message):
             
         # Format time left as a string
         time_left_str = f"{days} ᴅᴀʏꜱ, {hours} ʜᴏᴜʀꜱ, {minutes} ᴍɪɴᴜᴛᴇꜱ"
-        await message.reply_text(f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}")   
+        await message.reply_text(f"⚜️ \Pʀᴇᴍɪᴜᴍ Uꜱᴇʀ Dᴀᴛᴀ :\n\n👤 Uꜱᴇʀ : {user}\n⚡ Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\n⏰ Tɪᴍᴇ Lᴇꜰᴛ : {time_left_str}\n⌛️ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}")   
     else:
-        await message.reply_text(f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
+        await message.reply_text(f"Hᴇʏ {user},\n\nYᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
 	reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))			 
 
 @Client.on_message(filters.command("get_premium") & filters.user(ADMINS))
@@ -76,9 +73,9 @@ async def get_premium(client, message):
             
             # Format time left as a string
             time_left_str = f"{days} days, {hours} hours, {minutes} minutes"
-            await message.reply_text(f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user.mention}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}")
+            await message.reply_text(f"⚜️ Pʀᴇᴍɪᴜᴍ uꜱᴇʀ Dᴀᴛᴀ :\n\n👤 Uꜱᴇʀ : {user.mention}\n⚡ Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\n⏰ Tɪᴍᴇ Lᴇꜰᴛ : {time_left_str}\n⌛️ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}")
         else:
-            await message.reply_text("ɴᴏ ᴀɴʏ ᴘʀᴇᴍɪᴜᴍ ᴅᴀᴛᴀ ᴏꜰ ᴛʜᴇ ᴡᴀꜱ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ !")
+            await message.reply_text("Nᴏ Aɴʏ Pʀᴇᴍɪᴜᴍ Dᴀᴛᴀ Oꜰ Tʜᴇ Wᴀꜱ Fᴏᴜɴᴅ Iɴ Dᴀᴛᴀʙᴀꜱᴇ !")
     else:
         await message.reply_text("ᴜꜱᴀɢᴇ : /get_premium user_id")
 
@@ -98,12 +95,12 @@ async def give_premium_cmd_handler(client, message):
             data = await db.get_user(user_id)
             expiry = data.get("expiry_time")   
             expiry_str_in_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata")).strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")         
-            await message.reply_text(f"ᴘʀᴇᴍɪᴜᴍ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ✅\n\n👤 ᴜꜱᴇʀ : {user.mention}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ : <code>{time}</code>\n\n⏳ ᴊᴏɪɴɪɴɢ ᴅᴀᴛᴇ : {current_time}\n\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True)
+            await message.reply_text(f"Pʀᴇᴍɪᴜᴍ Aᴅᴅᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ✅\n\n👤 Uꜱᴇʀ : {user.mention}\n⚡ Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\n⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ : <code>{time}</code>\n\n⏳ Jᴏɪɴɪɴɢ Dᴀᴛᴇ : {current_time}\n\n⌛️ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True)
             await client.send_message(
                 chat_id=user_id,
-                text=f"👋 ʜᴇʏ {user.mention},\nᴛʜᴀɴᴋ ʏᴏᴜ ꜰᴏʀ ᴘᴜʀᴄʜᴀꜱɪɴɢ ᴘʀᴇᴍɪᴜᴍ.\nᴇɴᴊᴏʏ !! ✨🎉\n\n⏰ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ : <code>{time}</code>\n⏳ ᴊᴏɪɴɪɴɢ ᴅᴀᴛᴇ : {current_time}\n\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True              
+                text=f"👋 Hᴇʏ {user.mention},\nTʜᴀɴᴋ Yᴏᴜ Fᴏʀ Pᴜʀᴄʜᴀꜱɪɴɢ Pʀᴇᴍɪᴜᴍ ✨🎉\n\n⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ : <code>{time}</code>\n⏳ Jᴏɪɴɪɴɢ Dᴀᴛᴇ : {current_time}\n\n⌛️ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True              
             )    
-            await client.send_message(PREMIUM_LOGS, text=f"#Added_Premium\n\n👤 ᴜꜱᴇʀ : {user.mention}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ : <code>{time}</code>\n\n⏳ ᴊᴏɪɴɪɴɢ ᴅᴀᴛᴇ : {current_time}\n\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True)
+            await client.send_message(PREMIUM_LOGS, text=f"#Added_Premium\n\n👤 Uꜱᴇʀ : {user.mention}\n⚡ Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\n⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ : <code>{time}</code>\n\n⏳ Jᴏɪɴɪɴɢ Dᴀᴛᴇ : {current_time}\n\n⌛️ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}", disable_web_page_preview=True)
                     
         else:
             await message.reply_text("Invalid time format. Please use '1 day for days', '1 hour for hours', or '1 min for minutes', or '1 month for months' or '1 year for year'")
@@ -128,7 +125,7 @@ async def premium_user(client, message):
             hours, remainder = divmod(time_left.seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             time_left_str = f"{days} days, {hours} hours, {minutes} minutes"	 
-            new += f"{user_count}. {(await client.get_users(user['id'])).mention}\n👤 ᴜꜱᴇʀ ɪᴅ : {user['id']}\n⏳ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n"
+            new += f"{user_count}. {(await client.get_users(user['id'])).mention}\n👤 Uꜱᴇʀ Iᴅ : {user['id']}\n⏳ Exᴘɪʀʏ Dᴀᴛᴇ : {expiry_str_in_ist}\n⏰ Tɪᴍᴇ Lᴇꜰᴛ : {time_left_str}\n"
             user_count += 1
         else:
             pass
@@ -147,9 +144,6 @@ async def plan(client, message):
     users = message.from_user.mention 
     btn = [[
 	
-        InlineKeyboardButton("📲 ꜱᴇɴᴅ ᴘᴀʏᴍᴇɴᴛ ꜱᴄʀᴇᴇɴꜱʜᴏᴛ ʜᴇʀᴇ", user_id=int(5123039648))],[InlineKeyboardButton("❌ ᴄʟᴏꜱᴇ ❌", callback_data="close_data")
+        InlineKeyboardButton("📲 Sᴇɴᴅ Pᴀʏᴍᴇɴᴛ Sᴄʀᴇᴇɴꜱʜᴏᴛ", user_id=int(5123039648))],[InlineKeyboardButton("❌ ᴄʟᴏꜱᴇ ❌", callback_data="close_data")
     ]]
     await message.reply_photo(photo="https://graph.org/file/7d8b428734782477158d4.jpg", caption=script.PREMIUM_TEXT.format(message.from_user.mention), reply_markup=InlineKeyboardMarkup(btn))
-    
-# SPECIAL THANKS TO [Rishikesh Sharma] @Rk_botowner FOR THESE AMAZING CODES
-# SPECIAL THANKS TO @DeletedFromEarth FOR MODIFYING THESE AMAZING CODES 
