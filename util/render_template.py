@@ -9,6 +9,7 @@ from server.exceptions import InvalidHash
 import urllib.parse
 import logging
 import aiohttp
+import mimetypes
 
 
 async def render_page(id, secure_hash, src=None):
@@ -24,7 +25,21 @@ async def render_page(id, secure_hash, src=None):
         f"{id}/{urllib.parse.quote_plus(file_data.file_name)}?hash={secure_hash}",
     )
 
-    tag = file_data.mime_type.split("/")[0].strip()
+    mime_type = (file_data.mime_type or "").strip()
+    file_name_for_mime = file_data.file_name or ""
+    guessed_mime = mimetypes.guess_type(file_name_for_mime)[0]
+
+    # Improve compatibility for common stream formats where Telegram mime can be empty/generic
+    if not mime_type or mime_type == "application/octet-stream":
+        mime_type = guessed_mime or "application/octet-stream"
+
+    # Explicit normalization for requested formats
+    lower_name = file_name_for_mime.lower()
+    if lower_name.endswith(".mkv"):
+        mime_type = "video/x-matroska"
+    elif lower_name.endswith(".mp4"):
+        mime_type = "video/mp4"
+    tag = mime_type.split("/")[0].strip()
     file_size = humanbytes(file_data.file_size)
     if tag in ["video", "audio"]:
         template_file = "template/req.html"
@@ -44,4 +59,6 @@ async def render_page(id, secure_hash, src=None):
         file_url=src,
         file_size=file_size,
         file_unique_id=file_data.unique_id,
+        mime_type=mime_type,
+        media_tag=tag,
     )
