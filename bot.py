@@ -1,4 +1,3 @@
-
 import sys
 import glob
 import importlib
@@ -46,6 +45,39 @@ files = glob.glob(ppath)
 LazyPrincessBot.start()
 loop = asyncio.get_event_loop()
 
+async def premium_expiry_notifier():
+    while True:
+        current_time = datetime.now()
+        expired_users = await db.get_expired(current_time)
+
+        for user in expired_users:
+            user_id = user.get("id")
+            if not user_id:
+                continue
+
+            await db.remove_premium_access(user_id)
+
+            try:
+                await LazyPrincessBot.send_message(
+                    chat_id=user_id,
+                    text=(
+                        "⚠️ Your premium plan has expired.\n\n"
+                        "You are now on the free plan. Renew premium to continue premium benefits."
+                    ),
+                )
+            except Exception as e:
+                logging.warning(f"Unable to send premium expiry notice to {user_id}: {e}")
+
+            try:
+                await LazyPrincessBot.send_message(
+                    chat_id=PREMIUM_LOGS,
+                    text=f"#Premium_Expired\n\n👤 User ID: <code>{user_id}</code>",
+                )
+            except Exception as e:
+                logging.warning(f"Unable to send premium expiry log for {user_id}: {e}")
+
+        await asyncio.sleep(300)
+
 
 async def Lazy_start():
     print('\n')
@@ -83,6 +115,7 @@ async def Lazy_start():
     now = datetime.now(tz)
     time = now.strftime("%H:%M:%S %p")
     await LazyPrincessBot.send_message(chat_id=LOG_CHANNEL, text=script.RESTART_TXT.format(today, time))
+    asyncio.create_task(premium_expiry_notifier())
     app = web.AppRunner(await web_server())
     await app.setup()
     bind_address = "0.0.0.0"
