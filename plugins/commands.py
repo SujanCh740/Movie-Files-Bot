@@ -948,7 +948,7 @@ async def requests(bot, message):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         success = True
-        except Exception:
+    except Exception:
         for admin in ADMINS:
             try:
                 btn = [[InlineKeyboardButton('ꜱʜᴏᴡ ᴏᴘᴛɪᴏɴꜱ', callback_data=f'show_option#{reporter}')]]
