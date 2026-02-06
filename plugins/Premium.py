@@ -1,4 +1,5 @@
 from datetime import timedelta
+import asyncio
 import secrets
 import string
 import pytz
@@ -26,6 +27,42 @@ def format_duration(total_seconds):
         parts.append(f"{seconds} second(s)")
     return ", ".join(parts) if parts else "0 seconds"
 
+async def send_redeem_expiry_notice(client, user_id, expiry_time):
+    delay = (expiry_time - datetime.datetime.now()).total_seconds()
+    if delay > 0:
+        await asyncio.sleep(delay)
+    user_data = await db.get_user(user_id)
+    if not user_data:
+        return
+    current_expiry = user_data.get("expiry_time")
+    if not isinstance(current_expiry, datetime.datetime):
+        return
+    if current_expiry > datetime.datetime.now():
+        return
+    if user_data.get("premium_source") != "redeem":
+        return
+    if user_data.get("redeem_expiry_notice_sent"):
+        return
+    await db.update_user(
+        {
+            "id": user_id,
+            "expiry_time": None,
+            "premium_source": None,
+            "redeem_expiry_notice_sent": True,
+        }
+    )
+    try:
+        await client.send_message(
+            chat_id=user_id,
+            text=(
+                "⚠️ Rᴇᴅᴇᴇᴍ Pʀᴇᴍɪᴜᴍ Exᴘɪʀᴇᴅ\n\n"
+                "Yᴏᴜʀ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇss Fʀᴏᴍ A Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ Hᴀs Exᴘɪʀᴇᴅ.\n"
+                "Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Pʟᴀɴs Aɴᴅ Rᴇɴᴇᴡ."
+            ),
+        )
+    except Exception:
+        pass
+		
 async def generate_unique_redeem_code(length=10):
     charset = string.ascii_uppercase + string.digits
     for _ in range(10):
@@ -33,7 +70,7 @@ async def generate_unique_redeem_code(length=10):
         if not await db.get_redeem_code(code):
             return code
     raise RuntimeError("Unable to generate unique redeem code")
-	
+
 @Client.on_message(filters.command("remove_premium") & filters.user(ADMINS))
 async def remove_premium(client, message):
     if len(message.command) == 2:
@@ -208,7 +245,15 @@ async def redeem_code(client, message):
         new_expiry = current_expiry + datetime.timedelta(seconds=seconds)
     else:
         new_expiry = now + datetime.timedelta(seconds=seconds)
-    await db.update_user({"id": user_id, "expiry_time": new_expiry})
+     await db.update_user(
+        {
+            "id": user_id,
+            "expiry_time": new_expiry,
+            "premium_source": "redeem",
+            "redeem_expiry_notice_sent": False,
+        }
+    )
+    asyncio.create_task(send_redeem_expiry_notice(client, user_id, new_expiry))
     duration_text = format_duration(seconds)
     await message.reply_text(
         f"✅ Redeem successful!\n\n"
