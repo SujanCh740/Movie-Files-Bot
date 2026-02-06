@@ -233,6 +233,13 @@ class Database:
         )
         return result.modified_count == 1
 
+    async def redeem_code(self, code, user_id):
+        return await self.redeem.find_one_and_update(
+            {"code": code, "redeemed_by": None},
+            {"$set": {"redeemed_by": user_id, "redeemed_at": datetime.datetime.utcnow()}},
+            return_document=ReturnDocument.BEFORE,
+        )
+
     async def delete_redeem_code(self, code):
         result = await self.redeem.delete_one({"code": code})
         return result.deleted_count == 1
