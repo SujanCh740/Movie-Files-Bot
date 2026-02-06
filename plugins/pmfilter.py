@@ -1467,8 +1467,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             )
             fileName = {quote_plus(get_name(log_msg))}
             #lazy_stream = f"{URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
-            lazy_stream = f"https://streamio.apistream.workers.dev/?url={URL}{str(log_msg.id)}/?hash={get_hash(log_msg)}"
-            lazy_download = f"{URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+            lazy_stream = f"https://streaminghub.42web.io/?i=1&url={URL}{str(log_msg.id)}/?hash={get_hash(log_msg)}"
+            lazy_download = f"{URL}{str(log_msg.id)}/?hash={get_hash(log_msg)}"
             hp_link = await get_shortlink(lazy_download)
             ph_link = await get_shortlink(lazy_stream)
             buttons = []
