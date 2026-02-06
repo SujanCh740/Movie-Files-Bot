@@ -54,11 +54,11 @@ class temp(object):
     SETTINGS = {}
     IMDB_CAP = {}
 
-async def is_req_subscribed(bot, query):
+async def is_req_subscribed(bot, query, auth_chat=AUTH_CHANNEL):
     if await db.find_join_req(query.from_user.id):
         return True
     try:
-        user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
+        user = await bot.get_chat_member(auth_chat, query.from_user.id)
     except UserNotParticipant:
         pass
     except Exception as e:
@@ -532,9 +532,13 @@ async def get_tutorial(chat_id):
         TUTORIAL_URL = TUTORIAL
     return TUTORIAL_URL
         
-async def get_verify_shorted_link(link):
+async def get_verify_shorted_link(link, chat_id=None)::
     API = SHORTLINK_API
     URL = SHORTLINK_URL
+    if chat_id is not None:
+        settings = await get_settings(chat_id)
+        URL = settings.get("shortlink", SHORTLINK_URL)
+        API = settings.get("shortlink_api", SHORTLINK_API)
     https = link.split(":")[0]
     if "http" == https:
         https = "https"
@@ -594,7 +598,7 @@ async def check_token(bot, userid, token):
     else:
         return False
 
-async def get_token(bot, userid, link):
+async def get_token(bot, userid, link, chat_id=None):
     user = await bot.get_users(userid)
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
@@ -602,7 +606,7 @@ async def get_token(bot, userid, link):
     token = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
     TOKENS[user.id] = {token: False}
     link = f"{link}verify-{user.id}-{token}"
-    shortened_verify_url = await get_verify_shorted_link(link)
+    shortened_verify_url = await get_verify_shorted_link(link, chat_id)
     return str(shortened_verify_url)
 
 async def verify_user(bot, userid, token):
