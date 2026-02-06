@@ -78,10 +78,10 @@ async def get_premium(client, message):
         expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")
         current_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
         time_left = expiry_ist - current_time
-        if time_left.total_seconds() <= 0:
+		if time_left.total_seconds() <= 0:
             await db.remove_premium_access(user_id)
             await message.reply_text("ɴᴏ ᴀɴʏ ᴘʀᴇᴍɪᴜᴍ ᴅᴀᴛᴀ ᴏꜰ ᴛʜᴇ ᴡᴀꜱ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ !")
-			return
+            return
 
         days = time_left.days
         hours, remainder = divmod(time_left.seconds, 3600)
@@ -130,10 +130,10 @@ async def premium_user(client, message):
             continue
         data = await db.get_user(user['id'])
         expiry = data.get("expiry_time") if data else None
-        if not expiry:
+		if not expiry:
             new += f"{user_count}. {(await client.get_users(user['id'])).mention}\n👤 ᴜꜱᴇʀ ɪᴅ : {user['id']}\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : ʟɪꜰᴇᴛɪᴍᴇ\n"
             user_count += 1
-        	continue
+            continue
 
         expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
         expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")            
@@ -154,8 +154,6 @@ async def premium_user(client, message):
         with open('usersplan.txt', 'w+') as outfile:
             outfile.write(new)
         await message.reply_document('usersplan.txt', caption="Paid Users:")
-
-
 
 @Client.on_message(filters.command("plan"))
 async def plan(client, message):
