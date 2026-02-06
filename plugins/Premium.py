@@ -135,7 +135,7 @@ async def give_premium_cmd_handler(client, message):
 @Client.on_message(filters.command("premium_users") & filters.user(ADMINS))
 async def premium_user(client, message):
     aa = await message.reply_text("<i>ꜰᴇᴛᴄʜɪɴɢ...</i>")
-    new = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀꜱ ʟɪꜱᴛ :\n\n"
+    new = f"⚜️ Pʀᴇᴍɪᴜᴍ Uꜱᴇʀꜱ Lɪꜱᴛ :\n\n"
     user_count = 1
     users = await db.get_all_users()
     async for user in users:
@@ -143,7 +143,7 @@ async def premium_user(client, message):
         if data and data.get("expiry_time"):
             expiry = data.get("expiry_time") 
             expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
-            expiry_str_in_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata")).strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")            
+            expiry_str_in_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata")).strftime("%d-%m-%Y\n⏱️ Exᴘɪʀʏ Tɪᴍᴇ : %I:%M:%S %p")            
             current_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
             time_left = expiry_ist - current_time
             days = time_left.days
@@ -160,25 +160,26 @@ async def premium_user(client, message):
         with open('usersplan.txt', 'w+') as outfile:
             outfile.write(new)
         await message.reply_document('usersplan.txt', caption="Paid Users:")
+		
 @Client.on_message(filters.command("gen_redeem") & filters.user(ADMINS))
 async def generate_redeem_code(client, message):
     if len(message.command) < 2:
-        return await message.reply_text("Usage : /gen_redeem <time> (e.g., '1 hour', '1 day', '1 month' or '1 year')")
+        return await message.reply_text("Usage : /gen_redeem <time> (e.g., '1 day', '2 hour', '30 min')")
     time_value = " ".join(message.command[1:]).strip()
     seconds = await get_seconds(time_value)
     if seconds <= 0:
-        return await message.reply_text("Invalid time format. Use '1 day', '2 hour', '30 min', '1 month', or '1 year'")
+        return await message.reply_text("Invalid time format. Use '1 day', '2 hour', '30 min', '1 month', or '1 year'.")
     code = await generate_unique_redeem_code()
     await db.create_redeem_code(code, seconds, message.from_user.id)
     duration_text = format_duration(seconds)
     await message.reply_text(
-        f"✅ *Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ Gᴇɴᴇʀᴀᴛᴇᴅ!*\n\n"
-		f"⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ: <code>{duration_text}</code>"
-        f"🧾 Redeem Cᴏᴅᴇ: <code>{code}</code>\n"
+        f"✅ Redeem code generated!\n\n"
+        f"Code: <code>{code}</code>\n"
+        f"Premium Access: <code>{duration_text}</code>"
     )
     await client.send_message(
         PREMIUM_LOGS,
-        text=f"#RedeemCodeGenerated\n\n👤 Aᴅᴍɪɴ: {message.from_user.mention}\n🧾 Cᴏᴅᴇ: <code>{code}</code>\n⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ: <code>{duration_text}</code>"
+        text=f"#RedeemCodeGenerated\n\n👤 Admin: {message.from_user.mention}\n🧾 Code: <code>{code}</code>\n⏰ Premium Access: <code>{duration_text}</code>"
     )
 
 @Client.on_message(filters.command("redeem"))
@@ -186,14 +187,17 @@ async def redeem_code(client, message):
     if len(message.command) != 2:
         return await message.reply_text("Usage : /redeem <code>")
     code = message.command[1].strip().upper()
-    redeem_data = await db.get_redeem_code(code)
+    redeem_data = await db.redeem_code(code, message.from_user.id)
     if not redeem_data:
-        return await message.reply_text("❌ Iɴᴠᴀʟɪᴅ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ.")
-    if redeem_data.get("redeemed_by"):
-        return await message.reply_text("⚠️ Tʜɪꜱ Cᴏᴅᴇ Aʟʀᴇᴀᴅʏ Rᴇᴅᴇᴇᴍ.")
+        existing = await db.get_redeem_code(code)
+        if not existing:
+            return await message.reply_text("❌ Invalid redeem code.")
+        if existing.get("redeemed_by"):
+            return await message.reply_text("⚠️ This redeem code has already been used.")
+        return await message.reply_text("⚠️ Unable to redeem this code. Please try again.")
     seconds = redeem_data.get("premium_seconds", 0)
     if seconds <= 0:
-        return await message.reply_text("❌ Tʜɪꜱ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ Iꜱ Nᴏᴛ Vᴀʟɪᴅ.")
+        return await message.reply_text("❌ This redeem code is not valid.")
     now = datetime.datetime.now()
     user_id = message.from_user.id
     user_data = await db.get_user(user_id)
@@ -205,37 +209,35 @@ async def redeem_code(client, message):
     else:
         new_expiry = now + datetime.timedelta(seconds=seconds)
     await db.update_user({"id": user_id, "expiry_time": new_expiry})
-    if not await db.mark_redeemed(code, user_id):
-        return await message.reply_text("⚠️ Uɴᴀʙʟᴇ Tᴏ Rᴇᴅᴇᴇᴍ Tʜɪꜱ Cᴏᴅᴇ. Pʟᴇᴀꜱᴇ Tʀʏ Aɢᴀɪɴ.")
     duration_text = format_duration(seconds)
     await message.reply_text(
-        f"✅ Rᴇᴅᴇᴇᴍ Sᴜᴄᴄᴇꜱꜱꜰᴜʟ!\n\n"
-		f"⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ: <code>{duration_text}</code>"
-        f"🧾 Cᴏᴅᴇ: <code>{code}</code>\n"
+        f"✅ Redeem successful!\n\n"
+        f"Code: <code>{code}</code>\n"
+        f"Premium Access Added: <code>{duration_text}</code>"
     )
     await client.send_message(
         PREMIUM_LOGS,
-        text=f"#RedeemCodeUsed\n\n👤 Uꜱᴇʀ: {message.from_user.mention}\n🧾 Cᴏᴅᴇ: <code>{code}</code>\n⏰ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ: <code>{duration_text}</code>"
+        text=f"#RedeemCodeUsed\n\n👤 User: {message.from_user.mention}\n🧾 Code: <code>{code}</code>\n⏰ Premium Access: <code>{duration_text}</code>"
     )
 
 @Client.on_message(filters.command("redeem_codes") & filters.user(ADMINS))
 async def redeem_codes_list(client, message):
-    show_all = len(message.command) > 1 and message.command[1].lower() == "all"
-    data = await db.list_redeem_codes(include_redeemed=show_all)
-    output = "🎟️ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ:\n\n"
+    show_unused_only = len(message.command) > 1 and message.command[1].lower() == "unused"
+    data = await db.list_redeem_codes(include_redeemed=not show_unused_only)
+    output = "🎟️ Redeem Codes:\n\n"
     idx = 1
     async for item in data:
         duration_text = format_duration(item.get("premium_seconds", 0))
         redeemed_by = item.get("redeemed_by")
-        status = f"Rᴇᴅᴇᴇᴍ Bʏ <code>{redeemed_by}</code>" if redeemed_by else "Not used"
+        status = f"Used by <code>{redeemed_by}</code>" if redeemed_by else "Not used"
         output += (
             f"{idx}. <code>{item.get('code')}</code>\n"
-            f"⏰ Pʀᴇᴍɪᴜᴍ: <code>{duration_text}</code>\n"
-            f"📌 Sᴛᴀᴛᴜꜱ: {status}\n\n"
+            f"⏰ Premium: <code>{duration_text}</code>\n"
+            f"📌 Status: {status}\n\n"
         )
         idx += 1
     if idx == 1:
-        output = "Nᴏ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ Fᴏᴜɴᴅ."
+        output = "No redeem codes found."
     try:
         await message.reply_text(output)
     except MessageTooLong:
@@ -248,14 +250,20 @@ async def delete_redeem_code(client, message):
     if len(message.command) != 2:
         return await message.reply_text("Usage : /del_redeem <code>")
     code = message.command[1].strip().upper()
+    existing = await db.get_redeem_code(code)
+    if not existing:
+        return await message.reply_text("❌ Redeem code not found.")
     if await db.delete_redeem_code(code):
-        await message.reply_text(f"✅ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ <code>{code}</code> deleted.")
+        redeemed_by = existing.get("redeemed_by")
+        if redeemed_by:
+            await db.remove_premium_access(redeemed_by)
+        await message.reply_text(f"✅ Redeem code <code>{code}</code> deleted.")
         await client.send_message(
             PREMIUM_LOGS,
-            text=f"#RedeemCodeDeleted\n\n👤 Aᴅᴍɪɴ: {message.from_user.mention}\n🧾 Cᴏᴅᴇ: <code>{code}</code>"
+            text=f"#RedeemCodeDeleted\n\n👤 Admin: {message.from_user.mention}\n🧾 Code: <code>{code}</code>"
         )
     else:
-        await message.reply_text("❌ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ Nᴏᴛ Fᴏᴜɴᴅ.")
+        await message.reply_text("❌ Redeem code not found.")
 		
 @Client.on_message(filters.command("plan"))
 async def plan(client, message):
