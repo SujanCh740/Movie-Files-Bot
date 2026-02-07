@@ -21,7 +21,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 # ==================== CONFIGURATION ====================
 
 # Auto-delete timer in seconds (set to 0 to disable auto-delete)
-AUTO_DELETE_TIMER = 30  # Messages will be deleted after 30 seconds
+AUTO_DELETE_TIMER = 60  # Messages will be deleted after set timer
 
 # ==================== HELPER FUNCTIONS ====================
 
@@ -655,14 +655,10 @@ async def myplan(client, message):
         if expiry:
             expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
             expiry_str = expiry_ist.strftime("%d-%m-%Y %I:%M:%S %p")
-            expired_text += f"⌛️ **Expired On:** `{expiry_str}`\n"
-        if redeemed_code:
-            expired_text += f"🎟️ **Redeemed Code:** `{redeemed_code}`\n"
+            expired_text += f"⌛️ **Expired On:** `{expiry_str}`\n\n"
 
         expired_text += (
-            f"\n💔 You no longer have access to premium features.\n\n"
             f"✨ **Want to continue enjoying premium?**\n"
-            f"Click below to check out our plans!"
         )
 
         reply_msg = await message.reply_text(
@@ -676,7 +672,7 @@ async def myplan(client, message):
 
     # No premium at all
     reply_msg = await message.reply_text(
-        f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
+        f"Hᴇʏ {user},\n\nYᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
         )
