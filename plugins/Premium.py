@@ -466,6 +466,8 @@ async def notify_expired_user(client, user_id, user_mention=None):
 
         # Check if already notified
         if user_data.get("expiry_notified", False):
+            # Already notified, clear the expired premium data
+            await db.clear_expired_premium(user_id)
             return False, "Already notified"
 
         # Get premium source for personalized message
@@ -479,13 +481,26 @@ async def notify_expired_user(client, user_id, user_mention=None):
             source_text = "👑 **Premium Source:** Admin Added"
 
         notification_text = (
-            f"⏰ **Premium Expired Notification** ⏰\n\n"
-            f"👋 Hello {user_mention or 'User'},\n\n"
-            f"Your premium access has **expired**.\n\n"
-            f"{source_text}\n\n"
-            f"💔 You no longer have access to premium features.\n\n"
-            f"✨ **Want to continue enjoying premium?**\n"
-            f"Contact admins or use `/plan` to purchase a new plan!\n\n"
+            f"⏰ **Premium Expired Notification** ⏰
+
+"
+            f"👋 Hello {user_mention or 'User'},
+
+"
+            f"Your premium access has **expired**.
+
+"
+            f"{source_text}
+
+"
+            f"💔 You no longer have access to premium features.
+
+"
+            f"✨ **Want to continue enjoying premium?**
+"
+            f"Contact admins or use `/plan` to purchase a new plan!
+
+"
             f"Thank you for using our service! 😊"
         )
 
@@ -499,8 +514,9 @@ async def notify_expired_user(client, user_id, user_mention=None):
             ])
         )
 
-        # Mark user as notified
+        # Mark user as notified and clear expired premium data
         await db.mark_expiry_notified(user_id)
+        await db.clear_expired_premium(user_id)
 
         return True, "Notification sent successfully"
 
@@ -595,37 +611,68 @@ async def myplan(client, message):
     user_id = message.from_user.id
     reply_msg = None
 
-    if not await db.has_premium_access(user_id):
-        reply_msg = await message.reply_text(
-            f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
-            reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
-            )
-        )
-        asyncio.create_task(auto_delete_message(message, reply_msg))
-        return
+    # Check if user has active premium
+    if await db.has_premium_access(user_id):
+        # User has active premium - show plan details
+        data = await db.get_user(user_id)
+        expiry = data.get("expiry_time") if data else None
+        redeemed_code = data.get("redeemed_code", None)
 
-    data = await db.get_user(user_id)
-    expiry = data.get("expiry_time") if data else None
-    redeemed_code = data.get("redeemed_code", None)
+        if not expiry:
+            # Lifetime premium
+            plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : ʟɪꜰᴇᴛɪᴍᴇ"
+            if redeemed_code:
+                plan_info += f"\n🎟️ ʀᴇᴅᴇᴇᴍᴇᴅ ᴄᴏᴅᴇ : <code>{redeemed_code}</code>"
+            reply_msg = await message.reply_text(plan_info)
+            asyncio.create_task(auto_delete_message(message, reply_msg))
+            return
 
-    if not expiry:
-        plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : ʟɪꜰᴇᴛɪᴍᴇ"
+        # Calculate time left
+        expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
+        expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")
+        current_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
+        time_left = expiry_ist - current_time
+
+        days = time_left.days
+        hours, remainder = divmod(time_left.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        time_left_str = f"{days} ᴅᴀʏꜱ, {hours} ʜᴏᴜʀꜱ, {minutes} ᴍɪɴᴜᴛᴇꜱ"
+
+        plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}"
         if redeemed_code:
             plan_info += f"\n🎟️ ʀᴇᴅᴇᴇᴍᴇᴅ ᴄᴏᴅᴇ : <code>{redeemed_code}</code>"
+
         reply_msg = await message.reply_text(plan_info)
         asyncio.create_task(auto_delete_message(message, reply_msg))
         return
 
-    expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
-    expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ ᴇxᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")
-    current_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
-    time_left = expiry_ist - current_time
+    # Check if premium expired (but not yet cleared)
+    if await db.is_premium_expired(user_id):
+        # Premium has expired - show expired message
+        data = await db.get_user(user_id)
+        expiry = data.get("expiry_time") if data else None
+        redeemed_code = data.get("redeemed_code", None)
 
-    if time_left.total_seconds() <= 0:
-        await db.remove_premium_access(user_id)
+        expired_text = (
+            f"⏰ **Premium Expired** ⏰\n\n"
+            f"Hᴇʏ {user},\n\n"
+            f"Your premium access has **expired**.\n\n"
+        )
+        if expiry:
+            expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
+            expiry_str = expiry_ist.strftime("%d-%m-%Y %I:%M:%S %p")
+            expired_text += f"⌛️ **Expired On:** `{expiry_str}`\n"
+        if redeemed_code:
+            expired_text += f"🎟️ **Redeemed Code:** `{redeemed_code}`\n"
+
+        expired_text += (
+            f"\n💔 You no longer have access to premium features.\n\n"
+            f"✨ **Want to continue enjoying premium?**\n"
+            f"Click below to check out our plans!"
+        )
+
         reply_msg = await message.reply_text(
-            f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
+            expired_text,
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
             )
@@ -633,18 +680,14 @@ async def myplan(client, message):
         asyncio.create_task(auto_delete_message(message, reply_msg))
         return
 
-    days = time_left.days
-    hours, remainder = divmod(time_left.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    time_left_str = f"{days} ᴅᴀʏꜱ, {hours} ʜᴏᴜʀꜱ, {minutes} ᴍɪɴᴜᴛᴇꜱ"
-
-    plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}"
-    if redeemed_code:
-        plan_info += f"\n🎟️ ʀᴇᴅᴇᴇᴍᴇᴅ ᴄᴏᴅᴇ : <code>{redeemed_code}</code>"
-
-    reply_msg = await message.reply_text(plan_info)
+    # No premium at all
+    reply_msg = await message.reply_text(
+        f"Hᴇʏ {user},\n\nʏᴏᴜ Dᴏ Nᴏᴛ Hᴀᴠᴇ Aɴʏ Aᴄᴛɪᴠᴇ Pʀᴇᴍɪᴜᴍ Pʟᴀɴs, Iꜰ Yᴏᴜ Wᴀɴᴛ Tᴏ Tᴀᴋᴇ Pʀᴇᴍɪᴜᴍ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ 👇",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data="seeplans")]]
+        )
+    )
     asyncio.create_task(auto_delete_message(message, reply_msg))
-
 @Client.on_message(filters.command("add_premium") & filters.user(ADMINS))
 async def give_premium_cmd_handler(client, message):
     reply_msg = None
