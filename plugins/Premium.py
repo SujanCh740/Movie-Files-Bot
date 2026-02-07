@@ -135,9 +135,8 @@ async def generate_redeem_code_handler(client, message):
     response = (
         f"✅ **Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ Gᴇɴᴇʀᴀᴛᴇᴅ!**\n\n"
         f"📊 **Qᴜᴀɴᴛɪᴛʏ :** {quantity}\n"
-        f"⏰ **Dᴜʀᴀᴛɪᴏɴ :** {duration_display}\n"
-        f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ :** {generated_time}\n\n"
-        f"📋 **Cᴏᴅᴇꜱ :**\n{codes_text}\n\n"
+        f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ :** {duration_display}\n\n"
+        f"📋 **Cᴏᴅᴇꜱ :** {codes_text}\n\n"
         f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ :** <b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>\n"
         f"💡 **Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ :** `/redeem`\n\n"
         f"✨ **Eɴᴊᴏʏ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ!**"
@@ -147,7 +146,7 @@ async def generate_redeem_code_handler(client, message):
     if len(response) > 4000:
         separator = "=" * 50
         file_content = f"Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ Gᴇɴᴇʀᴀᴛᴇᴅ\n{separator}\n"
-        file_content += f"Dᴜʀᴀᴛɪᴏɴ: {duration_display}\n"
+        file_content += f"Pʀᴇᴍɪᴜᴍ ꜰᴏʀ: {duration_display}\n"
         file_content += f"Qᴜᴀɴᴛɪᴛʏ: {quantity}\n"
         file_content += f"Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ: {generated_time}\n"
         file_content += f"{separator}\n\n"
@@ -169,7 +168,7 @@ async def generate_redeem_code_handler(client, message):
         f"#Nᴇᴡ_ʀᴇᴅᴇᴇᴍ_ᴄᴏᴅᴇꜱ_ɢᴇɴᴇʀᴀᴛᴇᴅ\n\n"
         f"🆔 **Aᴅᴍɪɴ ɪᴅ:** `{message.from_user.id}`\n"
         f"📊 **Qᴜᴀɴᴛɪᴛʏ:** {quantity}\n"
-        f"⏰ **Dᴜʀᴀᴛɪᴏɴ:** {duration_display}\n"
+        f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {duration_display}\n"
         f"🕐 **Tɪᴍᴇ:** {generated_time}"
     )
 
@@ -281,7 +280,7 @@ async def redeem_code_handler(client, message):
         f"👤 **Uꜱᴇʀ:** {user}\n"
         f"⚡ **Uꜱᴇʀ ɪᴅ:** `{user_id}`\n"
         f"🎟️ **Rᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ:** `{code}`\n"
-        f"⏰ **Dᴜʀᴀᴛɪᴏɴ:** {duration}\n"
+        f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {duration}\n"
         f"⏳ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ:** {current_time}\n"
         f"⌛️ **Exᴘɪʀʏ ᴛɪᴍᴇ:** {expiry_str}\n\n"
         f"✨ Eɴᴊᴏʏ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ!"
@@ -297,7 +296,7 @@ async def redeem_code_handler(client, message):
         f"👤 **Uꜱᴇʀ:** {user}\n"
         f"⚡ **Uꜱᴇʀ ɪᴅ:** `{user_id}`\n"
         f"🎟️ **Rᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ:** `{code}`\n"
-        f"⏰ **Dᴜʀᴀᴛɪᴏɴ:** {duration}\n"
+        f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {duration}\n"
         f"⏳ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ:** {current_time}\n"
         f"⌛️ **Exᴘɪʀʏ ᴛɪᴍᴇ:** {expiry_str}\n\n"
     )
@@ -320,14 +319,14 @@ async def redeem_status_handler(client, message):
             asyncio.create_task(auto_delete_message(message, reply_msg))
             return
 
-        status = "✅ Redeemed" if redeem_data.get("is_redeemed") else "⏳ Available"
+        status = "✅ Rᴇᴅᴇᴇᴍᴇᴅ" if redeem_data.get("is_redeemed") else "⏳ Available"
         generated_at = redeem_data.get("generated_at")
         generated_at_str = generated_at.astimezone(pytz.timezone("Asia/Kolkata")).strftime("%d-%m-%Y %I:%M:%S %p") if generated_at else "Unknown"
 
         response = (
             f"📋 **Cᴏᴅᴇ ꜱᴛᴀᴛᴜꜱ: `{code}`**\n\n"
             f"📊 **Sᴛᴀᴛᴜꜱ:** {status}\n"
-            f"⏰ **Dᴜʀᴀᴛɪᴏɴ:** {redeem_data.get('duration', 'Unknown')}\n"
+            f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {redeem_data.get('duration', 'Unknown')}\n"
             f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ ᴀᴛ:** {generated_at_str}\n"
         )
 
