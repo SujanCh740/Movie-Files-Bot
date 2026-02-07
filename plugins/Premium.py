@@ -479,7 +479,7 @@ async def notify_expired_user(client, user_id, user_mention=None):
             f"{source_text}\n\n"
             f"✨ **Wᴀɴᴛ ᴛᴏ ᴄᴏɴᴛɪɴᴜᴇ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ?**\n"
             f"👑 Uꜱᴇ `/plan` ᴛᴏ ᴘᴜʀᴄʜᴀꜱᴇ ᴀ ɴᴇᴡ ᴘʟᴀɴ!\n\n"
-            f"😊 **Tʜᴀɴᴋ ʏᴏᴜ ꜰᴏʀ ᴜꜱɪɴɢ ᴏᴜʀ ꜱᴇʀᴠɪᴄᴇ!** 😊"
+            f"😊 **Tʜᴀɴᴋ ʏᴏᴜ ꜰᴏʀ ᴜꜱɪɴɢ ᴏᴜʀ ꜱᴇʀᴠɪᴄᴇ!**"
         )
 
         # Send notification to user
