@@ -604,12 +604,16 @@ async def myplan(client, message):
         data = await db.get_user(user_id)
         expiry = data.get("expiry_time") if data else None
         redeemed_code = data.get("redeemed_code", None)
+        premium_source = data.get("premium_source", "admin")  # Default to admin if not set
 
         if not expiry:
             # Lifetime premium
             plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : ʟɪꜰᴇᴛɪᴍᴇ"
-            if redeemed_code:
+            # Show premium source based on how it was obtained
+            if premium_source == "redeem_code" and redeemed_code:
                 plan_info += f"\n🎟️ ʀᴇᴅᴇᴇᴍᴇᴅ ᴄᴏᴅᴇ : <code>{redeemed_code}</code>"
+            else:
+                plan_info += f"\n👑 ᴘʀᴇᴍɪᴜᴍ ꜱᴏᴜʀᴄᴇ : ᴀᴅᴍɪɴ ᴀᴅᴅᴇᴅ"
             reply_msg = await message.reply_text(plan_info)
             asyncio.create_task(auto_delete_message(message, reply_msg))
             return
@@ -626,8 +630,11 @@ async def myplan(client, message):
         time_left_str = f"{days} ᴅᴀʏꜱ, {hours} ʜᴏᴜʀꜱ, {minutes} ᴍɪɴᴜᴛᴇꜱ"
 
         plan_info = f"⚜️ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ ᴅᴀᴛᴀ :\n\n👤 ᴜꜱᴇʀ : {user}\n⚡ ᴜꜱᴇʀ ɪᴅ : <code>{user_id}</code>\n⏰ ᴛɪᴍᴇ ʟᴇꜰᴛ : {time_left_str}\n⌛️ ᴇxᴘɪʀʏ ᴅᴀᴛᴇ : {expiry_str_in_ist}"
-        if redeemed_code:
+        # Show premium source based on how it was obtained
+        if premium_source == "redeem_code" and redeemed_code:
             plan_info += f"\n🎟️ ʀᴇᴅᴇᴇᴍᴇᴅ ᴄᴏᴅᴇ : <code>{redeemed_code}</code>"
+        else:
+            plan_info += f"\n👑 ᴘʀᴇᴍɪᴜᴍ ꜱᴏᴜʀᴄᴇ : ᴀᴅᴍɪɴ ᴀᴅᴅᴇᴅ"
 
         reply_msg = await message.reply_text(plan_info)
         asyncio.create_task(auto_delete_message(message, reply_msg))
@@ -763,7 +770,7 @@ async def plan(client, message):
     users = message.from_user.mention 
     btn = [[
 
-        InlineKeyboardButton("📲 ꜱᴇɴᴅ ᴘᴀʏᴍᴇɴᴛ ꜱᴄʀᴇᴇɴꜱʜᴏᴛ ʜᴇʀᴇ", user_id=int(5123039648))],[InlineKeyboardButton("❌ ᴄʟᴏꜱᴇ ❌", callback_data="close_data")
+        InlineKeyboardButton("📲 Sᴇɴᴅ Pᴀʏᴍᴇɴᴛ Sᴄʀᴇᴇɴꜱʜᴏᴛ", user_id=int(5123039648))],[InlineKeyboardButton("❌ ᴄʟᴏꜱᴇ ❌", callback_data="close_data")
     ]]
     reply_msg = await message.reply_photo(photo="https://graph.org/file/7d8b428734782477158d4.jpg", caption=script.PREMIUM_TEXT.format(message.from_user.mention), reply_markup=InlineKeyboardMarkup(btn))
 
