@@ -481,26 +481,13 @@ async def notify_expired_user(client, user_id, user_mention=None):
             source_text = "👑 **Premium Source:** Admin Added"
 
         notification_text = (
-            f"⏰ **Premium Expired Notification** ⏰
-
-"
-            f"👋 Hello {user_mention or 'User'},
-
-"
-            f"Your premium access has **expired**.
-
-"
-            f"{source_text}
-
-"
-            f"💔 You no longer have access to premium features.
-
-"
-            f"✨ **Want to continue enjoying premium?**
-"
-            f"Contact admins or use `/plan` to purchase a new plan!
-
-"
+            f"⏰ **Premium Expired Notification** ⏰\n\n"
+            f"👋 Hello {user_mention or 'User'},\n\n"
+            f"Your premium access has **expired**.\n\n"
+            f"{source_text}\n\n"
+            f"💔 You no longer have access to premium features.\n\n"
+            f"✨ **Want to continue enjoying premium?**\n"
+            f"Contact admins or use `/plan` to purchase a new plan!\n\n"
             f"Thank you for using our service! 😊"
         )
 
