@@ -25,8 +25,8 @@ PICS = (environ.get('PICS', 'https://graph.org/file/57a6f6ee0bb528008a3c6.jpg ht
 NOR_IMG = environ.get("NOR_IMG", "https://graph.org/file/efd525bc133e1cbd0c966.jpg")
 MELCOW_VID = environ.get("MELCOW_VID", "https://graph.org/file/98168a0fe0764b10fe1ea.mp4")
 SPELL_IMG = environ.get("SPELL_IMG", "https://graph.org/file/c71f7bc667122cd1be418.jpg")
-SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://graph.org/file/7d8b428734782477158d4.jpg'))
-CODE = (environ.get('CODE', 'https://graph.org/file/a737e665e8496192a65c3.jpg'))
+SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://iili.io/fmFvFN1.jpg'))
+CODE = (environ.get('CODE', 'https://iili.io/ftvUziv.jpg'))
 
 #stream link shortner
 STREAM_SITE = (environ.get('STREAM_SITE', ''))
@@ -127,7 +127,7 @@ else:
     URL = "http://{}/".format(FQDN)
 
 # add premium logs channel id
-PREMIUM_LOGS = int(environ.get('PREMIUM_LOGS', '-1001813638350'))
+PREMIUM_LOGS = int(environ.get('PREMIUM_LOGS', '-1002143289748'))
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
