@@ -64,8 +64,8 @@ async def delete_redeem_code_message(client, chat_id, code):
 # ==================== REDEEM CODE FEATURE ====================
 
 def generate_redeem_code():
-    """Generate an 8-digit alphanumeric redeem code"""
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+    """Generate an 10-digit alphanumeric redeem code"""
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
 
 @Client.on_message(filters.command("gen_code") & filters.user(ADMINS))
 async def generate_redeem_code_handler(client, message):
@@ -134,11 +134,11 @@ async def generate_redeem_code_handler(client, message):
     codes_text = "\n".join([f"`{code}`" for code in generated_codes])
     response = (
         f"✅ **Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ Gᴇɴᴇʀᴀᴛᴇᴅ!**\n\n"
-        f"📊 **Qᴜᴀɴᴛɪᴛʏ:** {quantity}\n"
-        f"⏰ **Dᴜʀᴀᴛɪᴏɴ:** {duration_display}\n"
-        f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ:** {generated_time}\n\n"
-        f"📋 **Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ:**\n\n{codes_text}\n\n"
-        f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ:**<b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>"
+        f"📊 **Qᴜᴀɴᴛɪᴛʏ :** {quantity}\n"
+        f"⏰ **Dᴜʀᴀᴛɪᴏɴ :** {duration_display}\n"
+        f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ :** {generated_time}\n\n"
+        f"📋 **Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ :**\n {codes_text}\n\n"
+        f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ :** <b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>\n\n"
         f"💡 ** Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ & Rᴇᴅᴇᴇᴍ Wɪᴛʜ:** `/redeem <code>`"
     )
 
@@ -183,8 +183,8 @@ async def redeem_code_handler(client, message):
     if len(message.command) != 2:
         reply_msg = await message.reply_text(
             "**Uꜱᴀɢᴇ:** `/redeem <code>`\n\n"
-            "Exᴀᴍᴘʟᴇ: `/redeem ABCD1234`\n\n"
-            "Eɴᴛᴇʀ ʏᴏᴜʀ 8-ᴅɪɢɪᴛ ʀᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ ᴛᴏ ɢᴇᴛ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ!"
+            "Exᴀᴍᴘʟᴇ: `/redeem ABCDE12345`\n\n"
+            "Eɴᴛᴇʀ Yᴏᴜʀ Rᴇᴅᴇᴇᴍ Cᴏᴅᴇ Hᴇʀᴇ Tᴏ Gᴇᴛ Pʀᴇᴍɪᴜᴍ Aᴄᴄᴇꜱꜱ!"
         )
         asyncio.create_task(auto_delete_message(message, reply_msg))
         return
