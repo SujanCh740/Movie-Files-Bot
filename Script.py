@@ -300,9 +300,10 @@ BOT WORKING PROPERLY"""
 
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
-● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
+● <code>20₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>15 ᴅᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>1 ᴍᴏɴᴛʜ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>2 ᴍᴏɴᴛʜ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>3 ᴍᴏɴᴛʜ</code>
 
 🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
 
@@ -329,9 +330,10 @@ BOT WORKING PROPERLY"""
 
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
-● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
+● <code>20₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>15 ᴅᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>1 ᴍᴏɴᴛʜ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>2 ᴍᴏɴᴛʜ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>3 ᴍᴏɴᴛʜ</code>
 
 🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
 
@@ -342,23 +344,6 @@ BOT WORKING PROPERLY"""
 ⚜️ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ Bʏ Uꜱɪɴɢ : /myplan
 
 ‼️ Mᴜsᴛ Sᴇɴᴅ Sᴄʀᴇᴇɴsʜᴏᴛ Aғᴛᴇʀ Pᴀʏᴍᴇɴᴛ.</b>"""
-
-    PLAN_TXT = """<b>👋 Hᴇʏ {},
-    
-🎁 <u>Pʀᴇᴍɪᴜᴍ Fᴇᴀᴛᴜʀᴇs</u> :
-
-○ Nᴏ Nᴇᴇᴅ Tᴏ Oᴘᴇɴ Lɪɴᴋꜱ
-○ Dɪʀᴇᴄᴛ Fɪʟᴇs   
-○ Aᴅ-Fʀᴇᴇ Exᴘᴇʀɪᴇɴᴄᴇ 
-○ Hɪɢʜ-Sᴘᴇᴇᴅ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ                         
-○ Mᴜʟᴛɪ-Pʟᴀʏᴇʀ Sᴛʀᴇᴀᴍɪɴɢ Lɪɴᴋs                           
-○ Uɴʟɪᴍɪᴛᴇᴅ Mᴏᴠɪᴇs & Sᴇʀɪᴇs                                                                        
-○ Fᴜʟʟ Aᴅᴍɪɴ Sᴜᴘᴘᴏʀᴛ                              
-○ Rᴇǫᴜᴇsᴛ Wɪʟʟ Bᴇ Cᴏᴍᴘʟᴇᴛᴇᴅ Iɴ 2ʜ [ Iꜰ Aᴠᴀɪʟᴀʙʟᴇ ]
-
-➛ Uꜱᴇ /myplan Tᴏ Cʜᴇᴄᴋ Yᴏᴜʀ Aᴄᴛɪᴠᴇ Pʟᴀɴ & Sᴇᴇ Aʟʟ Oᴜʀ Pʟᴀɴꜱ.
-
-‼️ Aғᴛᴇʀ Sᴇɴᴅɪɴɢ A Sᴄʀᴇᴇɴsʜᴏᴛ Pʟᴇᴀsᴇ Gɪᴠᴇ Us Sᴏᴍᴇ Tɪᴍᴇ Tᴏ Aᴅᴅ Yᴏᴜ Iɴ Tʜᴇ Pʀᴇᴍɪᴜᴍ Lɪsᴛ.</b>"""
 
     PREPLANS_TXT = """<b>👋 Hᴇʏ {},
     
@@ -375,9 +360,10 @@ BOT WORKING PROPERLY"""
 
 <blockquote>🎖️ Aᴠᴀɪʟᴀʙʟᴇ Pʟᴀɴs:</blockquote>
 
-● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>30 Dᴀʏꜱ</code>
-● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>60 Dᴀʏꜱ</code>
-● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>90 Dᴀʏꜱ</code>
+● <code>20₹</code> ➛ <u>Sɪʟᴠᴇʀ Pʟᴀɴ</u> » <code>15 ᴅᴀʏꜱ</code>
+● <code>40₹</code> ➛ <u>Gᴏʟᴅ Pʟᴀɴ</u> » <code>1 ᴍᴏɴᴛʜ</code>
+● <code>80₹</code> ➛ <u>Pʟᴀᴛɪɴᴜᴍ Pʟᴀɴ</u> » <code>2 ᴍᴏɴᴛʜ</code>
+● <code>120₹</code> ➛ <u>Dɪᴀᴍᴏɴᴅ Pʟᴀɴ</u> » <code>3 ᴍᴏɴᴛʜ</code>
 
 🇮🇳 Uᴘɪ Iᴅ: <code>kumarjishusinha@ybl</code>
 
