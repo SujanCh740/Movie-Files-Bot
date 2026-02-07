@@ -47,7 +47,7 @@ loop = asyncio.get_event_loop()
 
 async def Lazy_start():
     print('\n')
-    print('Initalizing The Movie Provider Bot')
+    print('Initalizing Movie Search Bot')
     bot_info = await LazyPrincessBot.get_me()
     LazyPrincessBot.username = bot_info.username
     await initialize_clients()
