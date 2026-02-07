@@ -169,6 +169,7 @@ class Database:
         await self.users.update_one({"id": user_data["id"]}, {"$set": user_data}, upsert=True)
 
     async def has_premium_access(self, user_id):
+        """Check if user has active premium access (not expired)"""
         user_data = await self.get_user(user_id)
         if user_data:
             expiry_time = user_data.get("expiry_time")
@@ -176,9 +177,26 @@ class Database:
                 return False
             elif isinstance(expiry_time, datetime.datetime) and datetime.datetime.now() <= expiry_time:
                 return True
-            else:
-                await self.users.update_one({"id": user_id}, {"$set": {"expiry_time": None}})
+            # Note: We don't clear expiry_time here anymore
+            # Let the notification system handle expired users properly
         return False
+
+    async def is_premium_expired(self, user_id):
+        """Check if user's premium has expired (for notification purposes)"""
+        user_data = await self.get_user(user_id)
+        if user_data:
+            expiry_time = user_data.get("expiry_time")
+            if expiry_time is None:
+                return False  # Never had premium or lifetime
+            elif isinstance(expiry_time, datetime.datetime) and datetime.datetime.now() > expiry_time:
+                return True
+        return False
+
+    async def clear_expired_premium(self, user_id):
+        """Clear premium access after notification has been sent"""
+        return await self.update_one(
+            {"id": user_id}, {"$set": {"expiry_time": None}}
+        )
 
     async def update_user(self, user_data):
         await self.users.update_one({"id": user_data["id"]}, {"$set": user_data}, upsert=True)
