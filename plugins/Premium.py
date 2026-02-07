@@ -64,8 +64,8 @@ async def delete_redeem_code_message(client, chat_id, code):
 # ==================== REDEEM CODE FEATURE ====================
 
 def generate_redeem_code():
-    """Generate an 10-digit alphanumeric redeem code"""
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    """Generate an80-digit alphanumeric redeem code"""
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
 
 @Client.on_message(filters.command("gen_code") & filters.user(ADMINS))
 async def generate_redeem_code_handler(client, message):
@@ -137,7 +137,7 @@ async def generate_redeem_code_handler(client, message):
         f"📊 **Qᴜᴀɴᴛɪᴛʏ :** {quantity}\n"
         f"⏰ **Dᴜʀᴀᴛɪᴏɴ :** {duration_display}\n"
         f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ :** {generated_time}\n\n"
-        f"📋 **Rᴇᴅᴇᴇᴍ Cᴏᴅᴇꜱ :**\n {codes_text}\n\n"
+        f"📋 **Cᴏᴅᴇꜱ :**\n {codes_text}\n\n"
         f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ :** <b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>\n\n"
         f"💡 **Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ & Rᴇᴅᴇᴇᴍ :** `/redeem <code>`"
     )
