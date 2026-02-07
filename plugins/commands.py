@@ -966,7 +966,7 @@ async def requests(bot, message):
             except Exception:
                 continue
     if success:
-        '''if isinstance(REQST_CHANNEL, (int, str)):
+        link = await bot.create_chat_invite_link(int(REQST_CHANNEL))
         btn = [
             [InlineKeyboardButton('Jᴏɪɴ Cʜᴀɴɴᴇʟ', url=link.invite_link)],
             [InlineKeyboardButton('Vɪᴇᴡ Rᴇǫᴜᴇꜱᴛ', url=f"{reported_post.link}")]
@@ -976,7 +976,7 @@ async def requests(bot, message):
             "ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ ꜰɪʀꜱᴛ & ᴠɪᴇᴡ ʀᴇǫᴜᴇꜱᴛ.</b>",
             reply_markup=InlineKeyboardMarkup(btn)
         )
-    
+
 @Client.on_message(filters.command("send") & filters.user(ADMINS))
 async def send_msg(bot, message):
     if message.reply_to_message:
