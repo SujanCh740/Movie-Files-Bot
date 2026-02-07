@@ -237,7 +237,7 @@ async def redeem_code_handler(client, message):
 
     # Redeem the code
     time_zone = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
-    current_time = time_zone.strftime("%d-%m-%Y\n⏱️ Jᴏɪɴɪɴɢ ᴛɪᴍᴇ : %I:%M:%S %p")
+    current_time = time_zone.strftime("%d-%m-%Y\n⏱️ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ :** %I:%M:%S %p")
     redeemed_at = datetime.datetime.now()
 
     seconds = redeem_data.get("seconds", 0)
@@ -251,7 +251,7 @@ async def redeem_code_handler(client, message):
     else:
         expiry_time = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
         expiry_ist = expiry_time.astimezone(pytz.timezone("Asia/Kolkata"))
-        expiry_str = expiry_ist.strftime("%d-%m-%Y\n⏱️ Exᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")
+        expiry_str = expiry_ist.strftime("%d-%m-%Y\n⏱️ **Exᴘɪʀʏ ᴛɪᴍᴇ :** %I:%M:%S %p")
         time_left_str = duration
 
     # Update user premium data - also reset expiry notification status
@@ -281,8 +281,8 @@ async def redeem_code_handler(client, message):
         f"⚡ **Uꜱᴇʀ ɪᴅ:** `{user_id}`\n"
         f"🎟️ **Rᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ:** `{code}`\n"
         f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {duration}\n"
-        f"⏳ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ:** {current_time}\n"
-        f"⌛️ **Exᴘɪʀʏ ᴛɪᴍᴇ:** {expiry_str}\n\n"
+        f"⏳ **Jᴏɪɴɪɴɢ ᴅᴀᴛᴇ:** {current_time}\n"
+        f"⌛️ **Exᴘɪʀʏ ᴅᴀᴛᴇ:** {expiry_str}\n\n"
         f"✨ Eɴᴊᴏʏ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ!"
     )
 
@@ -297,8 +297,8 @@ async def redeem_code_handler(client, message):
         f"⚡ **Uꜱᴇʀ ɪᴅ:** `{user_id}`\n"
         f"🎟️ **Rᴇᴅᴇᴇᴍ ᴄᴏᴅᴇ:** `{code}`\n"
         f"⏰ **Pʀᴇᴍɪᴜᴍ ꜰᴏʀ:** {duration}\n"
-        f"⏳ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ:** {current_time}\n"
-        f"⌛️ **Exᴘɪʀʏ ᴛɪᴍᴇ:** {expiry_str}\n\n"
+        f"⏳ **Jᴏɪɴɪɴɢ ᴅᴀᴛᴇ:** {current_time}\n"
+        f"⌛️ **Exᴘɪʀʏ ᴅᴀᴛᴇ:** {expiry_str}\n\n"
     )
 
     # Auto-delete messages
@@ -611,7 +611,7 @@ async def myplan(client, message):
 
         # Calculate time left
         expiry_ist = expiry.astimezone(pytz.timezone("Asia/Kolkata"))
-        expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ Exᴘɪʀʏ ᴛɪᴍᴇ : %I:%M:%S %p")
+        expiry_str_in_ist = expiry_ist.strftime("%d-%m-%Y\n⏱️ **Exᴘɪʀʏ ᴛɪᴍᴇ :** %I:%M:%S %p")
         current_time = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
         time_left = expiry_ist - current_time
 
@@ -676,7 +676,7 @@ async def give_premium_cmd_handler(client, message):
 
     if len(message.command) == 4:
         time_zone = datetime.datetime.now(pytz.timezone("Asia/Kolkata"))
-        current_time = time_zone.strftime("%d-%m-%Y\n⏱️ Jᴏɪɴɪɴɢ ᴛɪᴍᴇ : %I:%M:%S %p") 
+        current_time = time_zone.strftime("%d-%m-%Y\n⏱️ **Jᴏɪɴɪɴɢ ᴛɪᴍᴇ :** %I:%M:%S %p") 
         user_id = int(message.command[1])  # Convert the user_id to integer
         user = await client.get_users(user_id)
         time = message.command[2]+" "+message.command[3]
