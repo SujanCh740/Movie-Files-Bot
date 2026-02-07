@@ -1661,7 +1661,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
             InlineKeyboardButton('🎁Exᴛʀᴀ Fᴇᴀᴛᴜʀᴇs🎁', callback_data='mods')
         ], [
-            InlineKeyboardButton('• Oᴡɴᴇʀ •', user_id=int(6474527080)),
+            InlineKeyboardButton('• Oᴡɴᴇʀ •', user_id=int(5123039648)),
             InlineKeyboardButton('• Sᴛᴀᴛꜱ •', callback_data='stats')
         ], [
             InlineKeyboardButton('🛰️ Rᴇɴᴅᴇʀɪɴɢ Sᴛᴀᴛᴜꜱ ☁️',callback_data='rendr')
