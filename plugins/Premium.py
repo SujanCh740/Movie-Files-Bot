@@ -138,8 +138,9 @@ async def generate_redeem_code_handler(client, message):
         f"⏰ **Dᴜʀᴀᴛɪᴏɴ :** {duration_display}\n"
         f"🕐 **Gᴇɴᴇʀᴀᴛᴇᴅ Aᴛ :** {generated_time}\n\n"
         f"📋 **Cᴏᴅᴇꜱ :**\n{codes_text}\n\n"
-        f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ :** <b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>\n\n"
-        f"💡 **Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ :** `/redeem`"
+        f"🤖 **Bᴏᴛ Uꜱᴇʀɴᴀᴍᴇ :** <b><a href='https://t.me/Your_Movie_Search_Bot'>Rᴇᴅᴇᴇᴍ Hᴇʀᴇ</a></b>\n"
+        f"💡 **Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ :** `/redeem`\n\n"
+        f"✨ **Eɴᴊᴏʏ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ!**"
     )
 
     # Send as file if too many codes
