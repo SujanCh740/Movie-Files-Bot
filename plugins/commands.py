@@ -20,8 +20,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 TIMEZONE = "Asia/Kolkata"
-BATCH_FILES = {}BATCH_FILES = {}
-
+BATCH_FILES = {}
 
 async def get_verify_keyboard(client, user_id):
     verify_url = await get_token(client, user_id, f"https://telegram.me/{temp.U_NAME}?start=")
