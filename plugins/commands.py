@@ -17,31 +17,10 @@ from database.connections_mdb import active_connection
 import re, asyncio, os, sys
 import json
 import base64
-from urllib.parse import urlparse
 logger = logging.getLogger(__name__)
 
 TIMEZONE = "Asia/Kolkata"
 BATCH_FILES = {}
-
-
-async def get_verify_keyboard(client, user_id):
-    verify_url = (await get_token(client, user_id, f"https://telegram.me/{temp.U_NAME}?start=")).strip()
-
-    parsed = urlparse(verify_url)
-    if not parsed.scheme:
-        verify_url = f"https://{verify_url.lstrip('/')}"
-        parsed = urlparse(verify_url)
-    elif parsed.scheme == "http":
-        verify_url = verify_url.replace("http://", "https://", 1)
-        parsed = urlparse(verify_url)
-
-    verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
-
-    return InlineKeyboardMarkup([
-        [verify_button], [
-            InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
-        ]
-    ])
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
@@ -402,10 +381,15 @@ async def start(client, message):
                 f_caption = f"{' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files1.file_name.split()))}"
 
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
+                btn = [[
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+                ],[
+                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                ]]
                 await message.reply_text(
                     text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
                     protect_content=True,
-                    reply_markup=await get_verify_keyboard(client, message.from_user.id)
+                    reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
             msg = await client.send_cached_media(
@@ -474,10 +458,15 @@ async def start(client, message):
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
+                btn = [[
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+                ],[
+                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                ]]
                 await message.reply_text(
                     text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
                     protect_content=True,
-                    reply_markup=await get_verify_keyboard(client, message.from_user.id)
+                    reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
             msg = await client.send_cached_media(
@@ -531,10 +520,15 @@ async def start(client, message):
         f_caption = f" {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files.file_name.split()))}"
 
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
+        btn = [[
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start="))
+        ],[
+            InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+        ]]
         await message.reply_text(
             text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
             protect_content=True,
-            reply_markup=await get_verify_keyboard(client, message.from_user.id)
+            reply_markup=InlineKeyboardMarkup(btn)
         )
         return
     msg = await client.send_cached_media(
