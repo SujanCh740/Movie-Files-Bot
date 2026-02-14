@@ -35,10 +35,7 @@ async def get_verify_keyboard(client, user_id):
         verify_url = verify_url.replace("http://", "https://", 1)
         parsed = urlparse(verify_url)
 
-    if parsed.scheme == "https":
-        verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
-    else:
-        verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
+    verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
 
     return InlineKeyboardMarkup([
         [verify_button], [
