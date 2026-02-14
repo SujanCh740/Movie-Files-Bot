@@ -17,21 +17,34 @@ from database.connections_mdb import active_connection
 import re, asyncio, os, sys
 import json
 import base64
+from urllib.parse import urlparse
 logger = logging.getLogger(__name__)
 
 TIMEZONE = "Asia/Kolkata"
 BATCH_FILES = {}
 
+
 async def get_verify_keyboard(client, user_id):
-    verify_url = await get_token(client, user_id, f"https://telegram.me/{temp.U_NAME}?start=")
+    verify_url = (await get_token(client, user_id, f"https://telegram.me/{temp.U_NAME}?start=")).strip()
+
+    parsed = urlparse(verify_url)
+    if not parsed.scheme:
+        verify_url = f"https://{verify_url.lstrip('/')}"
+        parsed = urlparse(verify_url)
+    elif parsed.scheme == "http":
+        verify_url = verify_url.replace("http://", "https://", 1)
+        parsed = urlparse(verify_url)
+
+    if parsed.scheme == "https":
+        verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
+    else:
+        verify_button = InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
+
     return InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
-        ], [
+        [verify_button], [
             InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
         ]
     ])
-
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
