@@ -583,13 +583,14 @@ async def get_webapp_verify_link(userid, verify_shortlink):
     """
     Generate a web app redirect link that will first open the web app,
     then redirect to the verification shortener link.
+    Uses base64 encoding to hide the actual link from users.
     """
-    # Encode the verification link to pass as URL parameter
-    import urllib.parse
-    encoded_link = urllib.parse.quote(verify_shortlink)
+    # Encode the verification link using base64 to hide it from users
+    import base64
+    encoded_link = base64.urlsafe_b64encode(verify_shortlink.encode()).decode()
 
-    # Create the web app URL with the verification link as parameter
-    webapp_link = f"{WEB_APP_URL}?link={encoded_link}&user={userid}"
+    # Create the web app URL with encoded link (not human readable)
+    webapp_link = f"{WEB_APP_URL}?token={encoded_link}&u={userid}"
 
     return webapp_link
 
