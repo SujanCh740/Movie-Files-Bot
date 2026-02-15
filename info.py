@@ -60,7 +60,7 @@ HOWTOVERIFY = environ.get('HOWTOVERIFY', 'https://t.me/How_2_Download_From_TeraB
 
 # NEW: WebApp URL for verification (host your verify_webapp.html here)
 # You can host this on GitHub Pages, Vercel, Netlify, or any static hosting
-WEB_APP_URL = 'https://verification-redirect.vercel.app/index.html'  # <-- UPDATE THIS
+WEB_APP_URL = 'https://web-app-redirect.vercel.app'  # <-- UPDATE THIS
 
 # Others
 SHORTLINK_URL = environ.get('SHORTLINK_URL', 'shortxlinks.com')
