@@ -1,6 +1,6 @@
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, SHORTLINK_URL, SHORTLINK_API, IS_SHORTLINK, LOG_CHANNEL, TUTORIAL, GRP_LNK, CHNL_LNK, CUSTOM_FILE_CAPTION, PREMIUM_USER
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, SHORTLINK_URL, SHORTLINK_API, IS_SHORTLINK, LOG_CHANNEL, TUTORIAL, GRP_LNK, CHNL_LNK, CUSTOM_FILE_CAPTION, PREMIUM_USER, WEB_APP_URL
 from imdb import Cinemagoer 
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -578,6 +578,21 @@ async def get_verify_shorted_link(link):
             logger.error(e)
             return f'{URL}/api?api={API}&link={link}'
 
+
+async def get_webapp_verify_link(userid, verify_shortlink):
+    """
+    Generate a web app redirect link that will first open the web app,
+    then redirect to the verification shortener link.
+    """
+    # Encode the verification link to pass as URL parameter
+    import urllib.parse
+    encoded_link = urllib.parse.quote(verify_shortlink)
+
+    # Create the web app URL with the verification link as parameter
+    webapp_link = f"{WEB_APP_URL}?link={encoded_link}&user={userid}"
+
+    return webapp_link
+
 async def check_token(bot, userid, token):
     user = await bot.get_users(userid)
     if not await db.is_user_exist(user.id):
@@ -603,7 +618,9 @@ async def get_token(bot, userid, link):
     TOKENS[user.id] = {token: False}
     link = f"{link}verify-{user.id}-{token}"
     shortened_verify_url = await get_verify_shorted_link(link)
-    return str(shortened_verify_url)
+    # Return web app redirect link instead of direct shortlink
+    webapp_verify_url = await get_webapp_verify_link(user.id, shortened_verify_url)
+    return str(webapp_verify_url)
 
 async def verify_user(bot, userid, token):
     user = await bot.get_users(userid)
