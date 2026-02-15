@@ -58,6 +58,10 @@ COLLECTION_NAME = environ.get('COLLECTION_NAME', 'TelegramFiles')
 VERIFY = bool(environ.get('VERIFY', True)) # Verification On ( True ) / Off ( False )
 HOWTOVERIFY = environ.get('HOWTOVERIFY', 'https://t.me/How_2_Download_From_TeraBox/5732') # How to open tutorial link for verification
 
+# NEW: WebApp URL for verification (host your verify_webapp.html here)
+# You can host this on GitHub Pages, Vercel, Netlify, or any static hosting
+WEBAPP_URL = 'https://your-verification-webapp.netlify.app'  # <-- UPDATE THIS
+
 # Others
 SHORTLINK_URL = environ.get('SHORTLINK_URL', 'shortxlinks.com')
 SHORTLINK_API = environ.get('SHORTLINK_API', '21312ded78e50e34e58391be04bf4a266e6b5d8f')
