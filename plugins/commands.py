@@ -529,9 +529,9 @@ async def start(client, message):
 
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
         token = await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")
-                # Extract token from the generated URL
-                token_param = token.split("start=")[-1] if "start=" in token else ""
-                verify_url = f"{WEBAPP_URL}?token={token_param}&userid={message.from_user.id}"
+        # Extract token from the generated URL
+        token_param = token.split("start=")[-1] if "start=" in token else ""
+        verify_url = f"{WEBAPP_URL}?token={token_param}&userid={message.from_user.id}"
         btn = [[
             InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
         ],[
