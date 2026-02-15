@@ -386,7 +386,7 @@ async def start(client, message):
                 token_param = token.split("start=")[-1] if "start=" in token else ""
                 verify_url = f"{WEBAPP_URL}?token={token_param}&userid={message.from_user.id}"
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -467,7 +467,7 @@ async def start(client, message):
                 token_param = token.split("start=")[-1] if "start=" in token else ""
                 verify_url = f"{WEBAPP_URL}?token={token_param}&userid={message.from_user.id}"
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -533,7 +533,7 @@ async def start(client, message):
         token_param = token.split("start=")[-1] if "start=" in token else ""
         verify_url = f"{WEBAPP_URL}?token={token_param}&userid={message.from_user.id}"
         btn = [[
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=verify_url))
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", url=verify_url)
         ],[
             InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
         ]]
