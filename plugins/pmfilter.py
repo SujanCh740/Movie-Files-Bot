@@ -1498,7 +1498,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             query.message.reply_markup.inline_keyboard.insert(0, buttons)
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             await log_msg.reply_text(
-                    text=f"Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\nUꜱᴇʀɴᴀᴍᴇ : {username}\n\n{fileName}",
+                    text=f"Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\nUꜱᴇʀɴᴀᴍᴇ : {username}",
                     quote=True,
                     disable_web_page_preview=True,
                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Dᴏᴡɴʟᴏᴀᴅ", url=hp_link),
