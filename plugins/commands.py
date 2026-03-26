@@ -155,7 +155,10 @@ async def start(client, message):
     data = message.command[1]
     if data.startswith("search_"):
         query = data.replace("search_", "").replace("_", " ")
-        await auto_filter(client, message, keywd=query)
+        try:
+            await auto_filter(client, message, keywd=query)
+        except Exception as e:
+            logger.exception(e)
         return
     try:
         pre, file_id = data.split('_', 1)
