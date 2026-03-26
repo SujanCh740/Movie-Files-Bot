@@ -1474,21 +1474,21 @@ async def cb_handler(client: Client, query: CallbackQuery):
             buttons = []
             if await db.has_premium_access(user_id):                               
                 buttons = [[
-                    InlineKeyboardButton("🚀 Fᴀꜱᴛ Dᴏᴡɴʟᴏᴀᴅ", url=lazy_download),
-                    InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=lazy_stream)
+                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=lazy_stream),
+                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=lazy_stream)
                 #],[
                     #InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url='https://t.me/Sujan_BotZ')
                 ]]
             else:
-                #await query.answer("🚸 Nᴏᴛᴇ :\nAᴅ-Fʀᴇᴇ Sᴇʀᴠɪᴄᴇ Iꜱ Oɴʟʏ Fᴏʀ Pʀᴇᴍɪᴜᴍ Uꜱᴇʀꜱ.\n\nTᴏ Kɴᴏᴡ Mᴏʀᴇ Cʜᴇᴄᴋ Pʟᴀɴꜱ.", show_alert=True)
+                #await query.answer("🚸 Nᴏᴛᴇ :\nTʜɪꜱ Fᴇᴀᴛᴜʀᴇ oɴʟʏ Aᴠᴀɪʟᴀʙʟᴇ Fᴏʀ Pʀᴇᴍɪᴜᴍ Uꜱᴇʀꜱ.\n\nTᴏ Kɴᴏᴡ Mᴏʀᴇ Cʜᴇᴄᴋ Pʟᴀɴꜱ.", show_alert=True)
                 #await query.message.reply_text(
-                #text="<b>‼️ Wᴀɴᴛ Tᴏ Rᴇᴍᴏᴠᴇ Aᴅꜱ ?\n\n✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ Aᴅ-Fʀᴇᴇ Exᴘᴇʀɪᴇɴᴄᴇ.</b>",
+                #text="<b>✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ ‼️.</b>",
                 #quote=True,
                 #disable_web_page_preview=True,                  
                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
-                    InlineKeyboardButton("🚀 Fᴀꜱᴛ Dᴏᴡɴʟᴏᴀᴅ", url=hp_link),
-                    InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=ph_link)
+                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=hp_link),
+                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=ph_link)
                 #],[
                     #InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
                 ]]
@@ -1501,8 +1501,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     text=f"Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\nUꜱᴇʀɴᴀᴍᴇ : {username}",
                     quote=True,
                     disable_web_page_preview=True,
-                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Dᴏᴡɴʟᴏᴀᴅ", url=hp_link),
-                                                        InlineKeyboardButton('Wᴀᴛᴄʜ Oɴʟɪɴᴇ', url=ph_link)]]))  
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=hp_link)]]))  
         except Exception as e:
             print(e)  # print the error message
             await query.answer(f"⚠️ SOMETHING WENT WRONG \n\n{e}", show_alert=True)
