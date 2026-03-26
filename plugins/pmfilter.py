@@ -1474,8 +1474,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             buttons = []
             if await db.has_premium_access(user_id):                               
                 buttons = [[
-                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=lazy_stream),
-                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=lazy_stream)
+                    InlineKeyboardButton("Download", url=lazy_download),
+                    InlineKeyboardButton("Stream", url=lazy_stream)
                 #],[
                     #InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url='https://t.me/Sujan_BotZ')
                 ]]
@@ -1487,8 +1487,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 #disable_web_page_preview=True,                  
                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
-                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=ph_link),
-                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=hp_link)
+                    InlineKeyboardButton("Stream", url=ph_link),
+                    InlineKeyboardButton("Download", url=hp_link)
                 #],[
                     #InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
                 ]]
