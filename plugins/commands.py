@@ -14,7 +14,7 @@ from database.users_chats_db import db
 from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, CHNL_LNK, GRP_LNK, REQST_CHANNEL, SUPPORT_CHAT_ID, SUPPORT_CHAT, MAX_B_TN, VERIFY, HOWTOVERIFY, SHORTLINK_API, SHORTLINK_URL, TUTORIAL, IS_TUTORIAL, PREMIUM_USER, PICS, SUBSCRIPTION, WEB_APP_URL
 from utils import get_settings, get_size, is_req_subscribed, save_group_settings, temp, verify_user, check_token, check_verification, get_token, get_shortlink, get_tutorial, get_webapp_verify_link
 from database.connections_mdb import active_connection
-from plugins.pmfilter import auto_filter
+# from plugins.pm_filter import ENABLE_SHORTLINK
 import re, asyncio, os, sys
 import json
 import base64
@@ -153,13 +153,6 @@ async def start(client, message):
         )
         return  
     data = message.command[1]
-    if data.startswith("search_"):
-        query = data.replace("search_", "").replace("_", " ")
-        try:
-            await auto_filter(client, message, keywd=query)
-        except Exception as e:
-            logger.exception(e)
-        return
     try:
         pre, file_id = data.split('_', 1)
     except:
