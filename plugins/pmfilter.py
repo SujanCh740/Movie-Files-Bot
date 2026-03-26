@@ -1594,7 +1594,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     
     elif query.data == "channels":
         buttons = [[
-            InlineKeyboardButton('⚜️ Mᴏᴠɪᴇ ʀᴇQ Gʀᴏᴜᴘ ⚜️', url='https://t.me/Movie_Search_Group_Bot')
+            InlineKeyboardButton('⚜️ Mᴏᴠɪᴇ ʀᴇQ Gʀᴏᴜᴘ ⚜️', url='https://t.me/Movie_Search_Group_Bott')
         ],[
             InlineKeyboardButton('⇇ Bᴀᴄᴋ', callback_data='start')
         ]]
@@ -1925,19 +1925,23 @@ async def cb_handler(client: Client, query: CallbackQuery):
     await query.answer(MSG_ALRT)
 
     
-async def auto_filter(client, msg, spoll=False):
+async def auto_filter(client, msg, spoll=False, keywd=None):
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
     # reqstr1 = msg.from_user.id if msg.from_user else 0
     # reqstr = await client.get_users(reqstr1)
     
     if not spoll:
         message = msg
-        if message.text.startswith("/"): return  # ignore commands
-        if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
-            return
-        if len(message.text) < 100:
+        if keywd:
+            search = keywd
+        else:
+            if message.text.startswith("/"): return  # ignore commands
+            if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
+                return
+            if len(message.text) >= 100:
+                return
             search = message.text
-            m=await message.reply_sticker("CAACAgQAAxkBAAEKSxplArIUActk4ORQuFn3DHFvBqQCOgACBQMAAnJxFyVYcSIunXgGjjAE",
+        m=await message.reply_sticker("CAACAgQAAxkBAAEKSxplArIUActk4ORQuFn3DHFvBqQCOgACBQMAAnJxFyVYcSIunXgGjjAE",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(f'Seaching for {search} 🔎', url=f"https://t.me/Sujan_Ch")]]) 
             )
             search = search.lower()
