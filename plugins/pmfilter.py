@@ -1487,8 +1487,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 #disable_web_page_preview=True,                  
                 #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
-                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=hp_link),
-                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=ph_link)
+                    InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=ph_link),
+                    #InlineKeyboardButton("🖥️ Wᴀᴛᴄʜ Oɴʟɪɴᴇ", url=hp_link)
                 #],[
                     #InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
                 ]]
