@@ -206,7 +206,8 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}'),
+                                #InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}')
+                                InlineKeyboardButton('Update Channel', url=f'https://t.me/Sujan_BotZ'),
                             ]
                         ]
                     )
@@ -223,7 +224,8 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}'),
+                                #InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}')
+                                InlineKeyboardButton('Update Channel', url=f'https://t.me/Sujan_BotZ'),
                             ]
                         ]
                     )
