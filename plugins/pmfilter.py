@@ -1916,9 +1916,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ],
                 [
                     InlineKeyboardButton('ᴠᴇʀɪꜰʏ',
-                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
-                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}')
+                                         callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{str(grp_id)}'),
+                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings.get("verify", VERIFY) else 'ᴅɪꜱᴀʙʟᴇ',
+                                         callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('⇋ Cʟᴏꜱᴇ Sᴇᴛᴛɪɴɢꜱ ⇋', 

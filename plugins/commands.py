@@ -828,11 +828,11 @@ async def settings(client, message):
             [
                 InlineKeyboardButton(
                     'ᴠᴇʀɪꜰʏ',
-                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
+                    callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{grp_id}',
                 ),
                 InlineKeyboardButton(
-                    'ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
-                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
+                    'ᴇɴᴀʙʟᴇ' if settings.get("verify", VERIFY) else 'ᴅɪꜱᴀʙʟᴇ',
+                    callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{grp_id}',
                 ),
             ],
             [
