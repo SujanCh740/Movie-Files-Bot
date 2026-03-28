@@ -11,14 +11,13 @@ from pyrogram.types import *
 from pyrogram.types import WebAppInfo
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, CHNL_LNK, GRP_LNK, REQST_CHANNEL, SUPPORT_CHAT_ID, SUPPORT_CHAT, MAX_B_TN, VERIFY, HOWTOVERIFY, SHORTLINK_API, SHORTLINK_URL, TUTORIAL, IS_TUTORIAL, PREMIUM_USER, PICS, SUBSCRIPTION, WEB_APP_URL, USE_SECONDARY_BOT
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, CHNL_LNK, GRP_LNK, REQST_CHANNEL, SUPPORT_CHAT_ID, SUPPORT_CHAT, MAX_B_TN, VERIFY, HOWTOVERIFY, SHORTLINK_API, SHORTLINK_URL, TUTORIAL, IS_TUTORIAL, PREMIUM_USER, PICS, SUBSCRIPTION, WEB_APP_URL
 from utils import get_settings, get_size, is_req_subscribed, save_group_settings, temp, verify_user, check_token, check_verification, get_token, get_shortlink, get_tutorial, get_webapp_verify_link
 from database.connections_mdb import active_connection
 # from plugins.pm_filter import ENABLE_SHORTLINK
 import re, asyncio, os, sys
 import json
 import base64
-from lazybot import multi_clients
 logger = logging.getLogger(__name__)
 
 TIMEZONE = "Asia/Kolkata"
@@ -28,12 +27,12 @@ BATCH_FILES = {}
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', url=f'https://t.me/Sujan_BotZ')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply(script.GSTART_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
+        await message.reply(script.GSTART_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
         await asyncio.sleep(2) # 😢 https://github.com/EvamariaTG/EvaMaria/blob/master/plugins/p_ttishow.py#L17 😬 wait a bit, before checking.
         if not await db.get_chat(message.chat.id):
             total=await client.get_chat_members_count(message.chat.id)
@@ -45,7 +44,7 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
@@ -71,7 +70,7 @@ async def start(client, message):
         await m.delete()
         await message.reply_photo(
             photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME),
+            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -96,7 +95,7 @@ async def start(client, message):
                 kk, file_id = message.command[1].split("_", 1)
                 btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"checksub#{kk}#{file_id}")])
             except (IndexError, ValueError):
-                btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", url=f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start={message.command[1]}")])
+                btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", url=f"https://t.me/{temp.U_NAME}?start={message.command[1]}")])
         await client.send_message(
             chat_id=message.from_user.id,
             text="Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ Aɴᴅ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Tʀʏ Aɢᴀɪɴ Tᴏ Gᴇᴛ Yᴏᴜʀ Rᴇǫᴜᴇꜱᴛᴇᴅ Fɪʟᴇ.",
@@ -105,9 +104,8 @@ async def start(client, message):
             )
         return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
-        # ... existing code ...
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
@@ -133,7 +131,7 @@ async def start(client, message):
         await m.delete()
         await message.reply_photo(
             photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME),
+            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -155,7 +153,6 @@ async def start(client, message):
         )
         return  
     data = message.command[1]
-    delivery_bot = multi_clients.get(1) if USE_SECONDARY_BOT and 1 in multi_clients else client
     try:
         pre, file_id = data.split('_', 1)
     except:
@@ -164,7 +161,7 @@ async def start(client, message):
     if data.split("-", 1)[0] == "BATCH":
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
             ],[
                 InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
             ]]
@@ -201,7 +198,7 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{title}"
             try:
-                m = await delivery_bot.send_cached_media(
+                m = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -219,7 +216,7 @@ async def start(client, message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
-                m = await delivery_bot.send_cached_media(
+                m = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -252,7 +249,7 @@ async def start(client, message):
     elif data.split("-", 1)[0] == "DSTORE":
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
             ],[
                 InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
             ]]
@@ -286,11 +283,11 @@ async def start(client, message):
                     file_name = getattr(media, 'file_name', '')
                     f_caption = getattr(msg, 'caption', file_name)
                 try:
-                    m = await delivery_bot.copy_message(chat_id=message.chat.id, from_chat_id=msg.chat.id, message_id=msg.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                     sent_messages.append(m)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    m = await delivery_bot.copy_message(chat_id=message.chat.id, from_chat_id=msg.chat.id, message_id=msg.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                     sent_messages.append(m)
                 except Exception as e:
                     logger.exception(e)
@@ -354,7 +351,7 @@ async def start(client, message):
             gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"
         chat_id = int("-" + file_id.split("-")[1])
         userid = message.from_user.id if message.from_user else None
-        g = await get_shortlink(chat_id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=allfiles_{file_id}")
+        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=allfiles_{file_id}")
         k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n‼️ Gᴇᴛ Aʟʟ Fɪʟᴇꜱ Iɴ A Sɪɴɢʟᴇ Lɪɴᴋ ‼️\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n", reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -388,8 +385,8 @@ async def start(client, message):
         chat_id = temp.SHORT.get(user_id)
         files_ = await get_file_details(file_id)
         files = files_[0]
-        g = await get_shortlink(chat_id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
-        k = await delivery_bot.send_message(
+        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
+        k = await client.send_message(
             chat_id=user_id,
             text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n",
             reply_markup=InlineKeyboardMarkup(
@@ -431,7 +428,7 @@ async def start(client, message):
 
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -458,7 +455,7 @@ async def start(client, message):
         )
     )
             filesarr.append(msg)
-        k = await delivery_bot.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
@@ -485,8 +482,8 @@ async def start(client, message):
         if not await db.has_premium_access(user_id) and settings['is_shortlink']: #Don't change anything without my permission @CoderluffyTG
             files_ = await get_file_details(file_id)
             files = files_[0]
-            g = await get_shortlink(chat_id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
-            k = await delivery_bot.send_message(chat_id=user_id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
+            g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
+            k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton('📁 Dᴏᴡɴʟᴏᴀᴅ 📁', url=g)
@@ -508,7 +505,7 @@ async def start(client, message):
         try:
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -518,7 +515,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
-            msg = await delivery_bot.send_cached_media(
+            msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
                 protect_content=True if pre == 'filep' else False,
@@ -547,7 +544,7 @@ async def start(client, message):
             btn = [[
                 InlineKeyboardButton("❗ Gᴇᴛ Fɪʟᴇ Aɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
             ]]
-            k = await delivery_bot.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+            k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
             await asyncio.sleep(600)
             await msg.delete()
             await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
@@ -570,7 +567,7 @@ async def start(client, message):
 
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
         ],[
             InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
         ]]
@@ -580,7 +577,7 @@ async def start(client, message):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         return
-    msg = await delivery_bot.send_cached_media(
+    msg = await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,

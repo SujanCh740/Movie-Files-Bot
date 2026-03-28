@@ -37,7 +37,7 @@ import asyncio
 from pyrogram import idle
 from lazybot import LazyPrincessBot
 from util.keepalive import ping_server
-from lazybot.clients import initialize_clients, multi_clients
+from lazybot.clients import initialize_clients
 
 
 ppath = "plugins/*.py"
@@ -51,12 +51,6 @@ async def Lazy_start():
     bot_info = await LazyPrincessBot.get_me()
     LazyPrincessBot.username = bot_info.username
     await initialize_clients()
-    if len(multi_clients) > 1:
-        client_to_use = multi_clients.get(1)
-        if client_to_use:
-            sec_me = await client_to_use.get_me()
-            temp.SEC_U_NAME = sec_me.username
-            logging.info(f"Secondary bot (@{sec_me.username}) is ready for delivery.")
     for name in files:
         with open(name) as a:
             patt = Path(a.name)
