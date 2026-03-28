@@ -11,13 +11,14 @@ from pyrogram.types import *
 from pyrogram.types import WebAppInfo
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, CHNL_LNK, GRP_LNK, REQST_CHANNEL, SUPPORT_CHAT_ID, SUPPORT_CHAT, MAX_B_TN, VERIFY, HOWTOVERIFY, SHORTLINK_API, SHORTLINK_URL, TUTORIAL, IS_TUTORIAL, PREMIUM_USER, PICS, SUBSCRIPTION, WEB_APP_URL
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT, CHNL_LNK, GRP_LNK, REQST_CHANNEL, SUPPORT_CHAT_ID, SUPPORT_CHAT, MAX_B_TN, VERIFY, HOWTOVERIFY, SHORTLINK_API, SHORTLINK_URL, TUTORIAL, IS_TUTORIAL, PREMIUM_USER, PICS, SUBSCRIPTION, WEB_APP_URL, USE_SECONDARY_BOT
 from utils import get_settings, get_size, is_req_subscribed, save_group_settings, temp, verify_user, check_token, check_verification, get_token, get_shortlink, get_tutorial, get_webapp_verify_link
 from database.connections_mdb import active_connection
 # from plugins.pm_filter import ENABLE_SHORTLINK
 import re, asyncio, os, sys
 import json
 import base64
+from lazybot import multi_clients
 logger = logging.getLogger(__name__)
 
 TIMEZONE = "Asia/Kolkata"
@@ -104,6 +105,7 @@ async def start(client, message):
             )
         return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
+        # ... existing code ...
         buttons = [[
                     InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
                 ],[
@@ -153,6 +155,7 @@ async def start(client, message):
         )
         return  
     data = message.command[1]
+    delivery_bot = multi_clients.get(1) if USE_SECONDARY_BOT and 1 in multi_clients else client
     try:
         pre, file_id = data.split('_', 1)
     except:
@@ -198,7 +201,7 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{title}"
             try:
-                m = await client.send_cached_media(
+                m = await delivery_bot.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -216,7 +219,7 @@ async def start(client, message):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
-                m = await client.send_cached_media(
+                m = await delivery_bot.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -283,11 +286,11 @@ async def start(client, message):
                     file_name = getattr(media, 'file_name', '')
                     f_caption = getattr(msg, 'caption', file_name)
                 try:
-                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await delivery_bot.copy_message(chat_id=message.chat.id, from_chat_id=msg.chat.id, message_id=msg.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                     sent_messages.append(m)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await delivery_bot.copy_message(chat_id=message.chat.id, from_chat_id=msg.chat.id, message_id=msg.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                     sent_messages.append(m)
                 except Exception as e:
                     logger.exception(e)
@@ -386,7 +389,7 @@ async def start(client, message):
         files_ = await get_file_details(file_id)
         files = files_[0]
         g = await get_shortlink(chat_id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
-        k = await client.send_message(
+        k = await delivery_bot.send_message(
             chat_id=user_id,
             text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n",
             reply_markup=InlineKeyboardMarkup(
@@ -455,7 +458,7 @@ async def start(client, message):
         )
     )
             filesarr.append(msg)
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+        k = await delivery_bot.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
@@ -483,7 +486,7 @@ async def start(client, message):
             files_ = await get_file_details(file_id)
             files = files_[0]
             g = await get_shortlink(chat_id, f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
-            k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
+            k = await delivery_bot.send_message(chat_id=user_id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton('📁 Dᴏᴡɴʟᴏᴀᴅ 📁', url=g)
@@ -515,7 +518,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(btn)
                 )
                 return
-            msg = await client.send_cached_media(
+            msg = await delivery_bot.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
                 protect_content=True if pre == 'filep' else False,
@@ -544,7 +547,7 @@ async def start(client, message):
             btn = [[
                 InlineKeyboardButton("❗ Gᴇᴛ Fɪʟᴇ Aɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
             ]]
-            k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+            k = await delivery_bot.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
             await asyncio.sleep(600)
             await msg.delete()
             await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
@@ -577,7 +580,7 @@ async def start(client, message):
             reply_markup=InlineKeyboardMarkup(btn)
         )
         return
-    msg = await client.send_cached_media(
+    msg = await delivery_bot.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,
