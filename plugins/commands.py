@@ -159,6 +159,18 @@ async def start(client, message):
         file_id = data
         pre = ""
     if data.split("-", 1)[0] == "BATCH":
+        if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            btn = [[
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+            ],[
+                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+            ]]
+            await message.reply_text(
+                text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
+                protect_content=True,
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
+            return
         sts = await message.reply("<b>Please wait...</b>")
         file_id = data.split("-", 1)[1]
         msgs = BATCH_FILES.get(file_id)
@@ -172,6 +184,7 @@ async def start(client, message):
                 return await client.send_message(LOG_CHANNEL, "UNABLE TO OPEN FILE.")
             os.remove(file)
             BATCH_FILES[file_id] = msgs
+        sent_messages = []
         for msg in msgs:
             title = msg.get("title")
             size=get_size(int(msg.get("size", 0)))
@@ -185,7 +198,7 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{title}"
             try:
-                await client.send_cached_media(
+                m = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -194,17 +207,15 @@ async def start(client, message):
                         [
                             [
                                 InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}'),
-                            #],
-                            #[
-                                #InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url=f'https://t.me/Sujan_BotZ') #Don't change anything without contacting me @LazyDeveloperr
                             ]
                         ]
                     )
                 )
+                sent_messages.append(m)
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
-                await client.send_cached_media(
+                m = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
@@ -213,22 +224,41 @@ async def start(client, message):
                         [
                             [
                                 InlineKeyboardButton('Gᴇɴᴇʀᴀᴛᴇ Lɪɴᴋ', callback_data=f'generate_stream_link:{file_id}'),
-                            #],
-                            #[
-                                #InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url=f'https://t.me/Sujan_BotZ') #Don't change anything without contacting me @LazyDeveloperr
                             ]
                         ]
                     )
                 )
+                sent_messages.append(m)
             except Exception as e:
                 logger.warning(e, exc_info=True)
                 continue
             await asyncio.sleep(1) 
         await sts.delete()
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀꜱᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+        await asyncio.sleep(600)
+        for msg in sent_messages:
+            try:
+                await msg.delete()
+            except:
+                pass
+        await k.edit_text("<b>Yᴏᴜʀ Vɪᴅᴇᴏꜱ / Fɪʟᴇꜱ Aʀᴇ Dᴇʟᴇᴛᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nKɪɴᴅʟʏ Sᴇᴀʀᴄʜ Aɢᴀɪɴ.</b>")
         return
     
     elif data.split("-", 1)[0] == "DSTORE":
+        if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            btn = [[
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+            ],[
+                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+            ]]
+            await message.reply_text(
+                text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
+                protect_content=True,
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
+            return
         sts = await message.reply("<b>Please wait...</b>")
+        sent_messages = []
         b_string = data.split("-", 1)[1]
         decoded = (base64.urlsafe_b64decode(b_string + "=" * (-len(b_string) % 4))).decode("ascii")
         try:
@@ -251,10 +281,12 @@ async def start(client, message):
                     file_name = getattr(media, 'file_name', '')
                     f_caption = getattr(msg, 'caption', file_name)
                 try:
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    sent_messages.append(m)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    sent_messages.append(m)
                 except Exception as e:
                     logger.exception(e)
                     continue
@@ -262,15 +294,26 @@ async def start(client, message):
                 continue
             else:
                 try:
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    sent_messages.append(m)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    m = await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    sent_messages.append(m)
                 except Exception as e:
                     logger.exception(e)
                     continue
             await asyncio.sleep(1) 
-        return await sts.delete()
+        await sts.delete()
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀꜱᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
+        await asyncio.sleep(600)
+        for msg in sent_messages:
+            try:
+                await msg.delete()
+            except:
+                pass
+        await k.edit_text("<b>Yᴏᴜʀ Vɪᴅᴇᴏꜱ / Fɪʟᴇꜱ Aʀᴇ Dᴇʟᴇᴛᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nKɪɴᴅʟʏ Sᴇᴀʀᴄʜ Aɢᴀɪɴ.</b>")
+        return
 
     elif data.split("-", 1)[0] == "verify":
         userid = data.split("-", 2)[1]
@@ -410,7 +453,7 @@ async def start(client, message):
         )
     )
             filesarr.append(msg)
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 30 Mɪɴꜱ. Sᴏ Pʟᴇᴀꜱᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇᴍ.</b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
         await asyncio.sleep(600)
         for x in filesarr:
             await x.delete()
@@ -499,7 +542,7 @@ async def start(client, message):
             btn = [[
                 InlineKeyboardButton("❗ Gᴇᴛ Fɪʟᴇ Aɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
             ]]
-            k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 30 Mɪɴꜱ. Sᴏ Pʟᴇᴀꜱᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇᴍ.</b>")
+            k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
             await asyncio.sleep(600)
             await msg.delete()
             await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
@@ -551,7 +594,7 @@ async def start(client, message):
     btn = [[
         InlineKeyboardButton("❗ ɢᴇᴛ ꜰɪʟᴇ ᴀɢᴀɪɴ ❗", callback_data=f'delfile#{file_id}')
     ]]
-    k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 30 Mɪɴꜱ. Sᴏ Pʟᴇᴀꜱᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇᴍ.</b>")
+    k = await client.send_message(chat_id = message.from_user.id, text=f"<b>❗️ <u>Iᴍᴘᴏʀᴛᴀɴᴛ</u> ❗️</b>\n\n<b>Fɪʟᴇ/Vɪᴅᴇᴏ Wɪʟʟ Bᴇ Dᴇʟᴇᴛᴇᴅ Iɴ 10 Mɪɴꜱ. Sᴏ Pʟᴇᴀsᴇ Fᴏʀᴡᴀʀᴅ Aɴʏ Wʜᴇʀᴇ Tᴏ Sᴀᴠᴇ Tʜᴇ Mᴏᴠɪᴇ.</b>")
     await asyncio.sleep(600)
     await msg.delete()
     await k.edit_text("<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",reply_markup=InlineKeyboardMarkup(btn))
