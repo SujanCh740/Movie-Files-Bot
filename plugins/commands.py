@@ -153,17 +153,26 @@ async def start(client, message):
         )
         return  
     data = message.command[1]
-    try:
-        pre, file_id = data.split('_', 1)
-    except:
+    parts = data.split("_")
+    tag = parts[0]
+    chat_id = None
+    file_id = None
+    
+    if len(parts) == 3:
+        tag, chat_id, file_id = parts
+    elif len(parts) == 2:
+        tag, file_id = parts
+    else:
         file_id = data
-        pre = ""
+
     if data.split("-", 1)[0] == "BATCH":
+        # Check if BATCH has a chat_id encoded (e.g. BATCH-chatid-fileid)
+        # But for now, let's keep it simple. If we want per-group BATCH, we'd need to change generator.
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start={data}")))
             ],[
-                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=await get_tutorial())
             ]]
             await message.reply_text(
                 text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
@@ -249,9 +258,9 @@ async def start(client, message):
     elif data.split("-", 1)[0] == "DSTORE":
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start={data}")))
             ],[
-                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=await get_tutorial())
             ]]
             await message.reply_text(
                 text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
@@ -317,7 +326,7 @@ async def start(client, message):
         await k.edit_text("<b>Yᴏᴜʀ Vɪᴅᴇᴏꜱ / Fɪʟᴇꜱ Aʀᴇ Dᴇʟᴇᴛᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nKɪɴᴅʟʏ Sᴇᴀʀᴄʜ Aɢᴀɪɴ.</b>")
         return
 
-    elif data.split("-", 1)[0] == "verify":
+    elif data.startswith("verify"):
         userid = data.split("-", 2)[1]
         token = data.split("-", 3)[2]
         if str(message.from_user.id) != str(userid):
@@ -426,11 +435,11 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files1.file_name.split()))}"
 
-            if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            if not await check_verification(client, message.from_user.id, chat_id):
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start={data}", chat_id)))
                 ],[
-                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪғʏ ⁉️", url=await get_tutorial(chat_id))
                 ]]
                 await message.reply_text(
                     text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
@@ -462,52 +471,20 @@ async def start(client, message):
         await k.edit_text("<b>Yᴏᴜʀ Vɪᴅᴇᴏꜱ / Fɪʟᴇꜱ Aʀᴇ Dᴇʟᴇᴛᴇᴅ Sᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ !\nKɪɴᴅʟʏ Sᴇᴀʀᴄʜ Aɢᴀɪɴ.</b>")
         return
         
-    elif data.startswith("files"):
-        current_time = datetime.now(pytz.timezone(TIMEZONE))
-        curr_time = current_time.hour        
-        if curr_time < 12:
-            gtxt = "Gᴏᴏᴅ Mᴏʀɴɪɴɢ 👋" 
-        elif curr_time < 17:
-            gtxt = "Gᴏᴏᴅ Aғᴛᴇʀɴᴏᴏɴ 👋" 
-        elif curr_time < 21:
-            gtxt = "Gᴏᴏᴅ Eᴠᴇɴɪɴɢ 👋"
-        else:
-            gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"        
-        user_id = message.from_user.id
-        if temp.SHORT.get(user_id)==None:
-            return await message.reply_text(text="<b>Please Search Again in Group</b>")
-        else:
-            chat_id = temp.SHORT.get(user_id)
-        settings = await get_settings(chat_id)
-        if not await db.has_premium_access(user_id) and settings['is_shortlink']: #Don't change anything without my permission @CoderluffyTG
-            files_ = await get_file_details(file_id)
-            files = files_[0]
-            g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
-            k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton('📁 Dᴏᴡɴʟᴏᴀᴅ 📁', url=g)
-                        ], [
-                            InlineKeyboardButton('⚡ Hᴏᴡ Tᴏ Dᴏᴡɴʟᴏᴀᴅ ⚡', url=await get_tutorial(chat_id))
-                        ], [
-                            InlineKeyboardButton('✨ Bᴜʏ Sᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : Rᴇᴍᴏᴠᴇ Aᴅꜱ ✨', callback_data="seeplans")                            
-                        ]
-                    ]
-                )
-            )
-            await asyncio.sleep(600)
-            await k.edit("<b>ʏᴏᴜʀ ᴍᴇꜱꜱᴀɢᴇ ɪꜱ ᴅᴇʟᴇᴛᴇᴅ !\nᴋɪɴᴅʟʏ ꜱᴇᴀʀᴄʜ ᴀɢᴀɪɴ.</b>")
-            return
+    elif tag.startswith("files"):
+        # The 'files' tag is now used to trigger verification before sending files
+        # The actual file delivery is handled by the fallthrough block below
+        pass
     user = message.from_user.id
     files_ = await get_file_details(file_id)           
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
-            if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            if not await check_verification(client, message.from_user.id, chat_id):
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start={data}", chat_id)))
                 ],[
-                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+                    InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪғʏ ⁉️", url=await get_tutorial(chat_id))
                 ]]
                 await message.reply_text(
                     text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
@@ -565,11 +542,11 @@ async def start(client, message):
     if f_caption is None:
         f_caption = f" {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files.file_name.split()))}"
 
-    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+    if not await check_verification(client, message.from_user.id, chat_id):
         btn = [[
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start={data}", chat_id)))
         ],[
-            InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
+            InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪғʏ ⁉️", url=await get_tutorial(chat_id))
         ]]
         await message.reply_text(
             text="<b>👋 Hᴇʏ Tʜᴇʀᴇ,\n\nYᴏᴜ'ʀᴇ Nᴏᴛ Vᴇʀɪꜰɪᴇᴅ Tᴏᴅᴀʏ, Pʟᴇᴀꜱᴇ Vᴇʀɪꜰʏ Aɴᴅ Gᴇᴛ Uɴʟɪᴍɪᴛᴇᴅ Aᴄᴄᴇꜱꜱ Uɴᴛɪʟ Nᴇxᴛ Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ.</b>",
@@ -762,8 +739,8 @@ async def settings(client, message):
     except KeyError:
         await save_group_settings(grp_id, 'max_btn', False)
         settings = await get_settings(grp_id)
-    if 'is_shortlink' not in settings.keys():
-        await save_group_settings(grp_id, 'is_shortlink', False)
+    if 'verify' not in settings.keys():
+        await save_group_settings(grp_id, 'verify', True)
     else:
         pass
 
@@ -861,12 +838,12 @@ async def settings(client, message):
             ],
             [
                 InlineKeyboardButton(
-                    'ꜱʜᴏʀᴛʟɪɴᴋ',
-                    callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{grp_id}',
+                    'ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ',
+                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
                 ),
                 InlineKeyboardButton(
-                    'ᴇɴᴀʙʟᴇ' if settings["is_shortlink"] else 'ᴅɪꜱᴀʙʟᴇ',
-                    callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{grp_id}',
+                    'ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
+                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
                 ),
             ],
             [
@@ -1166,36 +1143,10 @@ async def shortlink(bot, message):
     shortlink_url = re.sub(r"[:/]", "", shortlink_url)
     await save_group_settings(grpid, 'shortlink', shortlink_url)
     await save_group_settings(grpid, 'shortlink_api', api)
-    await save_group_settings(grpid, 'is_shortlink', True)
-    await reply.edit_text(f"<b>✅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴀᴅᴅᴇᴅ ꜱʜᴏʀᴛʟɪɴᴋ ꜰᴏʀ <code>{title}</code>.\n\nꜱʜᴏʀᴛʟɪɴᴋ ᴡᴇʙꜱɪᴛᴇ : <code>{shortlink_url}</code>\nꜱʜᴏʀᴛʟɪɴᴋ ᴀᴘɪ : <code>{api}</code></b>")
+    await save_group_settings(grpid, 'verify', True)
+    await reply.edit_text(f"<b>✅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴀᴅᴅᴇᴅ ꜱʜᴏʀᴛɴᴇʀ ᴀɴᴅ ᴇɴᴀʙʟᴇᴅ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ ꜰᴏʀ <code>{title}</code>.\n\nꜱʜᴏʀᴛɴᴇʀ ᴡᴇʙꜱɪᴛᴇ : <code>{shortlink_url}</code>\nꜱʜᴏʀᴛɴᴇʀ ᴀᴘɪ : <code>{api}</code>\n\nɴᴏᴡ ᴜꜱᴇʀꜱ ᴡɪʟʟ ɴᴇᴇᴅ ᴛᴏ ᴠᴇʀɪꜰʏ ᴛᴏ ɢᴇᴛ ꜰɪʟᴇꜱ ɪɴ ᴛʜɪꜱ ɢʀᴏᴜᴘ.</b>")
 
-@Client.on_message(filters.command("setshortlinkoff") & filters.user(ADMINS))
-async def offshortlink(bot, message):
-    chat_type = message.chat.type
-    if chat_type == enums.ChatType.PRIVATE:
-        return await message.reply_text("ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ᴡᴏʀᴋꜱ ᴏɴʟʏ ɪɴ ɢʀᴏᴜᴘꜱ !")
-    elif chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        grpid = message.chat.id
-        title = message.chat.title
-    else:
-        return
-    await save_group_settings(grpid, 'is_shortlink', False)
-    ENABLE_SHORTLINK = False
-    return await message.reply_text("ꜱʜᴏʀᴛʟɪɴᴋ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅɪꜱᴀʙʟᴇᴅ.")
-    
-@Client.on_message(filters.command("setshortlinkon") & filters.user(ADMINS))
-async def onshortlink(bot, message):
-    chat_type = message.chat.type
-    if chat_type == enums.ChatType.PRIVATE:
-        return await message.reply_text("ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ᴡᴏʀᴋꜱ ᴏɴʟʏ ɪɴ ɢʀᴏᴜᴘꜱ !")
-    elif chat_type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        grpid = message.chat.id
-        title = message.chat.title
-    else:
-        return
-    await save_group_settings(grpid, 'is_shortlink', True)
-    ENABLE_SHORTLINK = True
-    return await message.reply_text("ꜱʜᴏʀᴛʟɪɴᴋ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴇɴᴀʙʟᴇᴅ.")
+# Commands removed: /setshortlinkoff, /setshortlinkon. Verification is now handled via /shortlink or settings menu.
 
 
 @Client.on_message(filters.command("shortlink_info"))
@@ -1228,7 +1179,8 @@ async def ginfo(bot, message):
             su = settings['shortlink']
             sa = settings['shortlink_api']
             st = settings['tutorial']
-            return await message.reply_text(f"<b><u>ᴄᴜʀʀᴇɴᴛ  ꜱᴛᴀᴛᴜꜱ<u> 📊\n\nᴡᴇʙꜱɪᴛᴇ : <code>{su}</code>\n\nᴀᴘɪ : <code>{sa}</code>\n\nᴛᴜᴛᴏʀɪᴀʟ : {st}</b>", disable_web_page_preview=True)
+            v = settings.get('verify', False)
+            return await message.reply_text(f"<b><u>ᴄᴜʀʀᴇɴᴛ  ꜱᴛᴀᴛᴜꜱ<u> 📊\n\nᴡᴇʙꜱɪᴛᴇ : <code>{su}</code>\n\nᴀᴘɪ : <code>{sa}</code>\n\nᴛᴜᴛᴏʀɪᴀʟ : {st}\n\nᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ : {'ᴇɴᴀʙʟᴇᴅ' if v else 'ᴅɪꜱᴀʙʟᴇᴅ'}</b>", disable_web_page_preview=True)
         elif 'shortlink' in settings.keys() and 'tutorial' not in settings.keys():
             su = settings['shortlink']
             sa = settings['shortlink_api']

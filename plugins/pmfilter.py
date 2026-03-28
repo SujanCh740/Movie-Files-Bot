@@ -1038,10 +1038,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             f_caption = f"{files.file_name}"
 
         try:
-            if not await db.has_premium_access(clicked) and settings['is_shortlink']: #Don't change Anything without my permission @CodeluffyTG
+            if not await db.has_premium_access(clicked) and settings.get('verify', True): 
                 if clicked == query.from_user.id:
                     temp.SHORT[clicked] = query.message.chat.id
-                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=short_{file_id}")
+                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start={ident}_{query.message.chat.id}_{file_id}")
                     return
                 else:
                     await query.answer(f"Hᴇʏ {query.from_user.first_name},\nTʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ.\nRᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
@@ -1063,8 +1063,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ident, key = query.data.split("#")
         settings = await get_settings(query.message.chat.id)
         try:
-            if not await db.has_premium_access(clicked) and settings['is_shortlink']: # Don't Change anything without my permission @CoderluffyTG
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles1_{key}")
+            if not await db.has_premium_access(clicked) and settings.get('verify', True): 
+                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{query.message.chat.id}_{key}")
                 return
             else:
                 await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
@@ -1231,10 +1231,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#max_btn#{settings["max_btn"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Sʜᴏʀᴛʟɪɴᴋ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["is_shortlink"] else 'ᴅɪꜱᴀʙʟᴇ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
+                    InlineKeyboardButton('Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('⇋ Cʟᴏꜱᴇ Sᴇᴛᴛɪɴɢꜱ ⇋', 
@@ -1323,10 +1323,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#max_btn#{settings["max_btn"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Sʜᴏʀᴛʟɪɴᴋ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["is_shortlink"] else 'ᴅɪꜱᴀʙʟᴇ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
+                    InlineKeyboardButton('Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('⇋ Cʟᴏꜱᴇ Sᴇᴛᴛɪɴɢꜱ ⇋', 
@@ -1845,8 +1845,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit("Yᴏᴜʀ Aᴄᴛɪᴠᴇ Cᴏɴɴᴇᴄᴛɪᴏɴ Hᴀs Bᴇᴇɴ Cʜᴀɴɢᴇᴅ. Gᴏ Tᴏ /connections ᴀɴᴅ ᴄʜᴀɴɢᴇ ʏᴏᴜʀ ᴀᴄᴛɪᴠᴇ ᴄᴏɴɴᴇᴄᴛɪᴏɴ.")
             return await query.answer(MSG_ALRT)
 
-        if set_type == 'is_shortlink' and query.from_user.id not in ADMINS:
-            return await query.answer(text=f"Hey {query.from_user.first_name}, You can't change shortlink settings for your group !\n\nIt's an admin only setting !", show_alert=True)
+        if set_type in ['is_shortlink', 'verify'] and query.from_user.id not in ADMINS:
+            return await query.answer(text=f"Hey {query.from_user.first_name}, You can't change verification settings for your group !\n\nIt's an admin only setting !", show_alert=True)
 
         if status == "True":
             await save_group_settings(grpid, set_type, False)
@@ -1909,10 +1909,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#max_btn#{settings["max_btn"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Sʜᴏʀᴛʟɪɴᴋ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["is_shortlink"] else 'ᴅɪꜱᴀʙʟᴇ',
-                                         callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
+                    InlineKeyboardButton('Vᴇʀɪꜰɪᴄᴀᴛɪᴏɴ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
+                                         callback_data=f'setgs#verify#{settings["verify"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('⇋ Cʟᴏꜱᴇ Sᴇᴛᴛɪɴɢꜱ ⇋', 

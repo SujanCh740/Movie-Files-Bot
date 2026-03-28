@@ -1,6 +1,6 @@
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, SHORTLINK_URL, SHORTLINK_API, IS_SHORTLINK, LOG_CHANNEL, TUTORIAL, GRP_LNK, CHNL_LNK, CUSTOM_FILE_CAPTION, PREMIUM_USER, WEB_APP_URL
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, SHORTLINK_URL, SHORTLINK_API, LOG_CHANNEL, TUTORIAL, GRP_LNK, CHNL_LNK, CUSTOM_FILE_CAPTION, PREMIUM_USER, WEB_APP_URL, VERIFY
 from imdb import Cinemagoer 
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -532,9 +532,9 @@ async def get_tutorial(chat_id):
         TUTORIAL_URL = TUTORIAL
     return TUTORIAL_URL
         
-async def get_verify_shorted_link(link):
-    API = SHORTLINK_API
-    URL = SHORTLINK_URL
+async def get_verify_shorted_link(link, api=None, url=None):
+    API = api or SHORTLINK_API
+    URL = url or SHORTLINK_URL
     https = link.split(":")[0]
     if "http" == https:
         https = "https"
@@ -610,7 +610,7 @@ async def check_token(bot, userid, token):
     else:
         return False
 
-async def get_token(bot, userid, link):
+async def get_token(bot, userid, link, chat_id=None):
     user = await bot.get_users(userid)
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
@@ -618,7 +618,15 @@ async def get_token(bot, userid, link):
     token = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
     TOKENS[user.id] = {token: False}
     link = f"{link}verify-{user.id}-{token}"
-    shortened_verify_url = await get_verify_shorted_link(link)
+    
+    # Use group settings for shortening if chat_id is provided
+    api, url = SHORTLINK_API, SHORTLINK_URL
+    if chat_id:
+        settings = await get_settings(chat_id)
+        api = settings.get('shortlink_api', api)
+        url = settings.get('shortlink', url)
+        
+    shortened_verify_url = await get_verify_shorted_link(link, api, url)
     # Return web app redirect link instead of direct shortlink
     webapp_verify_url = await get_webapp_verify_link(user.id, shortened_verify_url)
     return str(webapp_verify_url)
@@ -667,10 +675,21 @@ async def get_seconds(time_string):
     else:
         return 0
 
-async def check_verification(bot, userid):
+async def check_verification(bot, userid, chat_id=None):
     user = await bot.get_users(userid)
     if user.id in PREMIUM_USER or await db.has_premium_access(user.id):
         return True
+    
+    # Check if verification is enabled for the group or globally
+    if chat_id:
+        settings = await get_settings(chat_id)
+        is_verify = settings.get('verify', VERIFY)
+    else:
+        is_verify = VERIFY
+        
+    if not is_verify:
+        return True
+
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
         await bot.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(user.id, user.mention))
@@ -689,49 +708,37 @@ async def check_verification(bot, userid):
     
     
 async def send_all(bot, userid, files, ident, chat_id, user_name, query):
-    settings = await get_settings(chat_id)
-    if 'is_shortlink' in settings.keys():
-        ENABLE_SHORTLINK = settings['is_shortlink']
-    else:
-        await save_group_settings(message.chat.id, 'is_shortlink', False)
-        ENABLE_SHORTLINK = False
     try:
-        if ENABLE_SHORTLINK:
-            for file in files:
-                title = file.file_name
-                size = get_size(file.file_size)
-                await bot.send_message(chat_id=userid, text=f"<b>Hᴇʏ ᴛʜᴇʀᴇ {user_name} 👋🏽 \n\n✅ Sᴇᴄᴜʀᴇ ʟɪɴᴋ ᴛᴏ ʏᴏᴜʀ ғɪʟᴇ ʜᴀs sᴜᴄᴄᴇssғᴜʟʟʏ ʙᴇᴇɴ ɢᴇɴᴇʀᴀᴛᴇᴅ ᴘʟᴇᴀsᴇ ᴄʟɪᴄᴋ ᴅᴏᴡɴʟᴏᴀᴅ ʙᴜᴛᴛᴏɴ\n\n🗃️ Fɪʟᴇ Nᴀᴍᴇ : {title}\n🔖 Fɪʟᴇ Sɪᴢᴇ : {size}</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("📤 Dᴏᴡɴʟᴏᴀᴅ 📥", url=await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}"))]]))
-        else:
-            for file in files:
-                    f_caption = file.caption
-                    title = file.file_name
-                    size = get_size(file.file_size)
-                    if CUSTOM_FILE_CAPTION:
-                        try:
-                            f_caption = CUSTOM_FILE_CAPTION.format(file_name='' if title is None else title,
-                                                                    file_size='' if size is None else size,
-                                                                    file_caption='' if f_caption is None else f_caption)
-                        except Exception as e:
-                            print(e)
-                            f_caption = f_caption
-                    if f_caption is None:
-                        f_caption = f"{title}"
-                    await bot.send_cached_media(
-                        chat_id=userid,
-                        file_id=file.file_id,
-                        caption=f_caption,
-                        protect_content=True if ident == "filep" else False,
-                        reply_markup=InlineKeyboardMarkup(
-                            [
-                                [
-                                InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=GRP_LNK),
-                                InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
-                            ],[
-                                InlineKeyboardButton("Bᴏᴛ Oᴡɴᴇʀ", url="t.me/Rexisop99")
-                                ]
-                            ]
-                        )
-                    )
+        for file in files:
+            f_caption = file.caption
+            title = file.file_name
+            size = get_size(file.file_size)
+            if CUSTOM_FILE_CAPTION:
+                try:
+                    f_caption = CUSTOM_FILE_CAPTION.format(file_name='' if title is None else title,
+                                                            file_size='' if size is None else size,
+                                                            file_caption='' if f_caption is None else f_caption)
+                except Exception as e:
+                    print(e)
+                    f_caption = f_caption
+            if f_caption is None:
+                f_caption = f"{title}"
+            await bot.send_cached_media(
+                chat_id=userid,
+                file_id=file.file_id,
+                caption=f_caption,
+                protect_content=True if ident == "filep" else False,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                        InlineKeyboardButton('Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ', url=GRP_LNK),
+                        InlineKeyboardButton('Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ', url=CHNL_LNK)
+                    ],[
+                        InlineKeyboardButton("Bᴏᴛ Oᴡɴᴇʀ", url="t.me/Rexisop99")
+                        ]
+                    ]
+                )
+            )
     except UserIsBlocked:
         await query.answer('Uɴʙʟᴏᴄᴋ ᴛʜᴇ ʙᴏᴛ ᴍᴀʜɴ !', show_alert=True)
     except PeerIdInvalid:
