@@ -27,12 +27,12 @@ BATCH_FILES = {}
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', url=f'https://t.me/Sujan_BotZ')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply(script.GSTART_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
+        await message.reply(script.GSTART_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME), reply_markup=reply_markup, disable_web_page_preview=True)
         await asyncio.sleep(2) # 😢 https://github.com/EvamariaTG/EvaMaria/blob/master/plugins/p_ttishow.py#L17 😬 wait a bit, before checking.
         if not await db.get_chat(message.chat.id):
             total=await client.get_chat_members_count(message.chat.id)
@@ -44,7 +44,7 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
@@ -70,7 +70,7 @@ async def start(client, message):
         await m.delete()
         await message.reply_photo(
             photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.U_NAME, temp.B_NAME),
+            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -95,7 +95,7 @@ async def start(client, message):
                 kk, file_id = message.command[1].split("_", 1)
                 btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"checksub#{kk}#{file_id}")])
             except (IndexError, ValueError):
-                btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", url=f"https://t.me/{temp.U_NAME}?start={message.command[1]}")])
+                btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", url=f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start={message.command[1]}")])
         await client.send_message(
             chat_id=message.from_user.id,
             text="Jᴏɪɴ Oᴜʀ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ Aɴᴅ Tʜᴇɴ Cʟɪᴄᴋ Oɴ Tʀʏ Aɢᴀɪɴ Tᴏ Gᴇᴛ Yᴏᴜʀ Rᴇǫᴜᴇꜱᴛᴇᴅ Fɪʟᴇ.",
@@ -105,7 +105,7 @@ async def start(client, message):
         return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
@@ -131,7 +131,7 @@ async def start(client, message):
         await m.delete()
         await message.reply_photo(
             photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.U_NAME, temp.B_NAME),
+            caption=script.START_TXT.format(message.from_user.mention, gtxt, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -161,7 +161,7 @@ async def start(client, message):
     if data.split("-", 1)[0] == "BATCH":
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
             ],[
                 InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
             ]]
@@ -249,7 +249,7 @@ async def start(client, message):
     elif data.split("-", 1)[0] == "DSTORE":
         if not await check_verification(client, message.from_user.id) and VERIFY == True:
             btn = [[
-                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
             ],[
                 InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
             ]]
@@ -351,7 +351,7 @@ async def start(client, message):
             gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"
         chat_id = int("-" + file_id.split("-")[1])
         userid = message.from_user.id if message.from_user else None
-        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=allfiles_{file_id}")
+        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=allfiles_{file_id}")
         k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n‼️ Gᴇᴛ Aʟʟ Fɪʟᴇꜱ Iɴ A Sɪɴɢʟᴇ Lɪɴᴋ ‼️\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n", reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -385,7 +385,7 @@ async def start(client, message):
         chat_id = temp.SHORT.get(user_id)
         files_ = await get_file_details(file_id)
         files = files_[0]
-        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
+        g = await get_shortlink(chat_id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
         k = await client.send_message(
             chat_id=user_id,
             text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n",
@@ -428,7 +428,7 @@ async def start(client, message):
 
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -482,7 +482,7 @@ async def start(client, message):
         if not await db.has_premium_access(user_id) and settings['is_shortlink']: #Don't change anything without my permission @CoderluffyTG
             files_ = await get_file_details(file_id)
             files = files_[0]
-            g = await get_shortlink(chat_id, f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
+            g = await get_shortlink(chat_id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
             k = await client.send_message(chat_id=message.from_user.id,text=f"🫂 Hᴇʏ {message.from_user.mention}, {gtxt}\n\n✅ Yᴏᴜʀ Lɪɴᴋ Iꜱ Rᴇᴀᴅʏ, Kɪɴᴅʟʏ Cʟɪᴄᴋ Oɴ Dᴏᴡɴʟᴏᴀᴅ Bᴜᴛᴛᴏɴ.\n\n⚠️ Fɪʟᴇ Nᴀᴍᴇ : <code>{files.file_name}</code> \n\n📥 Fɪʟᴇ Sɪᴢᴇ : <code>{get_size(files.file_size)}</code>\n\n", reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -505,7 +505,7 @@ async def start(client, message):
         try:
             if not await check_verification(client, message.from_user.id) and VERIFY == True:
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -567,7 +567,7 @@ async def start(client, message):
 
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=")))
         ],[
             InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
         ]]

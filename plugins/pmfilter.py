@@ -1041,22 +1041,22 @@ async def cb_handler(client: Client, query: CallbackQuery):
             if not await db.has_premium_access(clicked) and settings['is_shortlink']: #Don't change Anything without my permission @CodeluffyTG
                 if clicked == query.from_user.id:
                     temp.SHORT[clicked] = query.message.chat.id
-                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=short_{file_id}")
+                    await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=short_{file_id}")
                     return
                 else:
                     await query.answer(f"Hᴇʏ {query.from_user.first_name},\nTʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ.\nRᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
             else:
                 if clicked == query.from_user.id:
-                    await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start={ident}_{file_id}")
+                    await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start={ident}_{file_id}")
                     return
                 else:
                     await query.answer(f"Hᴇʏ {query.from_user.first_name},\nTʜɪs Is Nᴏᴛ Yᴏᴜʀ Mᴏᴠɪᴇ Rᴇǫᴜᴇsᴛ.\nRᴇǫᴜᴇsᴛ Yᴏᴜʀ's !", show_alert=True)
         except UserIsBlocked:
             await query.answer('Uɴʙʟᴏᴄᴋ ᴛʜᴇ ʙᴏᴛ ᴍᴀʜɴ !', show_alert=True)
         except PeerIdInvalid:
-            await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start={ident}_{file_id}")
+            await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
-            await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start={ident}_{file_id}")
+            await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start={ident}_{file_id}")
             
     elif query.data.startswith("sendfiles"):
         clicked = query.from_user.id
@@ -1064,18 +1064,18 @@ async def cb_handler(client: Client, query: CallbackQuery):
         settings = await get_settings(query.message.chat.id)
         try:
             if not await db.has_premium_access(clicked) and settings['is_shortlink']: # Don't Change anything without my permission @CoderluffyTG
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles1_{key}")
+                await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=sendfiles1_{key}")
                 return
             else:
-                await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=allfiles_{key}")
+                await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=allfiles_{key}")
                 return
         except UserIsBlocked:
             await query.answer('Uɴʙʟᴏᴄᴋ ᴛʜᴇ ʙᴏᴛ ᴍᴀʜɴ !', show_alert=True)
         except PeerIdInvalid:
-            await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles3_{key}")
+            await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=sendfiles3_{key}")
         except Exception as e:
             logger.exception(e)
-            await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=sendfiles4_{key}")
+            await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=sendfiles4_{key}")
     
     elif query.data.startswith("del"):
         ident, file_id = query.data.split("#")
@@ -1097,14 +1097,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
             f_caption = f_caption
         if f_caption is None:
             f_caption = f"{files.file_name}"
-        await query.answer(url=f"https://telegram.me/{temp.U_NAME}?start=file_{file_id}")
+        await query.answer(url=f"https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=file_{file_id}")
     
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_req_subscribed(client, query):
             await query.answer("Jᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ ᴍᴀʜɴ! 😒", show_alert=True)
             return
         ident, kk, file_id = query.data.split("#")
-        await query.answer(url=f"https://t.me/{temp.U_NAME}?start={kk}_{file_id}")
+        await query.answer(url=f"https://t.me/{temp.SEC_U_NAME or temp.U_NAME}?start={kk}_{file_id}")
     
     elif query.data == "pages":
         await query.answer()
@@ -1264,7 +1264,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         title = query.message.chat.title
         settings = await get_settings(grp_id)
         btn2 = [[
-                 InlineKeyboardButton("Cʜᴇᴄᴋ Mʏ Dᴍ 🗳️", url=f"telegram.me/{temp.U_NAME}")
+                 InlineKeyboardButton("Cʜᴇᴄᴋ Mʏ Dᴍ 🗳️", url=f"telegram.me/{temp.SEC_U_NAME or temp.U_NAME}")
                ]]
         reply_markup = InlineKeyboardMarkup(btn2)
         await query.message.edit_text(f"<b>ʏᴏᴜʀ sᴇᴛᴛɪɴɢs ᴍᴇɴᴜ ғᴏʀ {title} ʜᴀs ʙᴇᴇɴ sᴇɴᴛ ᴛᴏ ʏᴏᴜ ʙʏ ᴅᴍ.</b>")
@@ -1523,7 +1523,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "start":
         buttons = [[
-                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
+                    InlineKeyboardButton('☆ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?startgroup=true')
                 ],[
                     InlineKeyboardButton('🌿 Uᴘᴅᴀᴛᴇꜱ 🌿', callback_data='channels')
                 ],[
@@ -1546,7 +1546,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             gtxt = "Gᴏᴏᴅ Nɪɢʜᴛ 👋"
         await query.message.edit_text(
-            text=script.START_TXT.format(query.from_user.mention, gtxt, temp.U_NAME, temp.B_NAME),
+            text=script.START_TXT.format(query.from_user.mention, gtxt, temp.SEC_U_NAME or temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -2082,7 +2082,7 @@ async def auto_filter(client, msg, spoll=False):
         if not settings["button"]:
             cap+="\n\n<b>📚 <u>Your Requested Files</u> 👇\n\n</b>"
             for file in files:
-                cap += f"<b>\n<a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n</a></b>"
+                cap += f"<b>\n<a href='https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=files_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n</a></b>"
     else:
         if settings["button"]:
             cap = f"<b>🎬 Tɪᴛʟᴇ : <code>{search}</code>\n📂 Tᴏᴛᴀʟ Fɪʟᴇꜱ : <code>{total_results}</code>\n📝 Rᴇǫᴜᴇsᴛᴇᴅ Bʏ : {message.from_user.mention}\n⏰ Rᴇsᴜʟᴛ Iɴ : <code>{remaining_seconds} Sᴇᴄᴏɴᴅs</code>\n⚜️ Pᴏᴡᴇʀᴇᴅ ʙʏ : 👇\n⚡ {message.chat.title} \n\n</b>"
@@ -2090,7 +2090,7 @@ async def auto_filter(client, msg, spoll=False):
             cap = f"<b>🎬 Tɪᴛʟᴇ : <code>{search}</code>\n📂 Tᴏᴛᴀʟ Fɪʟᴇꜱ : <code>{total_results}</code>\n📝 Rᴇǫᴜᴇsᴛᴇᴅ Bʏ : {message.from_user.mention}\n⏰ Rᴇsᴜʟᴛ Iɴ : <code>{remaining_seconds} Sᴇᴄᴏɴᴅs</code>\n⚜️ Pᴏᴡᴇʀᴇᴅ Bʏ : 👇\n⚡ {message.chat.title} \n\n</b>"
             # cap+="<b>Hᴇʏ {message.from_user.mention}, Hᴇʀᴇ ɪs ᴛʜᴇ ʀᴇsᴜʟᴛ ғᴏʀ ʏᴏᴜʀ ᴏ̨ᴜᴇʀʏ {search} \n\n</b>"
             for file in files:
-                cap += f"<b><a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
+                cap += f"<b><a href='https://telegram.me/{temp.SEC_U_NAME or temp.U_NAME}?start=files_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
 
     if imdb and imdb.get('poster'):
         try:
