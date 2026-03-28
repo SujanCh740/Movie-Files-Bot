@@ -133,6 +133,7 @@ class Database:
             'shortlink': SHORTLINK_URL,
             'shortlink_api': SHORTLINK_API,
             'is_shortlink': IS_SHORTLINK,
+            'verify': VERIFY,
             'tutorial': TUTORIAL,
             'is_tutorial': IS_TUTORIAL
         }

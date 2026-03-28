@@ -532,9 +532,15 @@ async def get_tutorial(chat_id):
         TUTORIAL_URL = TUTORIAL
     return TUTORIAL_URL
         
-async def get_verify_shorted_link(link):
-    API = SHORTLINK_API
-    URL = SHORTLINK_URL
+async def get_verify_shorted_link(link, chat_id=None):
+    settings = await get_settings(chat_id) if chat_id else {}
+    if settings.get('shortlink'):
+        API = settings['shortlink_api']
+        URL = settings['shortlink']
+    else:
+        API = SHORTLINK_API
+        URL = SHORTLINK_URL
+
     https = link.split(":")[0]
     if "http" == https:
         https = "https"
@@ -610,7 +616,7 @@ async def check_token(bot, userid, token):
     else:
         return False
 
-async def get_token(bot, userid, link):
+async def get_token(bot, userid, link, chat_id=None):
     user = await bot.get_users(userid)
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
@@ -618,7 +624,7 @@ async def get_token(bot, userid, link):
     token = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
     TOKENS[user.id] = {token: False}
     link = f"{link}verify-{user.id}-{token}"
-    shortened_verify_url = await get_verify_shorted_link(link)
+    shortened_verify_url = await get_verify_shorted_link(link, chat_id)
     # Return web app redirect link instead of direct shortlink
     webapp_verify_url = await get_webapp_verify_link(user.id, shortened_verify_url)
     return str(webapp_verify_url)
@@ -667,10 +673,16 @@ async def get_seconds(time_string):
     else:
         return 0
 
-async def check_verification(bot, userid):
+async def check_verification(bot, userid, chat_id=None):
     user = await bot.get_users(userid)
     if user.id in PREMIUM_USER or await db.has_premium_access(user.id):
         return True
+    
+    settings = await get_settings(chat_id) if chat_id else None
+    from info import VERIFY
+    if not (VERIFY or (settings and settings.get('verify'))):
+        return True
+
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
         await bot.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(user.id, user.mention))

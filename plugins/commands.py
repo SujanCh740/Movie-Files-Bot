@@ -362,6 +362,7 @@ async def start(client, message):
         protect_content=True
         user_id = message.from_user.id
         files = temp.GETALL.get(file_id)
+        chat_id = temp.SHORT.get(user_id)
         if not files:
             return await message.reply('<b><i>ɴᴏ ꜱᴜᴄʜ ꜰɪʟᴇ ᴇxɪꜱᴛꜱ !</b></i>')
         filesarr = []
@@ -381,9 +382,9 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files1.file_name.split()))}"
 
-            if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            if not await check_verification(client, message.from_user.id, chat_id):
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=", chat_id)))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -458,9 +459,9 @@ async def start(client, message):
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
-            if not await check_verification(client, message.from_user.id) and VERIFY == True:
+            if not await check_verification(client, message.from_user.id, chat_id):
                 btn = [[
-                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+                    InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=", chat_id)))
                 ],[
                     InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
                 ]]
@@ -520,9 +521,9 @@ async def start(client, message):
     if f_caption is None:
         f_caption = f" {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files.file_name.split()))}"
 
-    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+    if not await check_verification(client, message.from_user.id, chat_id):
         btn = [[
-            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")))
+            InlineKeyboardButton("♻️ Cʟɪᴄᴋ Hᴇʀᴇ Tᴏ Vᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=", chat_id)))
         ],[
             InlineKeyboardButton("⁉️ Hᴏᴡ Tᴏ Vᴇʀɪꜰʏ ⁉️", url=HOWTOVERIFY)
         ]]
@@ -825,6 +826,16 @@ async def settings(client, message):
                 ),
             ],
             [
+                InlineKeyboardButton(
+                    'ᴠᴇʀɪꜰʏ',
+                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
+                ),
+                InlineKeyboardButton(
+                    'ᴇɴᴀʙʟᴇ' if settings["verify"] else 'ᴅɪꜱᴀʙʟᴇ',
+                    callback_data=f'setgs#verify#{settings["verify"]}#{grp_id}',
+                ),
+            ],
+            [
                 InlineKeyboardButton('⇋ ᴄʟᴏꜱᴇ ꜱᴇᴛᴛɪɴɢꜱ ᴍᴇɴᴜ ⇋', 
                                      callback_data='close_data'
                                      )
@@ -1121,7 +1132,8 @@ async def shortlink(bot, message):
     shortlink_url = re.sub(r"[:/]", "", shortlink_url)
     await save_group_settings(grpid, 'shortlink', shortlink_url)
     await save_group_settings(grpid, 'shortlink_api', api)
-    await save_group_settings(grpid, 'is_shortlink', True)
+    await save_group_settings(grpid, 'is_shortlink', False)
+    await save_group_settings(grpid, 'verify', True)
     await reply.edit_text(f"<b>✅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴀᴅᴅᴇᴅ ꜱʜᴏʀᴛʟɪɴᴋ ꜰᴏʀ <code>{title}</code>.\n\nꜱʜᴏʀᴛʟɪɴᴋ ᴡᴇʙꜱɪᴛᴇ : <code>{shortlink_url}</code>\nꜱʜᴏʀᴛʟɪɴᴋ ᴀᴘɪ : <code>{api}</code></b>")
 
 @Client.on_message(filters.command("setshortlinkoff") & filters.user(ADMINS))
