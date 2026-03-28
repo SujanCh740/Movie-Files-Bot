@@ -16,7 +16,6 @@ SESSION = environ.get('SESSION', 'Media_search')
 API_ID = int(environ.get('API_ID', ''))
 API_HASH = environ.get('API_HASH', '')
 BOT_TOKEN = environ.get('BOT_TOKEN', "6135527073:AAGY-ilkU3nAxvkkez1-e0eW9mFHAJPrNU0")
-MULTI_TOKEN_1 = environ.get('MULTI_TOKEN_1', '')
 
 # Bot settings
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
@@ -94,7 +93,7 @@ FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).
 MELCOW_NEW_USERS = is_enabled((environ.get('MELCOW_NEW_USERS', "True")), True)
 PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "False")), False)
 PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "True")), True)
-USE_SECONDARY_BOT = is_enabled((environ.get('USE_SECONDARY_BOT', "True")), True)
+USE_SECONDARY_BOT = is_enabled((environ.get('USE_SECONDARY_BOT', "False")), False)
 
 LANGUAGES = ["malayalam", "", "tamil", "", "english", "", "hindi", "", "telugu", "", "kannada", "", "gujarati", "", "marathi", "", "punjabi", ""]
 

@@ -37,7 +37,7 @@ import asyncio
 from pyrogram import idle
 from lazybot import LazyPrincessBot
 from util.keepalive import ping_server
-from lazybot.clients import initialize_clients
+from lazybot.clients import initialize_clients, multi_clients
 
 
 ppath = "plugins/*.py"
