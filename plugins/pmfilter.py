@@ -1915,12 +1915,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('ᴠᴇʀɪꜰʏ',
-                                         callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{str(grp_id)}'),
-                    InlineKeyboardButton('ᴇɴᴀʙʟᴇ' if settings.get("verify", VERIFY) else 'ᴅɪꜱᴀʙʟᴇ',
-                                         callback_data=f'setgs#verify#{settings.get("verify", VERIFY)}#{str(grp_id)}')
-                ],
-                [
                     InlineKeyboardButton('⇋ Cʟᴏꜱᴇ Sᴇᴛᴛɪɴɢꜱ ⇋', 
                                          callback_data='close_data'
                                          )
