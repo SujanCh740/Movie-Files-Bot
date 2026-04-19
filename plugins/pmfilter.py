@@ -1476,21 +1476,21 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 buttons = [[
                     InlineKeyboardButton("Download", url=lazy_download),
                     InlineKeyboardButton("Stream", url=lazy_stream)
-                #],[
+                ],[
                     #InlineKeyboardButton('📌 Jᴏɪɴ Uᴘᴅᴀᴛᴇꜱ Cʜᴀɴɴᴇʟ 📌', url='https://t.me/Sujan_BotZ')
                 ]]
             else:
-                #await query.answer("🚸 Nᴏᴛᴇ :\nTʜɪꜱ Fᴇᴀᴛᴜʀᴇ oɴʟʏ Aᴠᴀɪʟᴀʙʟᴇ Fᴏʀ Pʀᴇᴍɪᴜᴍ Uꜱᴇʀꜱ.\n\nTᴏ Kɴᴏᴡ Mᴏʀᴇ Cʜᴇᴄᴋ Pʟᴀɴꜱ.", show_alert=True)
-                #await query.message.reply_text(
-                #text="<b>✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ ‼️.</b>",
-                #quote=True,
-                #disable_web_page_preview=True,                  
-                #reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
+                await query.answer("🚸 Nᴏᴛᴇ :\nTʜɪꜱ Fᴇᴀᴛᴜʀᴇ oɴʟʏ Aᴠᴀɪʟᴀʙʟᴇ Fᴏʀ Pʀᴇᴍɪᴜᴍ Uꜱᴇʀꜱ.\n\nTᴏ Kɴᴏᴡ Mᴏʀᴇ Cʜᴇᴄᴋ Pʟᴀɴꜱ.", show_alert=True)
+                await query.message.reply_text(
+                text="<b>✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ ‼️.</b>",
+                quote=True,
+                disable_web_page_preview=True,                  
+                reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
                     InlineKeyboardButton("Stream", url=ph_link),
                     InlineKeyboardButton("Download", url=hp_link)
-                #],[
-                    #InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
+                ],[
+                    InlineKeyboardButton('❗Hᴏᴡ Tᴏ Oᴘᴇɴ Lɪɴᴋ❗', url=STREAMHTO)
                 ]]
     
             query.message.reply_markup = query.message.reply_markup or []
