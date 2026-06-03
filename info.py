@@ -31,7 +31,7 @@ CODE = (environ.get('CODE', 'https://iili.io/ftvUziv.jpg'))
 #stream link shortner
 STREAM_SITE = (environ.get('STREAM_SITE', 'shortxlinks.com'))
 STREAM_API = (environ.get('STREAM_API', '21312ded78e50e34e58391be04bf4a266e6b5d8f'))
-STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5732'))
+STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5728'))
 
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5123039648 6093431204').split()]
@@ -56,7 +56,7 @@ COLLECTION_NAME = environ.get('COLLECTION_NAME', 'TelegramFiles')
 
 # Verify
 VERIFY = bool(environ.get('VERIFY', False)) # Verification On ( True ) / Off ( False )
-HOWTOVERIFY = environ.get('HOWTOVERIFY', 'https://t.me/How_2_Download_From_TeraBox/5732') # How to open tutorial link for verification
+HOWTOVERIFY = environ.get('HOWTOVERIFY', 'https://t.me/How_2_Download_From_TeraBox/5728') # How to open tutorial link for verification
 
 # NEW: WebApp URL for verification (host your verify_webapp.html here)
 # You can host this on GitHub Pages, Vercel, Netlify, or any static hosting
@@ -72,7 +72,7 @@ MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
 PORT = environ.get("PORT", "8080")
 GRP_LNK = environ.get('GRP_LNK', 'https://t.me/Sujan_Ch')
 CHNL_LNK = environ.get('CHNL_LNK', 'https://t.me/Sujan_BotZ')
-TUTORIAL = environ.get('TUTORIAL', 'https://t.me/How_2_Download_From_TeraBox/5732') # Tutorial video link for opening shortlink website 
+TUTORIAL = environ.get('TUTORIAL', 'https://t.me/How_2_Download_From_TeraBox/5728') # Tutorial video link for opening shortlink website 
 IS_TUTORIAL = bool(environ.get('IS_TUTORIAL', True))
 MSG_ALRT = environ.get('MSG_ALRT', 'ᴘʀɪᴠᴀᴄʏ ɪꜱ ᴄʀɪᴍᴇ')
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001813638350')) #Log channel id ( make sure bot is admin )
