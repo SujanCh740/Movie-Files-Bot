@@ -1484,7 +1484,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.message.reply_text(
                 text="<b>✅ Pᴜʀᴄʜᴀꜱᴇ Pʀᴇᴍɪᴜᴍ Aɴᴅ Eɴᴊᴏʏ ‼️.</b>",
                 quote=True,
-                protect_content=True,
                 disable_web_page_preview=True,                  
                 reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Cʜᴇᴄᴋᴏᴜᴛ Pʀᴇᴍɪᴜᴍ Pʟᴀɴꜱ 💸", callback_data='seeplans')]]))
                 buttons = [[
@@ -1501,7 +1500,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await log_msg.reply_text(
                     text=f"Uꜱᴇʀ Iᴅ : <code>{user_id}</code>\nUꜱᴇʀɴᴀᴍᴇ : {username}",
                     quote=True,
-                    protect_content=True,
                     disable_web_page_preview=True,
                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("𝗪𝗔𝗧𝗖𝗛 𝗢𝗡𝗟𝗜𝗡𝗘/𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", url=ph_link)]]))  
         except Exception as e:
