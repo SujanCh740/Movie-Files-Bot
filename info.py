@@ -29,9 +29,9 @@ SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://iili.io/fmFvFN1.jpg'))
 CODE = (environ.get('CODE', 'https://iili.io/ftvUziv.jpg'))
 
 #stream link shortner
-STREAM_SITE = (environ.get('STREAM_SITE', 'shortxlinks.com'))
-STREAM_API = (environ.get('STREAM_API', '21312ded78e50e34e58391be04bf4a266e6b5d8f'))
-STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5728'))
+STREAM_SITE = (environ.get('STREAM_SITE', 'arolinks.com'))
+STREAM_API = (environ.get('STREAM_API', 'd0bf69b0d0bb82a10fa9ff8a1d0d1f2bcc4fcda6'))
+STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5722'))
 
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5123039648 6093431204').split()]
