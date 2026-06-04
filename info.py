@@ -29,8 +29,8 @@ SUBSCRIPTION = (environ.get('SUBSCRIPTION', 'https://iili.io/fmFvFN1.jpg'))
 CODE = (environ.get('CODE', 'https://iili.io/ftvUziv.jpg'))
 
 #stream link shortner
-STREAM_SITE = (environ.get('STREAM_SITE', ''))
-STREAM_API = (environ.get('STREAM_API', ''))
+STREAM_SITE = (environ.get('STREAM_SITE', 'shortxlinks.com'))
+STREAM_API = (environ.get('STREAM_API', '21312ded78e50e34e58391be04bf4a266e6b5d8f'))
 STREAMHTO = (environ.get('STREAMHTO', 'https://t.me/How_2_Download_From_TeraBox/5728'))
 
 # Admins, Channels & Users
