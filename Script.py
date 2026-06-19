@@ -249,7 +249,7 @@ Nᴀᴍᴇ : {}
 
 Mᴇꜱꜱᴀɢᴇ : <b>{}</b>"""
     
-    CAPTION = """🗃️ <code><a>{file_name}</a></code>\n\n<b>📌 Note : Use VLC OR MX Player To Change Audio & Subtitle Accordingly</b>\n\n<b>Visit 🔗 : https://Movies4U.Site.Je</b>\n\n"""
+    CAPTION = """🗃️ <code><a>{file_name}</a></code>\n\n<b>📌 Note : Use VLC OR MX Player To Change Audio & Subtitle Accordingly</b>\n\n<b>Visit Us 🔗 : <a href='https://goo.su/ieoTaSl'>Movies4u.site.je</a></b>\n\n"""
 
     IMDB_TEMPLATE_TXT = """
 <b>Hᴇʏ {message.from_user.mention}, Hᴇʀᴇ Iꜱ Tʜᴇ Rᴇꜱᴜʟᴛꜱ Fᴏʀ Yᴏᴜʀ Qᴜᴇʀʏ {search}.
