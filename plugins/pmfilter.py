@@ -1531,7 +1531,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     InlineKeyboardButton('💠 Hᴇʟᴘ 💠', callback_data='help'),
                     InlineKeyboardButton('♻️ Aʙᴏᴜᴛ ♻️', callback_data='about')
                 ],[
-                    InlineKeyboardButton('✨ Mᴏᴠɪᴇ Wᴇʙꜱɪᴛᴇ ✨', url=f'https://Hub-Stream.Vercel.app')
+                    InlineKeyboardButton('✨ Mᴏᴠɪᴇ Wᴇʙꜱɪᴛᴇ ✨', url=f'https://goo.su/ieoTaSl')
                     #InlineKeyboardButton('✨ Bᴜʏ Sᴜʙꜱᴄʀɪᴘᴛɪᴏɴ : Rᴇᴍᴏᴠᴇ Aᴅꜱ ✨', callback_data="seeplans")               
                   ]]
         
