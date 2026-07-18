@@ -323,17 +323,15 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     search = FRESH.get(key)
     search = search.replace(' ', '_')
     btn = []
-    for i in range(0, len(QUALITIES)-1, 2):
-        btn.append([
-            InlineKeyboardButton(
-                text=QUALITIES[i].title(),
-                callback_data=f"fq#{QUALITIES[i].lower()}#{key}"
-            ),
-            InlineKeyboardButton(
-                text=QUALITIES[i+1].title(),
-                callback_data=f"fq#{QUALITIES[i+1].lower()}#{key}"
-            ),
-        ])
+    buttons = [
+        InlineKeyboardButton(
+            text=qual.title(),
+            callback_data=f"fq#{qual.lower()}#{key}"
+        )
+        for qual in QUALITIES if qual
+    ]
+    for i in range(0, len(buttons), 2):
+        btn.append(buttons[i:i+2])
 
     btn.insert(
         0,
@@ -486,17 +484,15 @@ async def languages_cb_handler(client: Client, query: CallbackQuery):
     search = FRESH.get(key)
     search = search.replace(' ', '_')
     btn = []
-    for i in range(0, len(LANGUAGES)-1, 2):
-        btn.append([
-            InlineKeyboardButton(
-                text=LANGUAGES[i].title(),
-                callback_data=f"fl#{LANGUAGES[i].lower()}#{key}"
-            ),
-            InlineKeyboardButton(
-                text=LANGUAGES[i+1].title(),
-                callback_data=f"fl#{LANGUAGES[i+1].lower()}#{key}"
-            ),
-        ])
+    buttons = [
+        InlineKeyboardButton(
+            text=lang.title(),
+            callback_data=f"fl#{lang.lower()}#{key}"
+        )
+        for lang in LANGUAGES if lang
+    ]
+    for i in range(0, len(buttons), 2):
+        btn.append(buttons[i:i+2])
 
     btn.insert(
         0,
@@ -650,17 +646,15 @@ async def seasons_cb_handler(client: Client, query: CallbackQuery):
     BUTTONS[key] = None
     search = search.replace(' ', '_')
     btn = []
-    for i in range(0, len(SEASONS)-1, 2):
-        btn.append([
-            InlineKeyboardButton(
-                text=SEASONS[i].title(),
-                callback_data=f"fs#{SEASONS[i].lower()}#{key}"
-            ),
-            InlineKeyboardButton(
-                text=SEASONS[i+1].title(),
-                callback_data=f"fs#{SEASONS[i+1].lower()}#{key}"
-            ),
-        ])
+    buttons = [
+        InlineKeyboardButton(
+            text=season.title(),
+            callback_data=f"fs#{season.lower()}#{key}"
+        )
+        for season in SEASONS if season
+    ]
+    for i in range(0, len(buttons), 2):
+        btn.append(buttons[i:i+2])
 
     btn.insert(
         0,
