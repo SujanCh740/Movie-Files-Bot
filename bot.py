@@ -1,4 +1,11 @@
 import sys
+import asyncio
+
+# Compatibility patch for Python 3.11+ where asyncio.coroutine was removed
+# This prevents motor 2.5.1 from throwing an ImportError when importing coroutine
+if sys.version_info >= (3, 11):
+    asyncio.coroutine = lambda f: f
+
 import glob
 import importlib
 from pathlib import Path
