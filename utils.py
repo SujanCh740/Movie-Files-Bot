@@ -70,6 +70,7 @@ async def is_req_subscribed(bot, query):
     return False
 
 async def get_poster(query, bulk=False, id=False, file=None):
+    loop = asyncio.get_event_loop()
     if not id:
         # https://t.me/GetTGLink/4183
         query = (query.strip()).lower()
@@ -84,7 +85,8 @@ async def get_poster(query, bulk=False, id=False, file=None):
                 year = list_to_str(year[:1]) 
         else:
             year = None
-        movieid = imdb.search_movie(title.lower(), results=10)
+        
+        movieid = await loop.run_in_executor(None, lambda: imdb.search_movie(title.lower(), results=10))
         if not movieid:
             return None
         if year:
@@ -101,7 +103,8 @@ async def get_poster(query, bulk=False, id=False, file=None):
         movieid = movieid[0].movieID
     else:
         movieid = query
-    movie = imdb.get_movie(movieid)
+        
+    movie = await loop.run_in_executor(None, lambda: imdb.get_movie(movieid))
     if movie.get("original air date"):
         date = movie["original air date"]
     elif movie.get("year"):
@@ -188,14 +191,20 @@ async def search_gagala(text):
     usr_agent = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
         'Chrome/61.0.3163.100 Safari/537.36'
-        }
+    }
     text = text.replace(" ", '+')
     url = f'https://www.google.com/search?q={text}'
-    response = requests.get(url, headers=usr_agent)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, 'html.parser')
-    titles = soup.find_all( 'h3' )
-    return [title.getText() for title in titles]
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=usr_agent) as response:
+                if response.status == 200:
+                    html = await response.text()
+                    soup = BeautifulSoup(html, 'html.parser')
+                    titles = soup.find_all('h3')
+                    return [title.getText() for title in titles]
+    except Exception as e:
+        logger.error(f"Error in search_gagala: {e}")
+    return []
 
 async def get_settings(group_id):
     settings = temp.SETTINGS.get(group_id)
