@@ -109,14 +109,30 @@ def _make_filter(query: str, file_type=None):
     words = [w for w in words if w not in removes]
     query = " ".join(words)
     
-    # 1. Parse season pattern before removing non-alphanumeric characters
-    season_match = re.search(r'\b(season|s)\s*(\d+)\b', query)
-    season_regex = None
-    if season_match:
-        season_num = int(season_match.group(2))
-        query = query.replace(season_match.group(0), "")
-        season_regex = re.compile(rf'\b(s[eason]*\s*0?{season_num}|s0?{season_num})\b', re.IGNORECASE)
+# Parse season before cleaning the query
+season_match = re.search(
+    r'\b(?:season\s*0?(\d+)|s\s*0?(\d+))(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
+    query,
+    re.IGNORECASE
+)
 
+season_regex = None
+
+if season_match:
+    season_num = int(season_match.group(1) or season_match.group(2))
+
+    # Remove season/episode text from the query
+    query = re.sub(
+        r'\b(?:season\s*0?\d+|s\s*0?\d+)(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
+        '',
+        query,
+        flags=re.IGNORECASE
+    ).strip()
+
+    season_regex = re.compile(
+        rf'\b(?:season\s*0?{season_num}|s\s*0?{season_num})(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
+        re.IGNORECASE
+    )
     # 2. Normalize remaining query
     query = re.sub(r"[^a-zA-Z0-9\s]", " ", query)
     query = re.sub(r"\s+", " ", query).strip()
