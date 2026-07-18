@@ -67,88 +67,6 @@ async def save_file(media):
 
 
 
-STOP_WORDS = {"the", "a", "an", "and", "or", "of", "to", "in", "for", "with", "by", "at", "on"}
-CONSONANTS = set("bcdgjkptz")
-
-def normalize_query(query: str) -> str:
-    query = query.lower()
-    query = re.sub(r"[^a-zA-Z0-9\s]", " ", query)
-    query = re.sub(r"\s+", " ", query).strip()
-    return query
-
-def word_to_regex(word: str) -> str:
-    if len(word) < 3:
-        return re.escape(word)
-    
-    chars_regex = []
-    for c in word:
-        escaped = re.escape(c)
-        if c in CONSONANTS:
-            chars_regex.append(escaped + r'[h]?')
-        elif c == 's':
-            chars_regex.append(escaped + r'[h]?')
-        elif c == 'h':
-            chars_regex.append(escaped)
-        else:
-            chars_regex.append(escaped)
-            
-    return r'[\s\.\+\-_]*'.join(chars_regex)
-
-def _make_filter(query: str, file_type=None):
-    query = query.lower()
-    
-    # Clean request keywords/noise
-    query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|bro|bruh|broh|helo|that|find|dubbed|link|venum|iruka|pannunga|pannungga|anuppunga|anupunga|anuppungga|anupungga|film(s)?|undo|kitti|kitty|tharu|kittumo|kittum|any(one)|with\ssubtitle(s)?|download)\b",
-        "",
-        query,
-        flags=re.IGNORECASE
-    )
-    removes = {"in", "upload", "series", "full", "horror", "thriller", "mystery", "print", "file"}
-    words = query.split()
-    words = [w for w in words if w not in removes]
-    query = " ".join(words)
-    
-    # 1. Parse season pattern before removing non-alphanumeric characters
-    season_match = re.search(r'\b(season|s)\s*(\d+)\b', query)
-    season_regex = None
-    if season_match:
-        season_num = int(season_match.group(2))
-        query = query.replace(season_match.group(0), "")
-        season_regex = re.compile(rf'\b(s[eason]*\s*0?{season_num}|s0?{season_num})\b', re.IGNORECASE)
-
-    # 2. Normalize remaining query
-    query = re.sub(r"[^a-zA-Z0-9\s]", " ", query)
-    query = re.sub(r"\s+", " ", query).strip()
-    
-    words = query.split(" ") if query else []
-    if len(words) > 1 or (words and season_regex):
-        words = [w for w in words if w not in STOP_WORDS]
-
-    regexes = [re.compile(word_to_regex(w), re.IGNORECASE) for w in words if w]
-    if season_regex:
-        regexes.append(season_regex)
-
-    if not regexes:
-        filter_query = {'file_name': re.compile('.', re.IGNORECASE)}
-    else:
-        file_name_conds = [{'file_name': regex} for regex in regexes]
-        if USE_CAPTION_FILTER:
-            caption_conds = [{'caption': regex} for regex in regexes]
-            filter_query = {
-                '$or': [
-                    {'$and': file_name_conds},
-                    {'$and': caption_conds}
-                ]
-            }
-        else:
-            filter_query = {'$and': file_name_conds}
-
-    if file_type:
-        filter_query['file_type'] = file_type
-
-    return filter_query
-
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
     """For given query return (results, next_offset)"""
     if chat_id is not None:
@@ -165,16 +83,38 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
                 max_results = 10
             else:
                 max_results = int(MAX_B_TN)
+    query = query.strip()
+    #if filter:
+        #better ?
+        #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
+        #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
+    if not query:
+        raw_pattern = '.'
+    elif ' ' not in query:
+        raw_pattern = r'(\b|[\.\+\-_])' + query + r'(\b|[\.\+\-_])'
+    else:
+        raw_pattern = query.replace(' ', r'.*[\s\.\+\-_]')
     
-    filter_query = _make_filter(query, file_type)
+    try:
+        regex = re.compile(raw_pattern, flags=re.IGNORECASE)
+    except:
+        return []
 
-    total_results = await Media.count_documents(filter_query)
+    if USE_CAPTION_FILTER:
+        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
+    else:
+        filter = {'file_name': regex}
+
+    if file_type:
+        filter['file_type'] = file_type
+
+    total_results = await Media.count_documents(filter)
     next_offset = offset + max_results
 
     if next_offset > total_results:
         next_offset = ''
 
-    cursor = Media.find(filter_query)
+    cursor = Media.find(filter)
     # Sort by recent
     cursor.sort('$natural', -1)
     # Slice files according to offset and max results
@@ -186,11 +126,34 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
 
 async def get_bad_files(query, file_type=None, filter=False):
     """For given query return (results, next_offset)"""
-    filter_query = _make_filter(query, file_type)
+    query = query.strip()
+    #if filter:
+        #better ?
+        #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
+        #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
+    if not query:
+        raw_pattern = '.'
+    elif ' ' not in query:
+        raw_pattern = r'(\b|[\.\+\-_])' + query + r'(\b|[\.\+\-_])'
+    else:
+        raw_pattern = query.replace(' ', r'.*[\s\.\+\-_]')
+    
+    try:
+        regex = re.compile(raw_pattern, flags=re.IGNORECASE)
+    except:
+        return []
 
-    total_results = await Media.count_documents(filter_query)
+    if USE_CAPTION_FILTER:
+        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
+    else:
+        filter = {'file_name': regex}
 
-    cursor = Media.find(filter_query)
+    if file_type:
+        filter['file_type'] = file_type
+
+    total_results = await Media.count_documents(filter)
+
+    cursor = Media.find(filter)
     # Sort by recent
     cursor.sort('$natural', -1)
     # Get list of files
