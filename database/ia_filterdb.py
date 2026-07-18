@@ -97,6 +97,18 @@ def word_to_regex(word: str) -> str:
 def _make_filter(query: str, file_type=None):
     query = query.lower()
     
+    # Clean request keywords/noise
+    query = re.sub(
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|bro|bruh|broh|helo|that|find|dubbed|link|venum|iruka|pannunga|pannungga|anuppunga|anupunga|anuppungga|anupungga|film(s)?|undo|kitti|kitty|tharu|kittumo|kittum|any(one)|with\ssubtitle(s)?|download)\b",
+        "",
+        query,
+        flags=re.IGNORECASE
+    )
+    removes = {"in", "upload", "series", "full", "horror", "thriller", "mystery", "print", "file"}
+    words = query.split()
+    words = [w for w in words if w not in removes]
+    query = " ".join(words)
+    
     # 1. Parse season pattern before removing non-alphanumeric characters
     season_match = re.search(r'\b(season|s)\s*(\d+)\b', query)
     season_regex = None
