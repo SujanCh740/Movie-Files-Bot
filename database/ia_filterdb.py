@@ -160,11 +160,10 @@ if season_match:
         else:
             filter_query = {'$and': file_name_conds}
 
-    if file_type:
+     if file_type:
         filter_query['file_type'] = file_type
 
-    return filter_query
-
+        return filter_query
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
     """For given query return (results, next_offset)"""
     if chat_id is not None:
