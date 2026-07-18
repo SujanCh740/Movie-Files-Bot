@@ -986,11 +986,11 @@ async def requests(bot, message):
             btn.append(InlineKeyboardButton('ꜱʜᴏᴡ ᴏᴘᴛɪᴏɴꜱ', callback_data=f'show_option#{reporter}'))
             
             if REQST_CHANNEL is not None:
-                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>📝 ʀᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 ʀᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 ʀᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴛʜᴇ ᴍᴏᴠɪᴇ ᴘʀᴏᴠɪᴅᴇʀ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
+                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>📝 Rᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 Rᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 Rᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴍᴏᴠɪᴇ ꜱᴇᴀʀᴄʜ ʙᴏᴛ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
                 success = True
             else:
                 for admin in ADMINS:
-                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>📝 ʀᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 ʀᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 ʀᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴛʜᴇ ᴍᴏᴠɪᴇ ᴘʀᴏᴠɪᴅᴇʀ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
+                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>📝 Rᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 Rᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 Rᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴍᴏᴠɪᴇ ꜱᴇᴀʀᴄʜ ʙᴏᴛ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
                 success = True
         except Exception as e:
             await message.reply_text(f"Error: {e}")
@@ -1008,7 +1008,7 @@ async def requests(bot, message):
         content = content.strip()
 
         if len(content) < 3:
-            await message.reply_text("<b>ʏᴏᴜ ᴍᴜꜱᴛ ᴛʏᴘᴇ ᴀʙᴏᴜᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛ [ᴍɪɴɪᴍᴜᴍ 3 ᴄʜᴀʀᴀᴄᴛᴇʀꜱ]. ʀᴇǫᴜᴇꜱᴛꜱ ᴄᴀɴ'ᴛ ʙᴇ ᴇᴍᴘᴛʏ.</b>")
+            await message.reply_text("<b>ʀᴇQᴜᴇꜱᴛ ʏᴏᴜʀ ꜰᴀᴠᴏʀɪᴛᴇ ᴍᴏᴠɪᴇ ᴏʀ ꜱᴇʀɪᴇꜱ ɪꜰ ʏᴏᴜ ᴄᴀɴ'ᴛ ꜰɪɴᴅ ɪᴛ ᴏɴ ᴛʜᴇ ʙᴏᴛ — ᴡᴇ'ʟʟ ᴀᴅᴅ ɪᴛ ᴏɴ ᴛʜᴇ ʙᴏᴛ!.\n\nꜰᴏʀ ᴍᴏᴠɪᴇ: <code>/request Peddi 2026</code>\n\nꜰᴏʀ ꜱᴇʀɪᴇꜱ: <code>/request Panchayat S01</code> </b>")
             return
 
         try:
@@ -1019,11 +1019,11 @@ async def requests(bot, message):
             btn.append(InlineKeyboardButton('ꜱʜᴏᴡ ᴏᴘᴛɪᴏɴꜱ', callback_data=f'show_option#{reporter}'))
 
             if REQST_CHANNEL is not None and len(content) >= 3:
-                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>📝 ʀᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 ʀᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 ʀᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴛʜᴇ ᴍᴏᴠɪᴇ ᴘʀᴏᴠɪᴅᴇʀ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
+                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>📝 Rᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 Rᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 Rᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴍᴏᴠɪᴇ ꜱᴇᴀʀᴄʜ ʙᴏᴛ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
                 success = True
             elif len(content) >= 3:
                 for admin in ADMINS:
-                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>📝 ʀᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 ʀᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 ʀᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴍᴏᴠɪᴇ ᴘʀᴏᴠɪᴅᴇʀ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
+                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>📝 Rᴇǫᴜᴇꜱᴛ : <u>{content}</u>\n\n📚 Rᴇᴘᴏʀᴛᴇᴅ ʙʏ : {mention}\n📖 Rᴇᴘᴏʀᴛᴇʀ ɪᴅ : {reporter}\n\n©️ ᴍᴏᴠɪᴇ ꜱᴇᴀʀᴄʜ ʙᴏᴛ™</b>", reply_markup=InlineKeyboardMarkup([btn]))
                 success = True
         except Exception as e:
             await message.reply_text(f"Error: {e}")
