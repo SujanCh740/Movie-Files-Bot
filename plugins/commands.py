@@ -975,7 +975,7 @@ async def requests(bot, message):
             return
         
         if len(content) < 3:
-            await message.reply_text("<b>ʏᴏᴜ ᴍᴜꜱᴛ ᴛʏᴘᴇ ᴀʙᴏᴜᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛ [ᴍɪɴɪᴍᴜᴍ 3 ᴄʜᴀʀᴀᴄᴛᴇʀꜱ]. ʀᴇǫᴜᴇꜱᴛꜱ ᴄᴀɴ'ᴛ ʙᴇ ᴇᴍᴘᴛʏ.</b>")
+            await message.reply_text("<b>ʀᴇQᴜᴇꜱᴛ ʏᴏᴜʀ ꜰᴀᴠᴏʀɪᴛᴇ ᴍᴏᴠɪᴇ ᴏʀ ꜱᴇʀɪᴇꜱ ɪꜰ ʏᴏᴜ ᴄᴀɴ'ᴛ ꜰɪɴᴅ ɪᴛ ᴏɴ ᴛʜᴇ ʙᴏᴛ — ᴡᴇ'ʟʟ ᴀᴅᴅ ɪᴛ ᴏɴ ᴛʜᴇ ʙᴏᴛ!.\n\nꜰᴏʀ ᴍᴏᴠɪᴇ: <code>/request Peddi 2026</code>\n\nꜰᴏʀ ꜱᴇʀɪᴇꜱ: <code>/request Panchayat S01</code> </b>")
             return
 
         try:
@@ -1035,7 +1035,7 @@ async def requests(bot, message):
               ]]
         if reported_post and reported_post.link:
             btn[0].append(InlineKeyboardButton('Vɪᴇᴡ Rᴇǫᴜᴇꜱᴛ', url=reported_post.link))
-        await message.reply_text("<b>ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ᴀᴅᴅᴇᴅ! ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ ꜰᴏʀ ꜱᴏᴍᴇ ᴛɪᴍᴇ.\n\nᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ ꜰɪʀꜱᴛ & ᴠɪᴇᴡ ʀᴇǫᴜᴇꜱᴛ.</b>", reply_markup=InlineKeyboardMarkup(btn))
+        await message.reply_text("<b>ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛ ʜᴀꜱ ʙᴇᴇɴ ꜱᴇɴᴛ! ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ ꜰᴏʀ ꜱᴏᴍᴇ ᴛɪᴍᴇ.\n\nᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ ꜰɪʀꜱᴛ & ᴠɪᴇᴡ ʀᴇǫᴜᴇꜱᴛ.</b>", reply_markup=InlineKeyboardMarkup(btn))
     
 @Client.on_message(filters.command("send") & filters.user(ADMINS))
 async def send_msg(bot, message):
