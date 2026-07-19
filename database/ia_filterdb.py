@@ -95,71 +95,93 @@ def word_to_regex(word: str) -> str:
     return r'[\s\.\+\-_]*'.join(chars_regex)
 
 def _make_filter(query: str, file_type=None):
-    query = query.lower()
+    import re
 
-    # Clean request keywords/noise
-    query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|bro|bruh|broh|helo|that|find|dubbed|link|venum|iruka|pannunga|pannungga|anuppunga|anupunga|anuppungga|anupungga|film(s)?|undo|kitti|kitty|tharu|kittumo|kittum|any(one)|with\ssubtitle(s)?|download)\b",
-        "",
-        query,
-        flags=re.IGNORECASE
+    query = query.strip()
+    season = None
+    episode = None
+
+    # Combined patterns: S01E08 / S01 E08 / Season 1 Episode 8
+    combined = re.search(
+        r'\b(?:s|season)\s*(\d{1,2})\s*(?:e|ep|episode)\s*(\d{1,3})\b',
+        query, re.IGNORECASE
     )
-    removes = {"in", "upload", "series", "full", "horror", "thriller", "mystery", "print", "file"}
-    words = query.split()
-    words = [w for w in words if w not in removes]
-    query = " ".join(words)
-
-    # Parse season before cleaning the query
-    season_match = re.search(
-        r'\b(?:season\s*0?(\d+)|s\s*0?(\d+))(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
-        query,
-        re.IGNORECASE
-    )
-
-    season_regex = None
-
-    if season_match:
-        season_num = int(season_match.group(1) or season_match.group(2))
-
-        # Remove season/episode text from the query
+    if combined:
+        season = int(combined.group(1))
+        episode = int(combined.group(2))
+        # strip the S/E token from query
         query = re.sub(
-            r'\b(?:season\s*0?\d+|s\s*0?\d+)(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
-            '',
-            query,
-            flags=re.IGNORECASE
-        ).strip()
-
-        season_regex = re.compile(
-            rf'\b(?:season\s*0?{season_num}|s\s*0?{season_num})(?:\s*(?:episode|ep|e)\s*0?\d+)?\b',
-            re.IGNORECASE
+            r'\b(?:s|season)\s*\d{1,2}\s*(?:e|ep|episode)\s*\d{1,3}\b',
+            '', query, flags=re.IGNORECASE
         )
+    else:
+        # Season only: S01 / Season 1
+        season_match = re.search(r'\b(?:s|season)\s*(\d{1,2})\b', query, re.IGNORECASE)
+        if season_match:
+            season = int(season_match.group(1))
+            query = re.sub(r'\b(?:s|season)\s*\d{1,2}\b', '', query, flags=re.IGNORECASE)
+
+        # Episode only: E08 / Ep 8 / Episode 8
+        episode_match = re.search(r'\b(?:e|ep|episode)\s*(\d{1,3})\b', query, re.IGNORECASE)
+        if episode_match:
+            episode = int(episode_match.group(1))
+            query = re.sub(r'\b(?:e|ep|episode)\s*\d{1,3}\b', '', query, flags=re.IGNORECASE)
 
     # Normalize remaining query
-    query = re.sub(r"[^a-zA-Z0-9\s]", " ", query)
-    query = re.sub(r"\s+", " ", query).strip()
+    query = re.sub(r'\s+', ' ', query).strip()
 
-    words = query.split(" ") if query else []
-    if len(words) > 1 or (words and season_regex):
-        words = [w for w in words if w not in STOP_WORDS]
+    # Build regex conditions for the remaining title words
+    file_name_conds = []
+    caption_conds = []
+    if query:
+        for word in query.split():
+            safe = re.escape(word)
+            file_name_conds.append({'file_name': {'$regex': safe, '$options': 'i'}})
+            caption_conds.append({'caption': {'$regex': safe, '$options': 'i'}})
 
-    regexes = [re.compile(word_to_regex(w), re.IGNORECASE) for w in words if w]
-    if season_regex:
-        regexes.append(season_regex)
+    # Season / Episode regex — must match BOTH when both given
+    se_patterns = []
+    if season is not None and episode is not None:
+        s, e = f'{season:02d}', f'{episode:02d}'
+        # matches S01E08, S01 E08, S1E8, Season 1 Episode 8, 1x08
+        se_patterns.append(
+            rf'(?:s(?:eason)?\s*0*{season}\s*[\s._-]*e(?:p|pisode)?\s*0*{episode}\b'
+            rf'|\b0*{season}x0*{episode}\b)'
+        )
+    elif season is not None:
+        se_patterns.append(rf'\bs(?:eason)?\s*0*{season}\b')
+    elif episode is not None:
+        se_patterns.append(rf'\be(?:p|pisode)?\s*0*{episode}\b')
 
-    if not regexes:
-        filter_query = {'file_name': re.compile('.', re.IGNORECASE)}
+    for pat in se_patterns:
+        file_name_conds.append({'file_name': {'$regex': pat, '$options': 'i'}})
+        caption_conds.append({'caption': {'$regex': pat, '$options': 'i'}})
+
+    if not file_name_conds:
+        filter_query = {}
+    elif query and se_patterns:
+        # match title words in either field, AND S/E in either field
+        filter_query = {
+            '$and': [
+                {'$or': [
+                    {'$and': [c for c in file_name_conds if 'file_name' in c and '$regex' in c['file_name'] and c['file_name']['$regex'] not in [p for p in se_patterns]]},
+                ]},
+            ]
+        }
+        # simpler: require every condition to match in either file_name or caption
+        filter_query = {
+            '$and': [
+                {'$or': [fn, cap]}
+                for fn, cap in zip(file_name_conds, caption_conds)
+            ]
+        }
     else:
-        file_name_conds = [{'file_name': regex} for regex in regexes]
-        if USE_CAPTION_FILTER:
-            caption_conds = [{'caption': regex} for regex in regexes]
-            filter_query = {
-                '$or': [
-                    {'$and': file_name_conds},
-                    {'$and': caption_conds}
-                ]
-            }
-        else:
-            filter_query = {'$and': file_name_conds}
+        filter_query = {
+            '$or': [
+                {'$and': file_name_conds},
+                {'$and': caption_conds},
+            ]
+        }
 
     if file_type:
         filter_query['file_type'] = file_type
